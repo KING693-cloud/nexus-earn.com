@@ -17,11 +17,12 @@
         
         .profile-input-wrapper { margin-bottom: 14px; }
         .profile-input-wrapper label { font-size: 0.65rem; color: #9ca3af; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; display: block; }
-        .input-row-container { width: 100%; background: #1b203a; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; display: flex; align-items: center; padding: 0 14px; height: 42px; }
+        .input-row-container { width: 100%; background: #1b203a; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; display: flex; align-items: center; padding: 0 14px; height: 42px; position: relative; }
         .input-row-container i { color: #e5b842; width: 20px; font-size: 0.9rem; }
-        .input-row-container input { width: 100%; border: none; background: transparent; color: #fff; font-size: 0.85rem; outline: none; }
+        .input-row-container input { width: 100%; border: none; background: transparent; color: #fff; font-size: 0.85rem; outline: none; padding: 0 10px; }
         
-        /* Disabled input treatment for incoming referral tracking anchors */
+        .password-toggle { cursor: pointer; color: #9ca3af; font-size: 0.9rem; position: absolute; right: 14px; }
+
         .input-row-container input:disabled { color: #a1a1aa; cursor: not-allowed; font-weight: 600; }
 
         .btn-submit { width: 100%; height: 42px; background: #e5b842; border: none; border-radius: 8px; color: #111424; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
@@ -54,7 +55,9 @@
                 <div class="profile-input-wrapper"><label>Username</label><div class="input-row-container"><i class="fa-solid fa-user"></i><input type="text" id="username" placeholder="Enter username" required autocomplete="username"></div></div>
                 <div class="profile-input-wrapper"><label>Email Address</label><div class="input-row-container"><i class="fa-solid fa-envelope"></i><input type="email" id="email" placeholder="example@gmail.com" required autocomplete="email"></div></div>
                 <div class="profile-input-wrapper"><label>Phone Number</label><div class="input-row-container"><i class="fa-solid fa-phone"></i><input type="tel" id="phone" pattern="\d{11}" maxlength="11" placeholder="080XXXXXXXX" required></div></div>
-                <div class="profile-input-wrapper"><label>Password</label><div class="input-row-container"><i class="fa-solid fa-lock"></i><input type="password" id="password" placeholder="Create password" required autocomplete="new-password"></div></div>
+                
+                <div class="profile-input-wrapper"><label>Password</label><div class="input-row-container"><i class="fa-solid fa-lock"></i><input type="password" id="password" placeholder="Create password" required autocomplete="new-password"><i class="fa-solid fa-eye password-toggle" onclick="togglePass('password', this)"></i></div></div>
+                <div class="profile-input-wrapper"><label>Confirm Password</label><div class="input-row-container"><i class="fa-solid fa-lock"></i><input type="password" id="confirmPassword" placeholder="Confirm password" required autocomplete="new-password"><i class="fa-solid fa-eye password-toggle" onclick="togglePass('confirmPassword', this)"></i></div></div>
                 
                 <div class="profile-input-wrapper">
                     <label>Invited By (Referral Code)</label>
@@ -88,7 +91,17 @@
         firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
 
-        // Capture both explicit "?ref=XYZ" variables and clean restful router parameters
+        function togglePass(id, icon) {
+            const input = document.getElementById(id);
+            if (input.type === "password") {
+                input.type = "text";
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                input.type = "password";
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
         const urlParams = new URLSearchParams(window.location.search);
         let activeIncomingRef = urlParams.get('ref');
 
@@ -103,10 +116,9 @@
         if (activeIncomingRef) {
             const refField = document.getElementById('referredByCode');
             refField.value = activeIncomingRef.trim();
-            refField.disabled = true; // Lock field if link structure auto-supplied tracking parameter
+            refField.disabled = true;
         }
 
-        // Helper string logic: Generates a unique referral code for the new account
         function generateUniqueReferralString(length = 6) {
             const keyspace = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
             let generatedOutput = "";
@@ -131,18 +143,18 @@
             const rawEmail = document.getElementById('email').value.trim();
             const rawPhone = document.getElementById('phone').value.trim();
             const rawPassword = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
             const invitationCodeGiven = document.getElementById('referredByCode').value.trim();
 
-            // Validation safeguards
             if (!/^[a-zA-Z0-9_]{3,15}$/.test(rawUsername)) return showToast("Username must be alphanumeric, 3-15 characters.");
             if (rawPhone.length !== 11 || !/^\d+$/.test(rawPhone)) return showToast("Phone must be exactly 11 numeric characters.");
             if (rawPassword.length < 6) return showToast("Password must be at least 6 characters.");
+            if (rawPassword !== confirmPassword) return showToast("Passwords do not match.");
 
             btn.style.display = 'none'; 
             spinner.style.display = 'block';
 
             try {
-                // 1. Cross-verify user duplicates unique paths
                 const emailSnap = await db.collection('users').where('email', '==', rawEmail).get();
                 if (!emailSnap.empty) throw new Error("This email is already linked to another terminal account.");
 
@@ -152,26 +164,20 @@
                 const userSnap = await db.collection('users').where('username', '==', rawUsername).get();
                 if (!userSnap.empty) throw new Error("Username already taken. Please choose another.");
 
-                // 2. Identify and resolve tracking linkage safely
                 let resolvedReferrerUID = "";
                 if (invitationCodeGiven !== "") {
                     const findReferrerQuery = await db.collection('users').where('referralCode', '==', invitationCodeGiven).get();
                     if (!findReferrerQuery.empty) {
-                        resolvedReferrerUID = findReferrerQuery.docs[0].id; // Pull the actual Firestore Document UID of the referrer
+                        resolvedReferrerUID = findReferrerQuery.docs[0].id;
                     } else {
                         throw new Error("Invalid or inactive invitation tracking code entered.");
                     }
                 }
 
-                // 3. Complete system core auth layer registry
                 const authCredentialResult = await firebase.auth().createUserWithEmailAndPassword(rawEmail, rawPassword);
                 const systemAssignedUID = authCredentialResult.user.uid;
-
-                // 4. Generate dynamic unique referral code for this user
                 const freshlyBuiltTrackingString = generateUniqueReferralString(6);
 
-                // 5. Commit unified production structural schema to database record
-                // Balance is set to 500.00 to account for the signup welcome bonus architecture cleanly
                 await db.collection('users').doc(systemAssignedUID).set({
                     uid: systemAssignedUID,
                     username: rawUsername,
