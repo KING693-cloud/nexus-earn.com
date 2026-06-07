@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS EARN - Create Account</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #0b0d17; color: #ffffff; min-height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; }
+        .app-container { width: 100%; max-width: 480px; min-height: 100vh; background: #111424; display: flex; flex-direction: column; position: relative; box-shadow: 0 0 30px rgba(0, 0, 0, 0.5); }
+        .hero-banner { width: 100%; height: 25vh; min-height: 180px; background: radial-gradient(circle at center, #1b203a 0%, #0b0d17 100%); display: flex; justify-content: center; align-items: center; border-bottom: 1px solid rgba(229, 184, 66, 0.1); }
+        .brand-logo { width: 80%; max-width: 280px; height: auto; }
+        .form-workspace { flex-grow: 1; padding: 25px 24px; }
+        .page-title { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; margin-bottom: 5px; color: #e5b842; }
+        .page-desc { font-size: 0.75rem; color: #9ca3af; margin-bottom: 20px; }
+        
+        .profile-input-wrapper { margin-bottom: 14px; }
+        .profile-input-wrapper label { font-size: 0.65rem; color: #9ca3af; text-transform: uppercase; font-weight: 700; margin-bottom: 4px; display: block; }
+        .input-row-container { width: 100%; background: #1b203a; border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; display: flex; align-items: center; padding: 0 14px; height: 42px; }
+        .input-row-container i { color: #e5b842; width: 20px; font-size: 0.9rem; }
+        .input-row-container input { width: 100%; border: none; background: transparent; color: #fff; font-size: 0.85rem; outline: none; }
+        
+        /* Disabled input treatment for incoming referral tracking anchors */
+        .input-row-container input:disabled { color: #a1a1aa; cursor: not-allowed; font-weight: 600; }
+
+        .btn-submit { width: 100%; height: 42px; background: #e5b842; border: none; border-radius: 8px; color: #111424; font-weight: 700; cursor: pointer; text-transform: uppercase; margin-top: 10px; }
+        .btn-submit:hover { background: #f0c34d; }
+        .login-nav { text-align: center; margin-top: 20px; font-size: 0.8rem; color: #9ca3af; }
+        .login-nav a { color: #e5b842; text-decoration: none; font-weight: 700; }
+        
+        #loadingSpinner { display: none; margin: 15px auto; border: 4px solid #1b203a; border-top: 4px solid #e5b842; border-radius: 50%; width: 25px; height: 25px; animation: spin 1s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        
+        .toast-notification { position: fixed; top: 25px; left: 50%; transform: translateX(-50%) translateY(-120px); width: 90%; max-width: 400px; background: #1b203a; border-left: 4px solid #e5b842; padding: 15px; border-radius: 8px; transition: 0.3s; z-index: 999; box-shadow: 0 10px 25px rgba(0,0,0,0.5); }
+        .toast-notification.show { transform: translateX(-50%) translateY(0); }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+        <div class="toast-notification" id="customToast"><div id="toastMsg" style="font-size: 0.85rem;"></div></div>
+
+        <div class="hero-banner">
+            <img src="logo.png" alt="NEXUS EARN" class="brand-logo" onerror="this.style.display='none'; document.getElementById('textLogo').style.display='block';">
+            <div id="textLogo" style="display:none; color:#e5b842; font-size: 1.5rem; font-weight: 900;">NEXUS EARN</div>
+        </div>
+
+        <div class="form-workspace">
+            <h2 class="page-title">Register Account</h2>
+            <p class="page-desc">Enter your details to join the NEXUS ecosystem.</p>
+
+            <form id="nexusSignupForm">
+                <div class="profile-input-wrapper"><label>Username</label><div class="input-row-container"><i class="fa-solid fa-user"></i><input type="text" id="username" placeholder="Enter username" required autocomplete="username"></div></div>
+                <div class="profile-input-wrapper"><label>Email Address</label><div class="input-row-container"><i class="fa-solid fa-envelope"></i><input type="email" id="email" placeholder="example@gmail.com" required autocomplete="email"></div></div>
+                <div class="profile-input-wrapper"><label>Phone Number</label><div class="input-row-container"><i class="fa-solid fa-phone"></i><input type="tel" id="phone" pattern="\d{11}" maxlength="11" placeholder="080XXXXXXXX" required></div></div>
+                <div class="profile-input-wrapper"><label>Password</label><div class="input-row-container"><i class="fa-solid fa-lock"></i><input type="password" id="password" placeholder="Create password" required autocomplete="new-password"></div></div>
+                
+                <div class="profile-input-wrapper">
+                    <label>Invited By (Referral Code)</label>
+                    <div class="input-row-container">
+                        <i class="fa-solid fa-gift"></i>
+                        <input type="text" id="referredByCode" placeholder="Optional code" maxlength="10">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-submit" id="submitBtn">Register Now</button>
+                <div id="loadingSpinner"></div>
+            </form>
+
+            <div class="login-nav">Already have an account? <a href="login.html">Login Here</a></div>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+    <script>
+        const firebaseConfig = { 
+            apiKey: "AIzaSyDUIQ5s-MI2V3rsi_uWBbRb5YGcFmjjKK4", 
+            authDomain: "nexus-earn-1.firebaseapp.com", 
+            projectId: "nexus-earn-1", 
+            storageBucket: "nexus-earn-1.firebasestorage.app", 
+            messagingSenderId: "779765076952", 
+            appId: "1:779765076952:web:fa5fac51bef82e74b598ad" 
+        };
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        // Capture both explicit "?ref=XYZ" variables and clean restful router parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        let activeIncomingRef = urlParams.get('ref');
+
+        if (!activeIncomingRef) {
+            const urlSegments = window.location.pathname.split('/');
+            const joinIndex = urlSegments.indexOf('join');
+            if (joinIndex !== -1 && urlSegments[joinIndex + 1]) {
+                activeIncomingRef = urlSegments[joinIndex + 1];
+            }
+        }
+
+        if (activeIncomingRef) {
+            const refField = document.getElementById('referredByCode');
+            refField.value = activeIncomingRef.trim();
+            refField.disabled = true; // Lock field if link structure auto-supplied tracking parameter
+        }
+
+        // Helper string logic: Generates a unique referral code for the new account
+        function generateUniqueReferralString(length = 6) {
+            const keyspace = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            let generatedOutput = "";
+            for (let i = 0; i < length; i++) {
+                generatedOutput += keyspace.charAt(Math.floor(Math.random() * keyspace.length));
+            }
+            return generatedOutput;
+        }
+
+        function showToast(msg) {
+            const t = document.getElementById('customToast');
+            document.getElementById('toastMsg').innerText = msg;
+            t.classList.add('show');
+            setTimeout(() => { t.classList.remove('show'); }, 3500);
+        }
+
+        document.getElementById('nexusSignupForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById('submitBtn'), spinner = document.getElementById('loadingSpinner');
+            
+            const rawUsername = document.getElementById('username').value.trim().toLowerCase();
+            const rawEmail = document.getElementById('email').value.trim();
+            const rawPhone = document.getElementById('phone').value.trim();
+            const rawPassword = document.getElementById('password').value;
+            const invitationCodeGiven = document.getElementById('referredByCode').value.trim();
+
+            // Validation safeguards
+            if (!/^[a-zA-Z0-9_]{3,15}$/.test(rawUsername)) return showToast("Username must be alphanumeric, 3-15 characters.");
+            if (rawPhone.length !== 11 || !/^\d+$/.test(rawPhone)) return showToast("Phone must be exactly 11 numeric characters.");
+            if (rawPassword.length < 6) return showToast("Password must be at least 6 characters.");
+
+            btn.style.display = 'none'; 
+            spinner.style.display = 'block';
+
+            try {
+                // 1. Cross-verify user duplicates unique paths
+                const emailSnap = await db.collection('users').where('email', '==', rawEmail).get();
+                if (!emailSnap.empty) throw new Error("This email is already linked to another terminal account.");
+
+                const phoneSnap = await db.collection('users').where('phone', '==', rawPhone).get();
+                if (!phoneSnap.empty) throw new Error("This phone number is already registered under a user.");
+                
+                const userSnap = await db.collection('users').where('username', '==', rawUsername).get();
+                if (!userSnap.empty) throw new Error("Username already taken. Please choose another.");
+
+                // 2. Identify and resolve tracking linkage safely
+                let resolvedReferrerUID = "";
+                if (invitationCodeGiven !== "") {
+                    const findReferrerQuery = await db.collection('users').where('referralCode', '==', invitationCodeGiven).get();
+                    if (!findReferrerQuery.empty) {
+                        resolvedReferrerUID = findReferrerQuery.docs[0].id; // Pull the actual Firestore Document UID of the referrer
+                    } else {
+                        throw new Error("Invalid or inactive invitation tracking code entered.");
+                    }
+                }
+
+                // 3. Complete system core auth layer registry
+                const authCredentialResult = await firebase.auth().createUserWithEmailAndPassword(rawEmail, rawPassword);
+                const systemAssignedUID = authCredentialResult.user.uid;
+
+                // 4. Generate dynamic unique referral code for this user
+                const freshlyBuiltTrackingString = generateUniqueReferralString(6);
+
+                // 5. Commit unified production structural schema to database record
+                // Balance is set to 500.00 to account for the signup welcome bonus architecture cleanly
+                await db.collection('users').doc(systemAssignedUID).set({
+                    uid: systemAssignedUID,
+                    username: rawUsername,
+                    email: rawEmail,
+                    phone: rawPhone,
+                    referralCode: freshlyBuiltTrackingString, 
+                    referredBy: resolvedReferrerUID,         
+                    balance: 500.00,
+                    referralBonusEarned: 0.00,
+                    directInvitesCount: 0,
+                    isFirstReferralBonusClaimed: false,
+                    status: "active",
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
+
+                showToast("Account established successfully! Transitioning profile portal...");
+                setTimeout(() => {
+                    window.location.href = "dashboard.html";
+                }, 1500);
+
+            } catch (err) {
+                showToast(err.message);
+                btn.style.display = 'block'; 
+                spinner.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

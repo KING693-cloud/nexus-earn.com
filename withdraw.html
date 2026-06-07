@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS EARN - Secure Withdrawal Portal</title>
+    <!-- FontAwesome for Premium Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+
+        html, body {
+            background-color: #0b0d17 !important;
+            color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 480px;
+            min-height: 100vh;
+            background: #111424;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+            padding-bottom: 40px;
+        }
+
+        /* Premium Navigation Header */
+        .page-header {
+            width: 100%;
+            padding: 20px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            background: #161a2e;
+        }
+
+        .back-btn {
+            color: #e5b842;
+            text-decoration: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+
+        .header-title {
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ffffff;
+        }
+
+        .content-panel {
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Balance Card */
+        .balance-summary-card {
+            background: linear-gradient(135deg, #1b203a 0%, #161a2e 100%);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .balance-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
+            background: rgba(229, 184, 66, 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #e5b842;
+            font-size: 1.3rem;
+        }
+
+        .balance-details p {
+            font-size: 0.75rem;
+            color: #a1a1aa;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .balance-details h3 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: #ffffff;
+            margin-top: 2px;
+        }
+
+        /* Form Input & Static Display Styling */
+        .input-box label {
+            font-size: 0.75rem;
+            color: #a1a1aa;
+            text-transform: uppercase;
+            font-weight: 700;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .input-row-container {
+            width: 100%;
+            background: #1b203a;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+            height: 54px;
+            margin-bottom: 6px;
+            transition: all 0.3s ease;
+        }
+
+        /* Lockout design states for active pending fields */
+        .input-row-container.disabled-state {
+            background: rgba(20, 24, 44, 0.6) !important;
+            border: 1px dashed rgba(255, 255, 255, 0.05) !important;
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .input-row-container.disabled-state input {
+            cursor: not-allowed !important;
+        }
+
+        /* Grayed out layout for non-editable auto-filled properties */
+        .input-row-container.static-display {
+            background: #14182c;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .static-text {
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .currency-symbol {
+            color: #e5b842;
+            font-weight: 800;
+            font-size: 1.2rem;
+            margin-right: 12px;
+        }
+
+        .input-row-container input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 700;
+            height: 100%;
+        }
+
+        .input-row-container input::placeholder { color: #636b8f; }
+        .input-row-container input:focus { outline: none; }
+
+        /* Premium Dynamic Breakdown Receipt Card */
+        .tax-breakdown-card {
+            background: #161a2e;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .breakdown-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            color: #a1a1aa;
+        }
+
+        .breakdown-row.total {
+            border-top: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-top: 12px;
+            font-weight: 700;
+            color: #ffffff;
+            font-size: 0.95rem;
+        }
+
+        .tax-highlight {
+            color: #ef4444;
+            font-weight: 600;
+        }
+
+        .receive-highlight {
+            color: #10b981;
+            font-weight: 800;
+        }
+
+        /* Rules Information Box */
+        .channel-info-box {
+            background: rgba(229, 184, 66, 0.03);
+            border: 1px dashed rgba(229, 184, 66, 0.2);
+            border-radius: 8px;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .channel-info-box i { color: #e5b842; font-size: 1.2rem; }
+        .channel-text h4 { font-size: 0.85rem; font-weight: 700; color: #ffffff; margin-bottom: 4px; }
+        .channel-text p { font-size: 0.75rem; color: #a1a1aa; line-height: 1.5; margin-bottom: 6px; }
+        .channel-text p:last-child { margin-bottom: 0; }
+
+        /* Active Blocking Alert Panel Element */
+        .lockout-alert-box {
+            background: rgba(239, 68, 68, 0.06);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            border-radius: 10px;
+            padding: 16px;
+            display: none;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 4px;
+        }
+        
+        .lockout-alert-box.active {
+            display: flex;
+        }
+        
+        .lockout-alert-box i {
+            color: #ef4444;
+            font-size: 1.2rem;
+            margin-top: 2px;
+        }
+        
+        .lockout-msg h5 {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: #ffffff;
+            margin-bottom: 4px;
+        }
+        
+        .lockout-msg p {
+            font-size: 0.75rem;
+            color: #cbd5e1;
+            line-height: 1.4;
+        }
+
+        .btn-withdraw-init {
+            width: 100%;
+            height: 52px;
+            background: linear-gradient(135deg, #f5d061 0%, #e5b842 100%);
+            border: none;
+            border-radius: 8px;
+            color: #111424;
+            font-size: 0.95rem;
+            font-weight: 700;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+        .btn-withdraw-init:disabled {
+            background: #2a314d !important;
+            color: #636b8f !important;
+            cursor: not-allowed !important;
+            box-shadow: none !important;
+        }
+
+        /* ========================================================
+           SPECTACULAR POST-PAYMENT TRANSACTION STATUS MODAL
+           ======================================================== */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(7, 9, 19, 0.92);
+            backdrop-filter: blur(10px);
+            z-index: 99999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+            padding: 20px;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .status-modal-box {
+            background: #111424;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 100%;
+            max-width: 380px;
+            border-radius: 20px;
+            padding: 35px 24px;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8);
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .status-modal-box { transform: scale(1); }
+
+        .status-icon-wrapper {
+            width: 90px;
+            height: 90px;
+            margin: 0 auto 24px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .status-circle { width: 90px; height: 90px; border-radius: 50%; position: absolute; transform: scale(0); }
+        .status-glyph { font-size: 3rem; opacity: 0; transform: scale(0.5); z-index: 2; }
+
+        .modal-overlay.pending-state .status-circle {
+            background: rgba(229, 184, 66, 0.1); border: 3px solid #e5b842;
+            animation: zoomCircle 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards 0.2s;
+        }
+        .modal-overlay.pending-state .status-glyph {
+            color: #e5b842; animation: pulsePending 1.6s infinite ease-in-out, popIcon 0.4s forwards 0.6s;
+        }
+        .modal-overlay.pending-state .status-modal-box { border-color: #e5b842; }
+
+        .modal-title { font-size: 1.4rem; font-weight: 800; color: #ffffff; margin-bottom: 8px; text-transform: uppercase; }
+        .modal-message { font-size: 0.9rem; color: #a1a1aa; line-height: 1.5; margin-bottom: 26px; }
+        .modal-amount-tag { font-size: 1.8rem; font-weight: 900; color: #ffffff; margin: 8px 0; display: block; }
+
+        .btn-status-action {
+            width: 100%; height: 48px; border: none; border-radius: 8px; font-size: 0.9rem;
+            font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px;
+        }
+        .pending-state .btn-status-action { background: #e5b842; color: #111424; box-shadow: 0 4px 12px rgba(229, 184, 66, 0.3); }
+
+        @keyframes zoomCircle { to { transform: scale(1); } }
+        @keyframes popIcon { to { transform: scale(1); opacity: 1; } }
+        @keyframes pulsePending { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); opacity: 0.8; } }
+
+        /* Error Notification Toast (Pre-Submission Validation) */
+        .error-toast {
+            position: fixed; top: 25px; left: 50%; transform: translateX(-50%) translateY(-120px);
+            width: calc(100% - 32px); max-width: 400px; background: #1b203a; border-left: 4px solid #ef4444;
+            padding: 16px; border-radius: 8px; box-shadow: 0 10px 25px rgba(0,0,0,0.4); z-index: 55555;
+            display: flex; align-items: center; gap: 12px; transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .error-toast.show { transform: translateX(-50%) translateY(0); }
+        
+        /* Alert style overrides */
+        .error-toast.warn-alert {
+            border-left-color: #e5b842 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="app-container">
+
+        <!-- Pre-Submission input validation warning toast -->
+        <div class="error-toast" id="errorToast">
+            <i id="toastIcon" class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>
+            <div style="font-size: 0.85rem; font-weight: 600;" id="errorToastMsg"></div>
+        </div>
+
+        <!-- ============================================
+           SPECTACULAR POST-PAYMENT RESPONSE MODAL
+           ============================================ -->
+        <div class="modal-overlay" id="statusModal">
+            <div class="status-modal-box">
+                <div class="status-icon-wrapper">
+                    <div class="status-circle"></div>
+                    <i id="statusIcon" class="fa-solid status-glyph"></i>
+                </div>
+                <h3 class="modal-title" id="modalTitleDisplay">Status</h3>
+                <p class="modal-message" id="modalMessageDisplay">Processing payout...</p>
+                <button class="btn-status-action" id="modalDismissBtn">Return to Dashboard</button>
+            </div>
+        </div>
+
+        <!-- Header -->
+        <div class="page-header">
+            <a href="dashboard.html" class="back-btn"><i class="fa-solid fa-chevron-left"></i></a>
+            <div class="header-title">Secure Payout Portal</div>
+            <div style="width:20px;"></div>
+        </div>
+
+        <div class="content-panel">
+            <!-- Current Balance Display -->
+            <div class="balance-summary-card">
+                <div class="balance-icon"><i class="fa-solid fa-building-columns"></i></div>
+                <div class="balance-details">
+                    <p>Withdrawable Balance</p>
+                    <h3 id="currentWalletDisplay">₦0.00</h3>
+                </div>
+            </div>
+
+            <!-- Lockout Alert Display Box -->
+            <div class="lockout-alert-box" id="lockoutAlertBox">
+                <i class="fa-solid fa-circle-lock"></i>
+                <div class="lockout-msg">
+                    <h5>Terminal Channel Locked</h5>
+                    <p>You have an active pending withdrawal transaction in processing. You must wait for this transaction to settle before creating a secondary request.</p>
+                </div>
+            </div>
+
+            <!-- Input Form -->
+            <div class="input-box">
+                <label>Amount to Withdraw</label>
+                <div class="input-row-container" id="amountInputContainer">
+                    <span class="currency-symbol">₦</span>
+                    <input type="number" id="withdrawAmount" placeholder="Min. 1,500" inputmode="numeric">
+                </div>
+            </div>
+            
+            <!-- Non-editable Auto-fetched Display Fields -->
+            <div class="input-box">
+                <label>Bank Name</label>
+                <div class="input-row-container static-display">
+                    <span class="static-text" id="displayBankName">Loading...</span>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <label>Account Number</label>
+                <div class="input-row-container static-display">
+                    <span class="static-text" id="displayAccountNumber">Loading...</span>
+                </div>
+            </div>
+
+            <div class="input-box">
+                <label>Account Name</label>
+                <div class="input-row-container static-display">
+                    <span class="static-text" id="displayAccountName">Loading...</span>
+                </div>
+            </div>
+
+            <!-- Dynamic Live 10% Tax Receipt Breakdown -->
+            <div class="tax-breakdown-card">
+                <div class="breakdown-row">
+                    <span>Requested Gross Amount:</span>
+                    <span id="grossDisplay">₦0.00</span>
+                </div>
+                <div class="breakdown-row">
+                    <span>Processing Tax (<span class="tax-highlight">10%</span>):</span>
+                    <span id="taxDisplay" class="tax-highlight">- ₦0.00</span>
+                </div>
+                <div class="breakdown-row total">
+                    <span>Net Amount to Bank Account:</span>
+                    <span id="netDisplay" class="receive-highlight">₦0.00</span>
+                </div>
+            </div>
+
+            <!-- Rules Information Box -->
+            <div class="channel-info-box">
+                <div class="channel-text">
+                    <h4>Payout Terminal Guidelines</h4>
+                    <p><i class="fa-solid fa-clock" style="font-size: 0.75rem; margin-right:4px;"></i> <strong>Operating Hours:</strong> Terminals open strictly from <strong>9:00 AM to 9:00 PM</strong> daily.</p>
+                    <p><i class="fa-solid fa-arrows-spin" style="font-size: 0.75rem; margin-right:4px;"></i> <strong>Frequency Rules:</strong> You can execute <strong>unlimited withdrawals</strong> per day as long as each order meets or exceeds the baseline threshold.</p>
+                    <p><i class="fa-solid fa-shield-halved" style="font-size: 0.75rem; margin-right:4px;"></i> <strong>Terminal Minimum:</strong> The mandatory structural lower limit scale is fixed at <strong>₦1,500</strong> per transaction.</p>
+                </div>
+            </div>
+
+            <button id="withdrawButton" class="btn-withdraw-init">
+                <i class="fa-solid fa-money-bill-transfer"></i> Dispatch Payout Request
+            </button>
+        </div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
+        import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
+        import { getFirestore, doc, runTransaction, collection, addDoc, serverTimestamp, onSnapshot, query, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDUIQ5s-MI2V3rsi_uWBbRb5YGcFmjjKK4",
+            authDomain: "nexus-earn-1.firebaseapp.com",
+            projectId: "nexus-earn-1",
+            storageBucket: "nexus-earn-1.firebasestorage.app",
+            messagingSenderId: "779765076952",
+            appId: "1:779765076952:web:fa5fac51bef82e74b598ad"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        let currentUserSession = null;
+        let userDataRecord = null;
+        let balanceListenerUnsubscribe = null;
+        let lockoutListenerUnsubscribe = null;
+        
+        let currentAvailableBalance = 0;
+        let hasActivePendingPayout = false;
+        let isRedirecting = false; 
+
+        let savedBankName = "";
+        let savedAccountNumber = "";
+        let savedAccountName = "";
+
+        function showErrorToast(message, isWarning = false) {
+            const toast = document.getElementById('errorToast');
+            const icon = document.getElementById('toastIcon');
+            document.getElementById('errorToastMsg').innerHTML = message;
+            
+            if (isWarning) {
+                toast.classList.add('warn-alert');
+                icon.className = "fa-solid fa-circle-exclamation";
+                icon.style.color = "#e5b842";
+            } else {
+                toast.classList.remove('warn-alert');
+                icon.className = "fa-solid fa-triangle-exclamation";
+                icon.style.color = "#ef4444";
+            }
+
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); }, 3800);
+        }
+
+        // Live Calculate the 10% Tax dynamically on input updates
+        document.getElementById('withdrawAmount').addEventListener('input', (e) => {
+            const value = parseFloat(e.target.value) || 0;
+            const tax = value * 0.10; 
+            const net = value - tax;
+
+            document.getElementById('grossDisplay').innerText = "₦" + value.toLocaleString(undefined, {minimumFractionDigits: 2});
+            document.getElementById('taxDisplay').innerText = "- ₦" + tax.toLocaleString(undefined, {minimumFractionDigits: 2});
+            document.getElementById('netDisplay').innerText = "₦" + net.toLocaleString(undefined, {minimumFractionDigits: 2});
+        });
+
+        // Sync and monitor live database account properties real-time
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                currentUserSession = user;
+                
+                if (balanceListenerUnsubscribe) balanceListenerUnsubscribe();
+                if (lockoutListenerUnsubscribe) lockoutListenerUnsubscribe();
+
+                // 1. MONITOR WALLET AND PROFILE PARAMETERS
+                balanceListenerUnsubscribe = onSnapshot(doc(db, "users", user.uid), (snapshot) => {
+                    if (isRedirecting) return;
+                    
+                    if (snapshot.exists()) {
+                        userDataRecord = snapshot.data();
+                        currentAvailableBalance = parseFloat(userDataRecord.balance || 0);
+                        
+                        document.getElementById('currentWalletDisplay').innerText = "₦" + currentAvailableBalance.toLocaleString(undefined, {
+                            minimumFractionDigits: 2,
+                            maximumFractionDigits: 2
+                        });
+
+                        savedBankName = userDataRecord.bankName ? userDataRecord.bankName.trim() : "";
+                        savedAccountNumber = userDataRecord.accountNumber ? userDataRecord.accountNumber.trim() : "";
+                        savedAccountName = userDataRecord.accountName ? userDataRecord.accountName.trim() : "";
+
+                        // REDIRECT CHECK VIA TOAST ONLY
+                        if (savedBankName === "" || savedAccountNumber === "" || savedAccountName === "") {
+                            isRedirecting = true;
+                            showErrorToast("Bank account details missing! Redirecting to profile setup...", true);
+                            setTimeout(() => {
+                                window.location.href = "history.html";
+                            }, 3000);
+                            return;
+                        }
+
+                        // Populate display properties safely
+                        document.getElementById('displayBankName').innerText = savedBankName;
+                        document.getElementById('displayAccountNumber').innerText = savedAccountNumber;
+                        document.getElementById('displayAccountName').innerText = savedAccountName;
+
+                    } else {
+                        window.location.href = "login.html";
+                    }
+                }, (error) => {
+                    console.error("Ledger snapshot synchronization error:", error);
+                });
+
+                // 2. MONITOR FOR ACTIVE PENDING WITHDRAWALS (LOCKOUT ENGINE)
+                const lockoutQuery = query(collection(db, "withdrawals"), where("uid", "==", user.uid), where("status", "==", "pending"));
+                
+                lockoutListenerUnsubscribe = onSnapshot(lockoutQuery, (querySnapshot) => {
+                    const amountInput = document.getElementById('withdrawAmount');
+                    const amountContainer = document.getElementById('amountInputContainer');
+                    const withdrawButton = document.getElementById('withdrawButton');
+                    const alertBox = document.getElementById('lockoutAlertBox');
+
+                    if (!querySnapshot.empty) {
+                        hasActivePendingPayout = true;
+                        
+                        // Enforce system element freeze
+                        alertBox.classList.add('active');
+                        amountContainer.classList.add('disabled-state');
+                        amountInput.disabled = true;
+                        withdrawButton.disabled = true;
+                        withdrawButton.innerHTML = `<i class="fa-solid fa-lock"></i> Terminal Locked By Pending Request`;
+                    } else {
+                        hasActivePendingPayout = false;
+                        
+                        // Restore element interaction parameters cleanly
+                        alertBox.classList.remove('active');
+                        amountContainer.classList.remove('disabled-state');
+                        amountInput.disabled = false;
+                        
+                        // Ensure we don't accidentally unlock if it is already running a transaction process loop
+                        if (withdrawButton.innerText.trim() !== "Contacting Ledger Core...") {
+                            withdrawButton.disabled = false;
+                            withdrawButton.innerHTML = `<i class="fa-solid fa-money-bill-transfer"></i> Dispatch Payout Request`;
+                        }
+                    }
+                });
+
+            } else {
+                window.location.href = "login.html";
+            }
+        });
+
+        // Process request payloads safely
+        async function processWithdrawalPayload() {
+            if (!currentUserSession || !userDataRecord || isRedirecting) {
+                showErrorToast("System synchronization incomplete. Please reload workspace.");
+                return;
+            }
+
+            if (hasActivePendingPayout) {
+                showErrorToast("Terminal Channel Locked. Settle active processing transactions first.", true);
+                return;
+            }
+
+            const amountInput = document.getElementById('withdrawAmount').value;
+            const grossAmount = parseFloat(amountInput);
+
+            if (isNaN(grossAmount) || grossAmount < 1500) {
+                showErrorToast("The minimum transaction scale limit is set to <span style='color:#e5b842; font-weight:700;'>₦1,500</span>.");
+                return;
+            }
+            if (savedBankName === "" || savedAccountNumber === "" || savedAccountName === "") {
+                showErrorToast("Critical destination routing data missing. Setup profiles first.");
+                return;
+            }
+
+            if (grossAmount > currentAvailableBalance) {
+                showErrorToast("Insufficient funding balance structure inside active wallet ledger.");
+                return;
+            }
+
+            const currentHour = new Date().getHours(); 
+            if (currentHour < 9 || currentHour >= 21) {
+                showErrorToast("Terminal closed. Payout operations function strictly between <span style='color:#e5b842; font-weight:700;'>9:00 AM and 9:00 PM</span>.");
+                return;
+            }
+
+            const withdrawButton = document.getElementById('withdrawButton');
+            withdrawButton.disabled = true;
+            withdrawButton.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> Contacting Ledger Core...`;
+
+            const finalTax = grossAmount * 0.10;
+            const finalNetToBank = grossAmount - finalTax;
+            
+            const uid = currentUserSession.uid;
+            const userDocRef = doc(db, "users", uid);
+
+            try {
+                await runTransaction(db, async (transaction) => {
+                    const userSnapshot = await transaction.get(userDocRef);
+                    if (!userSnapshot.exists()) throw new Error("Target core path unreachable.");
+                    
+                    let liveBalance = parseFloat(userSnapshot.data().balance || 0);
+                    if (grossAmount > liveBalance) {
+                        throw new Error("Deduction validation failure: Balance altered outside local window.");
+                    }
+                    
+                    transaction.update(userDocRef, { balance: liveBalance - grossAmount });
+                });
+
+                await addDoc(collection(db, "withdrawals"), {
+                    uid: uid,
+                    username: userDataRecord.username || "Investor",
+                    phone: userDataRecord.phone || "",
+                    email: currentUserSession.email,
+                    grossAmount: grossAmount,
+                    taxWithheld: finalTax,
+                    netAmount: finalNetToBank,
+                    bankName: savedBankName,
+                    accountNumber: savedAccountNumber,
+                    accountName: savedAccountName,
+                    status: "pending", 
+                    type: "User Withdrawal Request",
+                    timestamp: serverTimestamp()
+                });
+
+                document.getElementById('withdrawAmount').value = "";
+                document.getElementById('grossDisplay').innerText = "₦0.00";
+                document.getElementById('taxDisplay').innerText = "- ₦0.00";
+                document.getElementById('netDisplay').innerText = "₦0.00";
+
+                triggerSpectacularStatusModal('pending', finalNetToBank);
+
+            } catch (error) {
+                console.error("Payout transmission failure:", error);
+                showErrorToast(error.message || "Network exception inside ledger pipeline transaction.");
+                withdrawButton.disabled = false;
+                withdrawButton.innerHTML = `<i class="fa-solid fa-money-bill-transfer"></i> Dispatch Payout Request`;
+            }
+        }
+
+        document.getElementById('withdrawButton').addEventListener('click', processWithdrawalPayload);
+        document.getElementById('modalDismissBtn').addEventListener('click', () => {
+            document.getElementById('statusModal').classList.remove('active');
+            window.location.href = "dashboard.html";
+        });
+
+        function triggerSpectacularStatusModal(status, netAmount) {
+            const overlay = document.getElementById('statusModal');
+            const icon = document.getElementById('statusIcon');
+            const title = document.getElementById('modalTitleDisplay');
+            const message = document.getElementById('modalMessageDisplay');
+            
+            const formattedAmount = "<span class='modal-amount-tag'>₦" + netAmount.toLocaleString(undefined, {minimumFractionDigits: 2}) + "</span>";
+
+            overlay.className = "modal-overlay";
+
+            if (status === 'pending') {
+                overlay.classList.add('active', 'pending-state');
+                icon.className = "fa-solid fa-clock status-glyph";
+                title.innerText = "Processing Order";
+                message.innerHTML = "Your 10% tax-adjusted balance payload of " + formattedAmount + " was dispatched successfully to your bank account records.";
+            }
+        }
+    </script>
+</body>
+</html>

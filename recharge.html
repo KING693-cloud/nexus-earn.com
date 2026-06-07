@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Nexus Earn | Secure Vault</title>
+    
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+    <script src="https://js.paystack.co/v2/inline.js"></script>
+
+    <style>
+        :root { --p1: #e5b842; --dark: #0b0d17; --surface: #111424; --gold: #e5b842; }
+        body { background: var(--dark); color: white; font-family: 'Inter', sans-serif; margin: 0; padding-bottom: 50px; }
+        
+        /* Premium Header with Large Back Button */
+        header { padding: 25px 20px; display: flex; align-items: center; background: #161a2e; border-bottom: 1px solid #1f2544; }
+        .back-btn { 
+            background: #1b203a; border: 1px solid #2d345a; color: var(--gold); 
+            padding: 10px 20px; border-radius: 12px; text-decoration: none; 
+            font-weight: 800; font-size: 16px; margin-right: 15px; display: flex; align-items: center;
+        }
+        
+        .container { width: 92%; max-width: 420px; margin: auto; padding-top: 25px; }
+        .bal-card { background: linear-gradient(135deg, #1b203a, #161a2e); padding: 40px 30px; border-radius: 30px; text-align: center; border: 1px solid #2d345a; margin-bottom: 25px; }
+        
+        .grid-6 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 25px; }
+        .btn-amt { background: #161a2e; border: 2px solid #1f2544; padding: 18px 5px; border-radius: 15px; color: white; font-weight: 800; cursor: pointer; transition: 0.3s; }
+        .btn-amt:active { border-color: var(--gold); transform: scale(0.95); }
+        
+        .input-box { background: #161a2e; padding: 25px; border-radius: 25px; border: 1px solid #1f2544; margin-bottom: 25px; }
+        input { width: 100%; background: none; border: none; color: white; font-size: 32px; font-weight: 900; text-align: center; }
+        
+        .btn-pay { width: 100%; padding: 22px; border-radius: 18px; border: none; background: var(--gold); color: #000; font-weight: 950; cursor: pointer; text-transform: uppercase; font-size: 16px; }
+        
+        /* New Longer Section */
+        .details-section { background: #161a2e; padding: 25px; border-radius: 25px; margin-top: 30px; border: 1px solid #1f2544; }
+        .detail-row { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .icon { width: 45px; height: 45px; background: #1b203a; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; }
+        
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.98); display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 2000; }
+        .spinner { width: 60px; height: 60px; border: 6px solid #222; border-top: 6px solid var(--gold); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .logo-footer { margin-top: 40px; text-align: center; opacity: 0.7; }
+        .logo-footer img { width: 140px; margin-bottom: 20px; border-radius: 20px; }
+    </style>
+</head>
+<body>
+
+    <div id="initialLoader" class="overlay">
+        <div class="spinner"></div>
+        <p style="letter-spacing: 3px; font-size: 13px;">VAULT SYNCING...</p>
+    </div>
+
+    <header>
+        <a href="dashboard.html" class="back-btn">← BACK</a>
+        <span style="font-weight: 900; font-size: 18px; letter-spacing: 1px;">SECURE DEPOSIT</span>
+    </header>
+
+    <div class="container">
+        <div class="bal-card">
+            <p style="font-size: 11px; opacity: 0.6; letter-spacing: 2px;">AVAILABLE BALANCE</p>
+            <h1 style="margin: 10px 0 0 0; font-size: 45px;">₦<span id="balDisplay">0.00</span></h1>
+        </div>
+
+        <div class="grid-6">
+            <button class="btn-amt" onclick="set(5000)">₦5K</button>
+            <button class="btn-amt" onclick="set(10000)">₦10K</button>
+            <button class="btn-amt" onclick="set(20000)">₦20K</button>
+            <button class="btn-amt" onclick="set(50000)">₦50K</button>
+            <button class="btn-amt" onclick="set(100000)">₦100K</button>
+            <button class="btn-amt" onclick="set(200000)">₦200K</button>
+        </div>
+
+        <div class="input-box">
+            <input type="number" id="amtInput" placeholder="Manual Input ₦">
+        </div>
+
+        <button class="btn-pay" onclick="startFlow()">CONFIRM & PAY SECURELY</button>
+
+        <div class="details-section">
+            <div class="detail-row">
+                <div class="icon">🛡️</div>
+                <div><strong>Vault Protected</strong><br><small style="opacity: 0.6;">All deposits are covered by our secure system.</small></div>
+            </div>
+            <div class="detail-row">
+                <div class="icon">⚡</div>
+                <div><strong>Instant Sync</strong><br><small style="opacity: 0.6;">Balance updates immediately after success.</small></div>
+            </div>
+        </div>
+
+        <div class="logo-footer">
+            <img src="logo.png" alt="Logo">
+            <p style="font-size: 11px;">NEXUS EARN © 2026<br>PCI-DSS COMPLIANT GATEWAY</p>
+        </div>
+    </div>
+
+    <div id="procLoader" class="overlay" style="display:none;">
+        <div class="spinner"></div>
+        <h2 style="color:var(--gold)">VALIDATING TRANSACTION...</h2>
+    </div>
+
+    <script>
+        firebase.initializeApp({ apiKey: "AIzaSyDUIQ5s-MI2V3rsi_uWBbRb5YGcFmjjKK4", projectId: "nexus-earn-1" });
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        function set(v) { document.getElementById('amtInput').value = v; }
+        
+        auth.onAuthStateChanged(user => {
+            if (!user) location.href = 'login.html';
+            db.collection('users').doc(user.uid).onSnapshot(d => {
+                if(d.exists) {
+                    document.getElementById('balDisplay').innerText = d.data().balance.toLocaleString();
+                    document.getElementById('initialLoader').style.display = 'none';
+                }
+            });
+        });
+
+        async function startFlow() {
+            const amt = parseFloat(document.getElementById('amtInput').value);
+            if (!amt || amt < 5000) return alert("Minimum deposit is ₦5,000");
+
+            const ps = new PaystackPop();
+            ps.newTransaction({
+                key: 'pk_test_0bd5d47707ba3dd44faf66b493072b72082bcda1',
+                email: auth.currentUser.email,
+                amount: amt * 100,
+                onSuccess: (res) => finalize(res.reference, amt)
+            });
+        }
+
+        async function finalize(ref, amt) {
+            document.getElementById('procLoader').style.display = 'flex';
+            try {
+                const batch = db.batch();
+                const userRef = db.collection('users').doc(auth.currentUser.uid);
+                batch.update(userRef, { balance: firebase.firestore.FieldValue.increment(amt) });
+                batch.set(db.collection('ledger').doc(ref), { 
+                    uid: auth.currentUser.uid, amount: amt, title: "Paystack Deposit", status: "success", timestamp: firebase.firestore.FieldValue.serverTimestamp() 
+                });
+                await batch.commit();
+                location.href = "dashboard.html";
+            } catch (e) { alert("Sync failed. Try again."); location.reload(); }
+        }
+    </script>
+</body>
+</html>
