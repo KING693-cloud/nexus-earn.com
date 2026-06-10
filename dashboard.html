@@ -68,6 +68,13 @@
         .balance-sub-row { display: flex; justify-content: space-between; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 14px; margin-top: 16px; }
         .sub-balance-title { font-size: 0.65rem; color: #9ca3af; text-transform: uppercase; }
         .sub-balance-val { font-size: 0.95rem; font-weight: 700; color: #10b981; margin-top: 2px; }
+        
+        /* Pending Balance Card */
+        .pending-info-card { background: linear-gradient(135deg, #1e1a2e, #18152a); border-radius: 12px; padding: 12px 16px; margin-top: 12px; display: none; align-items: center; justify-content: space-between; border: 1px solid rgba(245,158,11,0.3); }
+        .pending-info-card .label { font-size: 0.65rem; color: #f59e0b; display: flex; align-items: center; gap: 6px; }
+        .pending-info-card .value { font-weight: 800; color: #f59e0b; }
+        .pending-info-card small { font-size: 0.55rem; color: #9ca3af; }
+        
         .hub-actions-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin-top: 16px; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 16px; }
         .action-tile { display: flex; align-items: center; justify-content: center; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); padding: 14px; border-radius: 12px; cursor: pointer; gap: 10px; text-decoration: none; transition: all 0.3s ease; }
         .action-tile:hover { background: rgba(229,184,66,0.1); border-color: #e5b842; transform: translateY(-2px); }
@@ -157,12 +164,6 @@
         .stat-mini-card span { font-size: 0.6rem; color: #9ca3af; display: block; }
         .stat-mini-card strong { font-size: 0.9rem; color: #fff; display: block; margin-top: 4px; }
 
-        /* Pending Balance Card */
-        .pending-info-card { background: linear-gradient(135deg, #1e1a2e, #18152a); border-radius: 12px; padding: 12px 16px; margin-top: 8px; display: flex; align-items: center; justify-content: space-between; border: 1px solid rgba(245,158,11,0.3); }
-        .pending-info-card .label { font-size: 0.65rem; color: #f59e0b; display: flex; align-items: center; gap: 6px; }
-        .pending-info-card .value { font-weight: 800; color: #f59e0b; }
-        .pending-info-card small { font-size: 0.55rem; color: #9ca3af; }
-
         /* Voucher History Styles */
         .voucher-history-section { margin-top: 20px; background: #1b203a; border-radius: 16px; padding: 16px; border: 1px solid rgba(255,255,255,0.05); display: none; }
         .voucher-history-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #e5b842; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
@@ -172,6 +173,8 @@
         .voucher-history-code { font-family: monospace; color: #e5b842; font-weight: 700; }
         .voucher-history-amount { color: #10b981; font-weight: 700; }
         .voucher-history-date { font-size: 0.6rem; color: #6b7280; }
+        
+        .referral-breakdown-mini { background: #0b0d17; border-radius: 10px; padding: 10px; margin-top: 8px; font-size: 0.65rem; display: none; }
     </style>
 </head>
 <body>
@@ -250,9 +253,9 @@
             <div id="viewHome" class="app-view active-view">
                 <div class="wallet-hub-card">
                     <div class="balance-block">
-                        <div class="balance-label"><i class="fa-solid fa-wallet"></i> WITHDRAWABLE BALANCE</div>
+                        <div class="balance-label"><i class="fa-solid fa-wallet"></i> AVAILABLE BALANCE</div>
                         <div class="balance-amount" id="displayUserBalance">₦0.00</div>
-                        <small style="font-size: 0.6rem; color: #10b981;">💰 Available for withdrawal & upgrades</small>
+                        <small style="font-size: 0.6rem; color: #10b981;">💰 Withdrawable balance (can be used for upgrades & withdrawals)</small>
                     </div>
                     <div class="balance-sub-row">
                         <div>
@@ -266,7 +269,7 @@
                     </div>
                     <!-- Pending Balance Info -->
                     <div class="pending-info-card" id="pendingBalanceCard" style="display: none;">
-                        <div class="label"><i class="fa-solid fa-lock"></i> PENDING BALANCE (Frozen)</div>
+                        <div class="label"><i class="fa-solid fa-lock"></i> PENDING BALANCE (Frozen Referral Bonuses)</div>
                         <div class="value" id="pendingBalanceDisplay">₦0.00</div>
                         <small>🔒 ₦300 per referral who hasn't activated VIP yet</small>
                     </div>
@@ -306,7 +309,7 @@
                 <!-- VIP 7: 48000+350=48350 daily -->
                 <div class="package-card"><div class="discount-tag">₦10,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-rocket"></i> VIP 7: APEX</span><span class="package-price">₦263,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦273,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦48,350 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦2,417,500</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP7" data-name="VIP 7: APEX" data-cost="263000" data-yield="48350">Activate Plan</button></div>
 
-                <!-- VIP 8-13 Coming Soon (same structure, kept intact) -->
+                <!-- VIP 8-13 Coming Soon -->
                 <div class="package-card" style="border: 1px solid #e5b842; opacity: 0.85;"><div class="discount-tag" style="background:#10b981;">₦20,000 SPECIAL DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#e5b842;"><i class="fa-solid fa-infinity"></i> VIP 8: INFINITY</span><span class="package-price">₦503,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦523,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦105,350 <span class="bonus-badge" style="background:rgba(229,184,66,0.15); color:#e5b842;">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦5,267,500</div></div><button class="btn-buy-package" style="background: #4b5563; color: #d1d5db;" onclick="openPortalModal('comingSoonPopup')">Coming Soon</button></div>
                 <div class="package-card" style="border: 1px solid #3b82f6; opacity: 0.85;"><div class="discount-tag" style="background:#3b82f6;">₦30,000 MILESTONE BONUS</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#3b82f6;"><i class="fa-solid fa-chart-simple"></i> VIP 9: OMEGA ALPHA</span><span class="package-price">₦850,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦880,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦195,350 <span class="bonus-badge" style="background:rgba(59,130,246,0.15); color:#3b82f6;">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦9,767,500</div></div><button class="btn-buy-package" style="background: #4b5563; color: #d1d5db;" onclick="openPortalModal('comingSoonPopup')">Coming Soon</button></div>
                 <div class="package-card" style="border: 1px solid #a855f7; opacity: 0.85;"><div class="discount-tag" style="background:#a855f7;">₦50,000 INCOME BONUS</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#a855f7;"><i class="fa-solid fa-atom"></i> VIP 10: QUANTUM SUPREME</span><span class="package-price">₦1,450,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦1,500,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦360,350 <span class="bonus-badge" style="background:rgba(168,85,247,0.15); color:#a855f7;">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦18,017,500</div></div><button class="btn-buy-package" style="background: #4b5563; color: #d1d5db;" onclick="openPortalModal('comingSoonPopup')">Coming Soon</button></div>
@@ -410,7 +413,7 @@
         const db = getFirestore(app);
 
         let activeUserSession = null, localUserRecord = null, dbSnapshotUnsubscriber = null;
-        let withdrawableBalance = 0, pendingBalance = 0, totalEarningsRaw = 0;
+        let withdrawableBalance = 0, pendingBalance = 0;
 
         window.logout = async function() {
             const result = await Swal.fire({ title: '⚠️ Confirm Logout', text: 'Are you sure you want to logout from NEXUS EARN?', icon: 'question', background: '#111424', color: '#fff', confirmButtonColor: '#ef4444', cancelButtonColor: '#e5b842', confirmButtonText: 'Yes, Logout', cancelButtonText: 'Cancel', showCancelButton: true, backdrop: 'rgba(0,0,0,0.8)' });
@@ -448,41 +451,24 @@
             }
         }
 
-        // Calculate withdrawable and pending balances
-        async function calculateBalances(userId) {
+        // Calculate pending balance from referrals
+        async function calculatePendingBalance(userId) {
             try {
-                const userDoc = await getDoc(doc(db, "users", userId));
-                if (!userDoc.exists()) return;
-                const user = userDoc.data();
-                totalEarningsRaw = user.totalEarnings || 0;
-                
-                // Get referred users
                 const referredQuery = query(collection(db, "users"), where("referredBy", "==", userId));
                 const referredSnap = await getDocs(referredQuery);
                 
                 let frozenReferral300 = 0;
-                let unlockedReferral300 = 0;
-                let commissionFromActivated = 0;
                 
                 for (const refDoc of referredSnap.docs) {
                     const refUser = refDoc.data();
                     const refTier = refUser.tierCode || 'NONE';
                     
-                    if (refTier !== 'NONE') {
-                        unlockedReferral300 += 300;
-                        const planCost = getPlanCost(refTier);
-                        commissionFromActivated += planCost * 0.10;
-                    } else {
+                    if (refTier === 'NONE') {
                         frozenReferral300 += 300;
                     }
                 }
                 
-                // WITHDRAWABLE BALANCE = totalEarnings + commissionFromActivated
-                withdrawableBalance = totalEarningsRaw + commissionFromActivated;
                 pendingBalance = frozenReferral300;
-                
-                document.getElementById('displayUserBalance').innerText = "₦" + withdrawableBalance.toLocaleString('en-US', { minimumFractionDigits: 2 });
-                document.getElementById('displayTotalEarnings').innerText = "₦" + totalEarningsRaw.toLocaleString('en-US', { minimumFractionDigits: 2 });
                 
                 const pendingCard = document.getElementById('pendingBalanceCard');
                 const pendingDisplay = document.getElementById('pendingBalanceDisplay');
@@ -493,10 +479,10 @@
                     pendingCard.style.display = 'none';
                 }
                 
-                return { withdrawableBalance, pendingBalance, totalEarnings: totalEarningsRaw };
+                return pendingBalance;
             } catch (error) {
-                console.error("Balance calculation error:", error);
-                return { withdrawableBalance: 0, pendingBalance: 0, totalEarnings: 0 };
+                console.error("Pending balance error:", error);
+                return 0;
             }
         }
 
@@ -507,7 +493,12 @@
                 dbSnapshotUnsubscriber = onSnapshot(doc(db, "users", user.uid), async (snapshot) => { 
                     if (snapshot.exists()) { 
                         localUserRecord = snapshot.data(); 
-                        await calculateBalances(user.uid);
+                        // CRITICAL FIX: Use 'balance' field from Firebase
+                        const currentBalance = localUserRecord.balance || 0;
+                        document.getElementById('displayUserBalance').innerText = "₦" + currentBalance.toLocaleString('en-US', { minimumFractionDigits: 2 });
+                        document.getElementById('displayTotalEarnings').innerText = "₦" + currentBalance.toLocaleString('en-US', { minimumFractionDigits: 2 });
+                        
+                        await calculatePendingBalance(user.uid);
                         renderTerminalMetrics(localUserRecord); 
                         loadTeamBreakdownNetwork(user.uid, localUserRecord.referralCode); 
                         loadVoucherHistory(); 
@@ -590,7 +581,7 @@
             onSnapshot(teamQuery, (snapshot) => { if (snapshot.empty) { targetContainer.innerHTML = `<p style="font-size: 0.75rem; color: #9ca3af; text-align: center; padding: 10px;">No downline network links registered under this connection node.</p>`; return; } targetContainer.innerHTML = ""; snapshot.forEach((docSnapshot) => { const member = docSnapshot.data(); const row = document.createElement('div'); row.className = "user-breakdown-row"; const isRegistered = member.username ? true : false; const displayName = isRegistered ? member.username : "Anonymous Invitee"; const activeTier = member.tierCode && member.tierCode !== 'NONE' ? member.tierCode : null; const depositValue = parseFloat(member.totalDepositedAmount || 0); let badgeLayoutHtml = ``; if (isRegistered) { badgeLayoutHtml += `<span class="status-badge registered">Registered</span>`; } else { badgeLayoutHtml += `<span class="status-badge unregistered">Unregistered</span>`; } if (activeTier) { badgeLayoutHtml += `<span class="status-badge vip-tag">${activeTier}</span>`; } else { badgeLayoutHtml += `<span class="status-badge not-activated">Not Activated</span>`; } row.innerHTML = `<div class="user-meta-info"><div class="user-display-name">${displayName}</div><div class="badge-holder">${badgeLayoutHtml}</div></div><div class="user-financial-contribution"><span>Deposited</span>₦${depositValue.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>`; targetContainer.appendChild(row); }); });
         }
 
-        // UPGRADE LOGIC - Uses WITHDRAWABLE BALANCE (not pending balance)
+        // UPGRADE LOGIC - Uses 'balance' field
         async function runProductActivationCycle(packageName, packageCost, dailyYield, tierCode) {
             if (!activeUserSession || !localUserRecord) return;
             const userDocRef = doc(db, "users", activeUserSession.uid);
@@ -604,52 +595,48 @@
                 return;
             }
             
-            // Check if withdrawable balance is sufficient
-            if (withdrawableBalance < packageCost) {
-                showToast(`Insufficient withdrawable balance! You need ₦${packageCost.toLocaleString()}. Pending balance (₦${pendingBalance.toLocaleString()}) cannot be used for upgrades.`, false);
+            // Check balance from 'balance' field
+            const currentBalance = parseFloat(localUserRecord.balance || 0);
+            if (currentBalance < packageCost) {
+                showToast(`Insufficient balance! You need ₦${packageCost.toLocaleString()}. Your balance: ₦${currentBalance.toLocaleString()}`, false);
                 return;
             }
             
             try {
-                let transactionSuccess = false;
                 await runTransaction(db, async (transaction) => {
                     const userSnapshot = await transaction.get(userDocRef);
                     if (!userSnapshot.exists()) throw new Error("Database pointer reference dropped.");
 
-                    let currentTotalEarnings = parseFloat(userSnapshot.data().totalEarnings || 0);
-                    if (currentTotalEarnings < packageCost) throw new Error("INSUFFICIENT_FUNDS");
+                    let walletBalance = parseFloat(userSnapshot.data().balance || 0);
+                    if (walletBalance < packageCost) throw new Error("INSUFFICIENT_FUNDS");
 
-                    let finalCalculatedEarnings = currentTotalEarnings - packageCost;
+                    let finalCalculatedBalance = walletBalance - packageCost;
                     
                     transaction.update(userDocRef, {
-                        totalEarnings: finalCalculatedEarnings,
+                        balance: finalCalculatedBalance,
                         tierCode: tierCode,
                         contractDaysRemaining: 50,
                         activeDailyYield: dailyYield,
                         lastMiningClaimDate: ""
                     });
-                    transactionSuccess = true;
                 });
 
-                if (transactionSuccess) {
-                    await addDoc(collection(db, "ledger"), {
-                        uid: activeUserSession.uid,
-                        title: "Activated " + packageName,
-                        amount: packageCost,
-                        type: "debit",
-                        timestamp: serverTimestamp()
-                    });
-                    showToast(packageName + " Plan Successfully Activated!");
-                    await calculateBalances(activeUserSession.uid);
-                    if (localUserRecord.referredBy) {
-                        triggerNetworkReferralReward(localUserRecord.referredBy, packageCost);
-                    }
+                await addDoc(collection(db, "ledger"), {
+                    uid: activeUserSession.uid,
+                    title: "Activated " + packageName,
+                    amount: packageCost,
+                    type: "debit",
+                    timestamp: serverTimestamp()
+                });
+                showToast(packageName + " Plan Successfully Activated!");
+                if (localUserRecord.referredBy) {
+                    triggerNetworkReferralReward(localUserRecord.referredBy, packageCost);
                 }
             } catch (err) {
                 if (err.message === "INSUFFICIENT_FUNDS") {
-                    showToast("Insufficient withdrawable funds to activate this investment plan.", false);
+                    showToast("Insufficient balance to activate this investment plan.", false);
                 } else {
-                    showToast("Network response fault error. Connection dropped.", false);
+                    showToast("Network error. Please try again.", false);
                 }
                 console.error(err);
             }
@@ -665,13 +652,51 @@
             });
         });
 
-        window.executeProfileAttendanceCheckIn = async function() { if (!activeUserSession || !localUserRecord) return; if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { showToast("Daily attendance rewards require an active plan level.", false); return; } const todayStr = new Date().toISOString().split('T')[0]; if (localUserRecord.lastAttendanceClaimDate === todayStr) { showToast("Attendance bonus already processed for today.", false); return; } const userDocRef = doc(db, "users", activeUserSession.uid); try { await runTransaction(db, async (transaction) => { const snap = await transaction.get(userDocRef); let currentEarnings = parseFloat(snap.data().totalEarnings || 0); transaction.update(userDocRef, { totalEarnings: currentEarnings + 50, lastAttendanceClaimDate: todayStr }); }); await addDoc(collection(db, "ledger"), { uid: activeUserSession.uid, title: "Daily Attendance Checked-In", amount: 50, type: "credit", timestamp: serverTimestamp() }); showToast("Verified! ₦50 credited to your withdrawable balance."); await calculateBalances(activeUserSession.uid); } catch (ex) { showToast("Operational processing fault. Try reloading workspace.", false); } };
+        window.executeProfileAttendanceCheckIn = async function() { 
+            if (!activeUserSession || !localUserRecord) return; 
+            if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { 
+                showToast("Daily attendance rewards require an active plan level.", false); 
+                return; 
+            } 
+            const todayStr = new Date().toISOString().split('T')[0]; 
+            if (localUserRecord.lastAttendanceClaimDate === todayStr) { 
+                showToast("Attendance bonus already processed for today.", false); 
+                return; 
+            } 
+            const userDocRef = doc(db, "users", activeUserSession.uid); 
+            try { 
+                await runTransaction(db, async (transaction) => { 
+                    const snap = await transaction.get(userDocRef); 
+                    let currentBalance = parseFloat(snap.data().balance || 0); 
+                    transaction.update(userDocRef, { 
+                        balance: currentBalance + 50, 
+                        lastAttendanceClaimDate: todayStr 
+                    }); 
+                }); 
+                await addDoc(collection(db, "ledger"), { 
+                    uid: activeUserSession.uid, 
+                    title: "Daily Attendance Checked-In", 
+                    amount: 50, 
+                    type: "credit", 
+                    timestamp: serverTimestamp() 
+                }); 
+                showToast("Verified! ₦50 credited to your balance."); 
+            } catch (ex) { 
+                showToast("Processing fault. Try reloading.", false); 
+            } 
+        };
 
         window.executeDailyMiningCycle = async function() {
             if (!activeUserSession || !localUserRecord) return;
-            if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { showToast("No active investment plan detected.", false); return; }
+            if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { 
+                showToast("No active investment plan detected.", false); 
+                return; 
+            }
             const todayStr = new Date().toISOString().split('T')[0];
-            if (localUserRecord.lastMiningClaimDate === todayStr) { showToast("Today's plan allocation already collected. Resets completely at midnight.", false); return; }
+            if (localUserRecord.lastMiningClaimDate === todayStr) { 
+                showToast("Today's plan allocation already collected. Resets completely at midnight.", false); 
+                return; 
+            }
             
             let daysRemaining = parseInt(localUserRecord.contractDaysRemaining || 0);
             if (daysRemaining <= 0) {
@@ -685,14 +710,14 @@
             try {
                 await runTransaction(db, async (transaction) => {
                     const snap = await transaction.get(userDocRef);
-                    let currentEarnings = parseFloat(snap.data().totalEarnings || 0);
+                    let currentBalance = parseFloat(snap.data().balance || 0);
                     let remaining = parseInt(snap.data().contractDaysRemaining || 0);
                     
                     let newRemaining = remaining - 1;
                     if (newRemaining < 0) newRemaining = 0;
                     
                     transaction.update(userDocRef, {
-                        totalEarnings: currentEarnings + activeYield,
+                        balance: currentBalance + activeYield,
                         lastMiningClaimDate: todayStr,
                         contractDaysRemaining: newRemaining
                     });
@@ -704,15 +729,14 @@
                     type: "credit",
                     timestamp: serverTimestamp()
                 });
-                showToast("Success! ₦" + activeYield.toLocaleString() + " added to your withdrawable balance.");
-                await calculateBalances(activeUserSession.uid);
+                showToast("Success! ₦" + activeYield.toLocaleString() + " added to your balance.");
             } catch (ex) {
-                showToast("Database synchronization issue. Try checking connection parameters.", false);
+                showToast("Database error. Please try again.", false);
             }
         };
         document.getElementById('universalTaskBox').addEventListener('click', executeDailyMiningCycle);
 
-        async function triggerNetworkReferralReward(referrerUID, purchasedPlanCost) { if (!referrerUID || referrerUID.trim() === "") return; const referrerDocRef = doc(db, "users", referrerUID); try { await runTransaction(db, async (transaction) => { const referrerSnap = await transaction.get(referrerDocRef); if (!referrerSnap.exists()) return; let currentEarnings = parseFloat(referrerSnap.data().totalEarnings || 0); let currentBonusEarned = parseFloat(referrerSnap.data().referralBonusEarned || 0); let directInvitesCount = parseInt(referrerSnap.data().directInvitesCount || 0); let oldTeamDepositTotal = parseFloat(referrerSnap.data().teamDepositTotal || 0); let teamCapitalVolume = parseFloat(referrerSnap.data().teamCapitalVolume || 0); let newTeamDepositTotal = oldTeamDepositTotal + purchasedPlanCost; let calculatedCommission = purchasedPlanCost * 0.10; let finalPayoutSum = calculatedCommission; let trackingMessage = "10% Direct Plan Referral Commission"; if (directInvitesCount === 0) { finalPayoutSum += 300; trackingMessage = "First Referral Bonus Payload (+₦300 Stacked)"; } let extraMilestoneBonusSum = 0; if (oldTeamDepositTotal < 100000 && newTeamDepositTotal >= 100000) { extraMilestoneBonusSum += 5000; addDoc(collection(db, "ledger"), { uid: referrerUID, title: "Reached 100K Deposit Milestone Bonus", amount: 5000, type: "credit", timestamp: serverTimestamp() }); } if (oldTeamDepositTotal < 200000 && newTeamDepositTotal >= 200000) { extraMilestoneBonusSum += 10000; addDoc(collection(db, "ledger"), { uid: referrerUID, title: "Reached 200K Deposit Milestone Bonus", amount: 10000, type: "credit", timestamp: serverTimestamp() }); } if (oldTeamDepositTotal < 300000 && newTeamDepositTotal >= 300000) { extraMilestoneBonusSum += 15000; addDoc(collection(db, "ledger"), { uid: referrerUID, title: "Reached 300K Deposit Milestone Bonus", amount: 15000, type: "credit", timestamp: serverTimestamp() }); } finalPayoutSum += extraMilestoneBonusSum; transaction.update(referrerDocRef, { totalEarnings: currentEarnings + finalPayoutSum, referralBonusEarned: currentBonusEarned + finalPayoutSum, directInvitesCount: directInvitesCount + 1, teamDepositTotal: newTeamDepositTotal, teamCapitalVolume: teamCapitalVolume + purchasedPlanCost }); addDoc(collection(db, "ledger"), { uid: referrerUID, title: trackingMessage, amount: calculatedCommission + (directInvitesCount === 0 ? 300 : 0), type: "credit", timestamp: serverTimestamp() }); }); } catch (err) { console.error("Referral error:", err); } }
+        async function triggerNetworkReferralReward(referrerUID, purchasedPlanCost) { if (!referrerUID || referrerUID.trim() === "") return; const referrerDocRef = doc(db, "users", referrerUID); try { await runTransaction(db, async (transaction) => { const referrerSnap = await transaction.get(referrerDocRef); if (!referrerSnap.exists()) return; let currentBalance = parseFloat(referrerSnap.data().balance || 0); let currentBonusEarned = parseFloat(referrerSnap.data().referralBonusEarned || 0); let directInvitesCount = parseInt(referrerSnap.data().directInvitesCount || 0); let oldTeamDepositTotal = parseFloat(referrerSnap.data().teamDepositTotal || 0); let teamCapitalVolume = parseFloat(referrerSnap.data().teamCapitalVolume || 0); let newTeamDepositTotal = oldTeamDepositTotal + purchasedPlanCost; let calculatedCommission = purchasedPlanCost * 0.10; let finalPayoutSum = calculatedCommission; let trackingMessage = "10% Direct Plan Referral Commission"; if (directInvitesCount === 0) { finalPayoutSum += 300; trackingMessage = "First Referral Bonus Payload (+₦300 Stacked)"; } let extraMilestoneBonusSum = 0; if (oldTeamDepositTotal < 100000 && newTeamDepositTotal >= 100000) { extraMilestoneBonusSum += 5000; addDoc(collection(db, "ledger"), { uid: referrerUID, title: "Reached 100K Deposit Milestone Bonus", amount: 5000, type: "credit", timestamp: serverTimestamp() }); } if (oldTeamDepositTotal < 200000 && newTeamDepositTotal >= 200000) { extraMilestoneBonusSum += 10000; addDoc(collection(db, "ledger"), { uid: referrerUID, title: "Reached 200K Deposit Milestone Bonus", amount: 10000, type: "credit", timestamp: serverTimestamp() }); } if (oldTeamDepositTotal < 300000 && newTeamDepositTotal >= 300000) { extraMilestoneBonusSum += 15000; addDoc(collection(db, "ledger"), { uid: referrerUID, title: "Reached 300K Deposit Milestone Bonus", amount: 15000, type: "credit", timestamp: serverTimestamp() }); } finalPayoutSum += extraMilestoneBonusSum; transaction.update(referrerDocRef, { balance: currentBalance + finalPayoutSum, referralBonusEarned: currentBonusEarned + finalPayoutSum, directInvitesCount: directInvitesCount + 1, teamDepositTotal: newTeamDepositTotal, teamCapitalVolume: teamCapitalVolume + purchasedPlanCost }); addDoc(collection(db, "ledger"), { uid: referrerUID, title: trackingMessage, amount: calculatedCommission + (directInvitesCount === 0 ? 300 : 0), type: "credit", timestamp: serverTimestamp() }); }); } catch (err) { console.error("Referral error:", err); } }
 
         document.getElementById('saveBankBtn').addEventListener('click', async () => { if (!activeUserSession) return; const bank = document.getElementById('inputBankName').value; const holder = document.getElementById('inputBankHolderName').value.trim(); const num = document.getElementById('inputBankNumber').value.trim(); if (!bank || holder === "" || num.length !== 10) { closePortalModal('bankLockRulesPopup'); showToast("Please provide an accurate 10-digit account number configuration.", false); return; } closePortalModal('bankLockRulesPopup'); try { const userDocRef = doc(db, "users", activeUserSession.uid); await runTransaction(db, async (transaction) => { transaction.update(userDocRef, { bankName: bank, accountName: holder, accountNumber: num }); }); showToast("Payout profile successfully linked and saved."); } catch (ex) { showToast("An error occurred while locking your details. Please try again.", false); } });
 
@@ -790,8 +814,8 @@
                     const freshData = freshVoucher.data();
                     if (freshData.isFullyClaimed || freshData.remainingClaims <= 0) throw new Error("Voucher fully claimed");
                     const userSnap = await transaction.get(userRef);
-                    let currentEarnings = parseFloat(userSnap.data().totalEarnings || 0);
-                    transaction.update(userRef, { totalEarnings: currentEarnings + claimAmount });
+                    let currentBalance = parseFloat(userSnap.data().balance || 0);
+                    transaction.update(userRef, { balance: currentBalance + claimAmount });
                     const newRemainingClaims = freshData.remainingClaims - 1;
                     const newRemainingAmount = freshData.remainingAmount - claimAmount;
                     const newClaimIndex = freshData.currentClaimIndex + 1;
@@ -807,7 +831,6 @@
                 document.getElementById('voucherCodeField').value = '';
                 closePortalModal('couponModalPopup');
                 await loadVoucherHistory();
-                await calculateBalances(activeUserSession.uid);
             } catch (error) {
                 console.error("Voucher claim error:", error);
                 showToast(error.message || "Error processing voucher.", false);
