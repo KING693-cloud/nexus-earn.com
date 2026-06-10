@@ -156,15 +156,6 @@
         .stat-mini-card i { font-size: 1.2rem; color: #e5b842; margin-bottom: 6px; display: block; }
         .stat-mini-card span { font-size: 0.6rem; color: #9ca3af; display: block; }
         .stat-mini-card strong { font-size: 0.9rem; color: #fff; display: block; margin-top: 4px; }
-
-        /* Voucher History Styles - NEW ADDITION */
-        .voucher-history-section { margin-top: 20px; background: #1b203a; border-radius: 16px; padding: 16px; border: 1px solid rgba(255,255,255,0.05); display: none; }
-        .voucher-history-title { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: #e5b842; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
-        .voucher-history-list { max-height: 200px; overflow-y: auto; }
-        .voucher-history-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 0.7rem; }
-        .voucher-history-code { font-family: monospace; color: #e5b842; font-weight: 700; }
-        .voucher-history-amount { color: #10b981; font-weight: 700; }
-        .voucher-history-date { font-size: 0.6rem; color: #6b7280; }
     </style>
 </head>
 <body>
@@ -207,28 +198,25 @@
             <p style="font-size: 0.78rem; color: #9ca3af; margin-bottom: 14px;">Reach an official care representative instantly:</p>
             <a href="https://t.me/Nexusearnofficial" target="_blank" class="support-channel-row"><span><i class="fa-brands fa-telegram" style="color: #24A1DE; margin-right: 6px;"></i> Telegram Official Channel</span><i class="fa-solid fa-angle-right" style="color: #6b7280;"></i></a>
             <a href="https://t.me/+VZUHZ5DjewIxYjU0" target="_blank" class="support-channel-row"><span><i class="fa-solid fa-comments" style="color: #24A1DE; margin-right: 6px;"></i> Telegram Discussion Group</span><i class="fa-solid fa-angle-right" style="color: #6b7280;"></i></a>
-            <a href="http://t.me/Nexusearncustomerservice" target="_blank" class="support-channel-row"><span><i class="fa-solid fa-headset" style="color: #24A1DE; margin-right: 6px;"></i> Telegram Customer Service Portal</span><i class="fa-solid fa-angle-right" style="color: #6b7280;"></i></a>
+            <a href="http://t.me/Nexusearncustomerservice" target="_blank" class="support-channel-row"><span><i class="fa-solid fa-headset" style="color: #24A1DE; margin-right: 6px;"></i> Telegram Customer Service Portal</span><i class="fa-solid fa-angle-right" style: #6b7280;"></i></a>
             <a href="https://chat.whatsapp.com/KlpIqFeHliuBRUAB61Vqhp" target="_blank" class="support-channel-row"><span><i class="fa-brands fa-whatsapp" style="color: #25D366; margin-right: 6px;"></i> Official WhatsApp Channel</span><i class="fa-solid fa-angle-right" style="color: #6b7280;"></i></a>
             <a href="https://chat.whatsapp.com/EVqaS2rkzuM76UUHg9NN5M" target="_blank" class="support-channel-row"><span><i class="fa-solid fa-users" style="color: #25D366; margin-right: 6px;"></i> WhatsApp Community Group</span><i class="fa-solid fa-angle-right" style="color: #6b7280;"></i></a>
         </div>
     </div>
 
-    <!-- UPDATED VOUCHER MODAL - Now supports progressive split vouchers -->
     <div id="couponModalPopup" class="portal-modal-overlay">
         <div class="portal-modal-card">
             <i class="fa-solid fa-xmark portal-modal-close" onclick="closePortalModal('couponModalPopup')"></i>
             <i class="fa-solid fa-envelope-open-text" style="font-size: 2rem; color: #e5b842; margin-bottom: 12px;"></i>
-            <h3>Progressive Voucher Redemption</h3>
-            <p style="font-size: 0.7rem; color: #9ca3af; margin-bottom: 14px;">First come, first served — claim early for maximum value!</p>
-            <input type="text" id="voucherCodeField" placeholder="Enter 8-digit voucher code" maxlength="8" style="width: 100%; height: 42px; background: #0b0d17; border: 1px solid rgba(229,184,66,0.3); border-radius: 6px; color: #fff; text-align: center; font-weight: 700; margin-bottom: 14px; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;">
-            <button class="btn-buy-package" id="claimVoucherBtn">Verify & Claim Voucher</button>
-            <div style="margin-top: 12px; font-size: 0.6rem; color: #6b7280;">
-                <i class="fa-solid fa-circle-info"></i> VIP 1+ required | Each voucher can be claimed once only
-            </div>
+            <h3>Voucher Activation</h3>
+            <p style="font-size: 0.78rem; color: #9ca3af; margin-bottom: 14px;">Input voucher strings to redeem platform credits.</p>
+            <input type="number" id="voucherCodeField" placeholder="00000" oninput="if(this.value.length > 5) this.value = this.value.slice(0,5);" style="width: 100%; height: 42px; background: #0b0d17; border: 1px solid rgba(229,184,66,0.3); border-radius: 6px; color: #fff; text-align: center; font-weight: 700; margin-bottom: 14px; font-size: 1.1rem; letter-spacing: 4px;">
+            <button class="btn-buy-package" id="claimVoucherBtn">Claim Code</button>
         </div>
     </div>
 
     <div class="app-container">
+        
         <header class="app-header">
             <div class="header-brand"><i class="fa-solid fa-cubes"></i><h1 class="header-title">NEXUS EARN</h1></div>
             <div style="display: flex; align-items: center; gap: 12px;">
@@ -238,6 +226,7 @@
         </header>
 
         <main class="app-workspace">
+
             <div id="viewHome" class="app-view active-view">
                 <div class="wallet-hub-card">
                     <div class="balance-block"><div class="balance-label"><i class="fa-solid fa-wallet"></i> Available Balance</div><div class="balance-amount" id="displayUserBalance">₦0.00</div></div>
@@ -251,53 +240,95 @@
                 <p class="section-subline">Choose your plan and start earning daily returns for 50 days</p>
                 
                 <!-- VIP 1: 600+350=950 daily -->
-                <div class="package-card"><div class="package-header"><span class="package-title-text"><i class="fa-solid fa-star"></i> VIP 1: STARTER</span><span class="package-price">₦7,000</span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦950 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦47,500</div></div><button class="btn-buy-package" data-tier="VIP1" data-name="VIP 1: STARTER" data-cost="7000" data-yield="950">Activate Plan</button></div>
+                <div class="package-card"><div class="package-header"><span class="package-title-text"><i class="fa-solid fa-star"></i> VIP 1: STARTER</span><span class="package-price">₦7,000</span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦950 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦47,500</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP1" data-name="VIP 1: STARTER" data-cost="7000" data-yield="950">Activate Plan</button></div>
                 
                 <!-- VIP 2: 1250+350=1600 daily -->
-                <div class="package-card"><div class="discount-tag">₦1,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-medal"></i> VIP 2: BRONZE</span><span class="package-price">₦11,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦12,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦1,600 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦80,000</div></div><button class="btn-buy-package" data-tier="VIP2" data-name="VIP 2: BRONZE" data-cost="11000" data-yield="1600">Activate Plan</button></div>
+                <div class="package-card"><div class="discount-tag">₦1,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-medal"></i> VIP 2: BRONZE</span><span class="package-price">₦11,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦12,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦1,600 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦80,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP2" data-name="VIP 2: BRONZE" data-cost="11000" data-yield="1600">Activate Plan</button></div>
                 
                 <!-- VIP 3: 2550+350=2900 daily -->
-                <div class="package-card"><div class="discount-tag">₦1,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-gem"></i> VIP 3: SILVER</span><span class="package-price">₦19,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦20,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦2,900 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦145,000</div></div><button class="btn-buy-package" data-tier="VIP3" data-name="VIP 3: SILVER" data-cost="19000" data-yield="2900">Activate Plan</button></div>
+                <div class="package-card"><div class="discount-tag">₦1,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-gem"></i> VIP 3: SILVER</span><span class="package-price">₦19,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦20,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦2,900 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦145,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP3" data-name="VIP 3: SILVER" data-cost="19000" data-yield="2900">Activate Plan</button></div>
                 
                 <!-- VIP 4: 5300+350=5650 daily -->
-                <div class="package-card"><div class="package-header"><span class="package-title-text"><i class="fa-solid fa-crown"></i> VIP 4: GOLD</span><span class="package-price">₦37,000</span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦5,650 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦282,500</div></div><button class="btn-buy-package" data-tier="VIP4" data-name="VIP 4: GOLD" data-cost="37000" data-yield="5650">Activate Plan</button></div>
+                <div class="package-card"><div class="package-header"><span class="package-title-text"><i class="fa-solid fa-crown"></i> VIP 4: GOLD</span><span class="package-price">₦37,000</span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦5,650 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦282,500</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP4" data-name="VIP 4: GOLD" data-cost="37000" data-yield="5650">Activate Plan</button></div>
                 
                 <!-- VIP 5: 11000+350=11350 daily -->
-                <div class="package-card"><div class="package-header"><span class="package-title-text"><i class="fa-solid fa-trophy"></i> VIP 5: PLATINUM</span><span class="package-price">₦71,000</span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦11,350 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦567,500</div></div><button class="btn-buy-package" data-tier="VIP5" data-name="VIP 5: PLATINUM" data-cost="71000" data-yield="11350">Activate Plan</button></div>
+                <div class="package-card"><div class="package-header"><span class="package-title-text"><i class="fa-solid fa-trophy"></i> VIP 5: PLATINUM</span><span class="package-price">₦71,000</span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦11,350 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦567,500</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP5" data-name="VIP 5: PLATINUM" data-cost="71000" data-yield="11350">Activate Plan</button></div>
                 
                 <!-- VIP 6: 23000+350=23350 daily -->
-                <div class="package-card"><div class="discount-tag">₦1,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-gem"></i> VIP 6: DIAMOND</span><span class="package-price">₦138,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦139,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦23,350 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦1,167,500</div></div><button class="btn-buy-package" data-tier="VIP6" data-name="VIP 6: DIAMOND" data-cost="138000" data-yield="23350">Activate Plan</button></div>
+                <div class="package-card"><div class="discount-tag">₦1,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-gem"></i> VIP 6: DIAMOND</span><span class="package-price">₦138,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦139,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦23,350 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦1,167,500</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP6" data-name="VIP 6: DIAMOND" data-cost="138000" data-yield="23350">Activate Plan</button></div>
                 
                 <!-- VIP 7: 48000+350=48350 daily -->
-                <div class="package-card"><div class="discount-tag">₦10,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-rocket"></i> VIP 7: APEX</span><span class="package-price">₦263,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦273,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦48,350 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦2,417,500</div></div><button class="btn-buy-package" data-tier="VIP7" data-name="VIP 7: APEX" data-cost="263000" data-yield="48350">Activate Plan</button></div>
+                <div class="package-card"><div class="discount-tag">₦10,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-rocket"></i> VIP 7: APEX</span><span class="package-price">₦263,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦273,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦48,350 <span class="bonus-badge">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦2,417,500</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP7" data-name="VIP 7: APEX" data-cost="263000" data-yield="48350">Activate Plan</button></div>
 
-                <!-- VIP 8-13 Coming Soon -->
+                <!-- VIP 8-13 Coming Soon (same as before) -->
                 <div class="package-card" style="border: 1px solid #e5b842; opacity: 0.85;"><div class="discount-tag" style="background:#10b981;">₦20,000 SPECIAL DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#e5b842;"><i class="fa-solid fa-infinity"></i> VIP 8: INFINITY</span><span class="package-price">₦503,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦523,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦105,350 <span class="bonus-badge" style="background:rgba(229,184,66,0.15); color:#e5b842;">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦5,267,500</div></div><button class="btn-buy-package" style="background: #4b5563; color: #d1d5db;" onclick="openPortalModal('comingSoonPopup')">Coming Soon</button></div>
 
                 <div class="package-card" style="border: 1px solid #3b82f6; opacity: 0.85;"><div class="discount-tag" style="background:#3b82f6;">₦30,000 MILESTONE BONUS</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#3b82f6;"><i class="fa-solid fa-chart-simple"></i> VIP 9: OMEGA ALPHA</span><span class="package-price">₦850,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦880,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦195,350 <span class="bonus-badge" style="background:rgba(59,130,246,0.15); color:#3b82f6;">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦9,767,500</div></div><button class="btn-buy-package" style="background: #4b5563; color: #d1d5db;" onclick="openPortalModal('comingSoonPopup')">Coming Soon</button></div>
 
                 <div class="package-card" style="border: 1px solid #a855f7; opacity: 0.85;"><div class="discount-tag" style="background:#a855f7;">₦50,000 INCOME BONUS</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#a855f7;"><i class="fa-solid fa-atom"></i> VIP 10: QUANTUM SUPREME</span><span class="package-price">₦1,450,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦1,500,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦360,350 <span class="bonus-badge" style="background:rgba(168,85,247,0.15); color:#a855f7;">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦18,017,500</div></div><button class="btn-buy-package" style="background: #4b5563; color: #d1d5db;" onclick="openPortalModal('comingSoonPopup')">Coming Soon</button></div>
+
+                <div class="package-card" style="border: 2px solid #ec4899; opacity: 0.85;"><div class="discount-tag" style="background:#ec4899;">₦100,000 CROWN SPECIAL DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#ec4899;"><i class="fa-solid fa-king"></i> VIP 11: NEXUS META KING</span><span class="package-price">₦2,900,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦3,000,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦780,350 <span class="bonus-badge" style="background:rgba(236,72,153,0.15); color:#ec4899;">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦39,017,500</div></div><button class="btn-buy-package" style="background: #4b5563; color: #d1d5db;" onclick="openPortalModal('comingSoonPopup')">Coming Soon</button></div>
+
+                <div class="package-card" style="border: 2px solid #06b6d4; opacity: 0.85;"><div class="discount-tag" style="background:#06b6d4;">₦150,000 ELITE MILESTONE BONUS</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#06b6d4;"><i class="fa-solid fa-globe"></i> VIP 12: COSMIC OVERLORD</span><span class="package-price">₦4,350,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦4,500,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦1,220,350 <span class="bonus-badge" style="background:rgba(6,182,212,0.15); color:#06b6d4;">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦61,017,500</div></div><button class="btn-buy-package" style="background: #4b5563; color: #d1d5db;" onclick="openPortalModal('comingSoonPopup')">Coming Soon</button></div>
+
+                <div class="package-card" style="border: 2px solid #f97316; opacity: 0.85;"><div class="discount-tag" style="background:#f97316;">₦250,000 MAXIMUM LIQUIDITY YIELD</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#f97316;"><i class="fa-solid fa-meteor"></i> VIP 13: SINGULARITY CORE</span><span class="package-price">₦6,750,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦7,000,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 50 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦2,025,350 <span class="bonus-badge" style="background:rgba(249,115,22,0.15); color:#f97316;">+₦350 Bonus</span></div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦101,267,500</div></div><button class="btn-buy-package" style="background: #4b5563; color: #d1d5db;" onclick="openPortalModal('comingSoonPopup')">Coming Soon</button></div>
             </div>
 
             <div id="viewTask" class="app-view">
                 <h2 class="section-headline"><i class="fa-solid fa-hand-holding-usd"></i> Daily Income Settlement</h2>
                 <p class="section-subline">Active earnings can be collected once every calendar day. The loop fully resets at 12:00 AM Midnight.</p>
+                
                 <div class="task-container">
-                    <div class="task-status-banner"><i class="fa-solid fa-chart-line"></i> Active Level: <span id="taskPackageLabel">NONE (STANDARD)</span></div>
-                    <div class="premium-days-badge-container" id="premiumDaysTrackerRow"><span class="days-title-text"><i class="fa-solid fa-hourglass-half"></i> Active Contract Duration Remaining:</span><span class="days-value-counter" id="premiumDaysRemainingText">0 Days</span></div>
+                    <div class="task-status-banner">
+                        <i class="fa-solid fa-chart-line"></i> Active Level: <span id="taskPackageLabel">NONE (STANDARD)</span>
+                    </div>
+
+                    <div class="premium-days-badge-container" id="premiumDaysTrackerRow">
+                        <span class="days-title-text"><i class="fa-solid fa-hourglass-half"></i> Active Contract Duration Remaining:</span>
+                        <span class="days-value-counter" id="premiumDaysRemainingText">0 Days</span>
+                    </div>
+
                     <p style="font-size: 0.9rem; color: #d1d5db;">Yield Value: <b style="color: #10b981; font-size: 1.2rem;" id="taskRewardLabel">₦0.00</b></p>
-                    <div class="claim-box" id="universalTaskBox"><i class="fa-solid fa-fingerprint" id="taskIcon"></i><span id="taskStatusText">Collect Income</span></div>
-                    <div class="task-expiry-note"><i class="fa-solid fa-clock" style="color: #e5b842;"></i> Midnight Balance Reset: <b id="countdownDisplay" style="color: #fff;">--:--:--</b></div>
+                    
+                    <div class="claim-box" id="universalTaskBox">
+                        <i class="fa-solid fa-fingerprint" id="taskIcon"></i>
+                        <span id="taskStatusText">Collect Income</span>
+                    </div>
+
+                    <div class="task-expiry-note">
+                        <i class="fa-solid fa-clock" style="color: #e5b842;"></i> Midnight Balance Reset: <b id="countdownDisplay" style="color: #fff;">--:--:--</b>
+                    </div>
                 </div>
             </div>
 
             <div id="viewTeam" class="app-view">
                 <h2 class="section-headline"><i class="fa-solid fa-users-between"></i> Affiliate Hub</h2>
                 <p class="section-subline">Earn commission percentages across multiple active dynamic team layers down the network node.</p>
-                <div class="link-copy-card"><h4 style="font-size: 0.75rem; color: #e5b842; text-transform: uppercase;"><i class="fa-solid fa-link"></i> Tracking Referral Link</h4><div class="link-field"><span id="inviteLinkText">https://nexus-earn.com/join/loading...</span><button class="btn-copy" id="copyLinkBtn"><i class="fa-regular fa-copy"></i> COPY</button></div></div>
-                <div class="stats-row-expanded"><div class="stat-box"><h4><i class="fa-solid fa-user-plus"></i> Direct (Lvl 1)</h4><p id="teamSizeText">0 Users</p></div><div class="stat-box"><h4><i class="fa-solid fa-user-friends"></i> Sub-Tier (Lvl 2)</h4><p id="teamLvl2SizeText">0 Users</p></div></div>
-                <div class="stats-row-expanded" style="margin-bottom: 20px;"><div class="stat-box" style="border-left-color: #3b82f6;"><h4><i class="fa-solid fa-coins"></i> Bonus Pay Total</h4><p style="color: #10b981;" id="teamRebateText">₦0.00</p></div><div class="stat-box" style="border-left-color: #10b981;"><h4><i class="fa-solid fa-chart-pie"></i> Team Node Capital</h4><p style="color: #e5b842;" id="teamCapitalVolumeText">₦0.00</p></div></div>
-                <div class="milestone-card"><div class="milestone-title"><i class="fa-solid fa-flag-checkered"></i> Milestone Target Rewards</div><div class="milestone-info"><span>Referral Deposit Total: <strong style="color: #10b981;" id="milestoneDepositLabel">₦0.00</strong></span></div><div class="progress-container"><div class="progress-bar" id="milestoneProgressBar"></div></div><div class="milestone-tiers"><div class="tier-node" id="tierNode100k">100K<br><span id="tierLabel100k">+₦5K Reward</span></div><div class="tier-node" id="tierNode200k">200K<br><span id="tierLabel200k">+₦10K Reward</span></div><div class="tier-node" id="tierNode300k">300K<br><span id="tierLabel300k">+₦15K Reward</span></div></div></div>
+                
+                <div class="link-copy-card">
+                    <h4 style="font-size: 0.75rem; color: #e5b842; text-transform: uppercase;"><i class="fa-solid fa-link"></i> Tracking Referral Link</h4>
+                    <div class="link-field">
+                        <span id="inviteLinkText">https://nexus-earn.com/?ref=loading...</span>
+                        <button class="btn-copy" id="copyLinkBtn"><i class="fa-regular fa-copy"></i> COPY</button>
+                    </div>
+                </div>
+
+                <div class="stats-row-expanded">
+                    <div class="stat-box"><h4><i class="fa-solid fa-user-plus"></i> Direct (Lvl 1)</h4><p id="teamSizeText">0 Users</p></div>
+                    <div class="stat-box"><h4><i class="fa-solid fa-user-friends"></i> Sub-Tier (Lvl 2)</h4><p id="teamLvl2SizeText">0 Users</p></div>
+                </div>
+                <div class="stats-row-expanded" style="margin-bottom: 20px;">
+                    <div class="stat-box" style="border-left-color: #3b82f6;"><h4><i class="fa-solid fa-coins"></i> Bonus Pay Total</h4><p style="color: #10b981;" id="teamRebateText">₦0.00</p></div>
+                    <div class="stat-box" style="border-left-color: #10b981;"><h4><i class="fa-solid fa-chart-pie"></i> Team Node Capital</h4><p style="color: #e5b842;" id="teamCapitalVolumeText">₦0.00</p></div>
+                </div>
+
+                <div class="milestone-card">
+                    <div class="milestone-title"><i class="fa-solid fa-flag-checkered"></i> Milestone Target Rewards</div>
+                    <div class="milestone-info"><span>Referral Deposit Total: <strong style="color: #10b981;" id="milestoneDepositLabel">₦0.00</strong></span></div>
+                    <div class="progress-container"><div class="progress-bar" id="milestoneProgressBar"></div></div>
+                    <div class="milestone-tiers"><div class="tier-node" id="tierNode100k">100K<br><span id="tierLabel100k">+₦5K Reward</span></div><div class="tier-node" id="tierNode200k">200K<br><span id="tierLabel200k">+₦10K Reward</span></div><div class="tier-node" id="tierNode300k">300K<br><span id="tierLabel300k">+₦15K Reward</span></div></div>
+                </div>
+
                 <h3 class="section-headline" style="font-size: 0.95rem; margin-top: 24px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;"><i class="fa-solid fa-users-viewfinder" style="color: #e5b842;"></i> Team Breakdown</h3>
                 <div class="team-list-card" id="teamBreakdownContainer"><p style="font-size: 0.75rem; color: #9ca3af; text-align: center; padding: 10px;">No downline network links registered under this connection node.</p></div>
             </div>
@@ -313,22 +344,18 @@
                     <div class="modification-notice-box" id="bankEditWarningNote"><i class="fa-solid fa-triangle-exclamation"></i> NOTE: Bank routing is securely encrypted. To modify your linked bank profile, please submit an identity verification request to Customer Support.</div>
                 </div>
                 <div class="profile-management-group"><div class="group-title"><i class="fa-solid fa-receipt"></i> Account History</div><p style="font-size: 0.78rem; color: #9ca3af; margin-bottom: 14px;">Review your historical mining records and transaction ledger logs.</p><a href="history.html" class="btn-buy-package" style="display: flex; align-items: center; justify-content: center; text-decoration: none; background: rgba(229,184,66,0.1); border: 1px solid #e5b842; color: #e5b842;"><i class="fa-solid fa-clock-rotate-left" style="margin-right: 8px;"></i> View History Log</a></div>
-                
-                <!-- Voucher History Section - NEW ADDITION -->
-                <div class="voucher-history-section" id="voucherHistorySection">
-                    <div class="voucher-history-title"><i class="fa-solid fa-clock-rotate-left"></i> Recent Voucher Redemptions</div>
-                    <div class="voucher-history-list" id="voucherHistoryList"></div>
-                </div>
             </div>
+
         </main>
 
         <nav class="bottom-nav"><div class="nav-tab active-tab" id="tabHome" onclick="switchPortalTab('Home')"><i class="fa-solid fa-house-chimney"></i><span class="nav-label">Home</span></div><div class="nav-tab" id="tabTask" onclick="switchPortalTab('Task')"><i class="fa-solid fa-list-check"></i><span class="nav-label">Mining</span></div><div class="nav-tab" id="tabTeam" onclick="switchPortalTab('Team')"><i class="fa-solid fa-users"></i><span class="nav-label">Team</span></div><div class="nav-tab" id="tabProfile" onclick="switchPortalTab('Profile')"><i class="fa-solid fa-circle-user"></i><span class="nav-label">Account</span></div></nav>
+
     </div>
 
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, runTransaction, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, limit } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, runTransaction, collection, addDoc, serverTimestamp, query, where } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyDUIQ5s-MI2V3rsi_uWBbRb5YGcFmjjKK4", authDomain: "nexus-earn-1.firebaseapp.com", projectId: "nexus-earn-1", storageBucket: "nexus-earn-1.firebasestorage.app", messagingSenderId: "779765076952", appId: "1:779765076952:web:fa5fac51bef82e74b598ad" };
         const app = initializeApp(firebaseConfig);
@@ -347,7 +374,19 @@
         window.openPortalModal = function(id) { document.getElementById(id).style.display = 'flex'; };
         window.closePortalModal = function(id) { document.getElementById(id).style.display = 'none'; };
 
-        onAuthStateChanged(auth, (user) => { if (user) { activeUserSession = user; if (dbSnapshotUnsubscriber) dbSnapshotUnsubscriber(); dbSnapshotUnsubscriber = onSnapshot(doc(db, "users", user.uid), (snapshot) => { if (snapshot.exists()) { localUserRecord = snapshot.data(); renderTerminalMetrics(localUserRecord); loadTeamBreakdownNetwork(user.uid, localUserRecord.referralCode); loadVoucherHistory(); } else { window.location.href = "login.html"; } }); } else { window.location.href = "login.html"; } });
+        onAuthStateChanged(auth, (user) => { if (user) { activeUserSession = user; if (dbSnapshotUnsubscriber) dbSnapshotUnsubscriber(); dbSnapshotUnsubscriber = onSnapshot(doc(db, "users", user.uid), (snapshot) => { if (snapshot.exists()) { localUserRecord = snapshot.data(); renderTerminalMetrics(localUserRecord); loadTeamBreakdownNetwork(user.uid, localUserRecord.referralCode); } else { window.location.href = "login.html"; } }); } else { window.location.href = "login.html"; } });
+
+        // Helper: get numeric tier index for comparison (higher number = better plan)
+        function getTierValue(tierCode) {
+            if (tierCode === 'VIP1') return 1;
+            if (tierCode === 'VIP2') return 2;
+            if (tierCode === 'VIP3') return 3;
+            if (tierCode === 'VIP4') return 4;
+            if (tierCode === 'VIP5') return 5;
+            if (tierCode === 'VIP6') return 6;
+            if (tierCode === 'VIP7') return 7;
+            return 0; // NONE or unknown
+        }
 
         function renderTerminalMetrics(data) {
             const currentBal = parseFloat(data.balance || 0), totalEarned = parseFloat(data.totalEarnings || 0), userTier = data.tierCode || 'NONE';
@@ -368,8 +407,12 @@
             else if (userTier === 'VIP7') displayYield = 48350;
             document.getElementById('taskRewardLabel').innerText = "₦" + displayYield.toLocaleString();
 
-            if(userTier !== 'NONE') { document.getElementById('premiumDaysTrackerRow').style.display = 'flex'; document.getElementById('premiumDaysRemainingText').innerText = (data.contractDaysRemaining || 50) + " Days"; } 
-            else { document.getElementById('premiumDaysTrackerRow').style.display = 'none'; }
+            if(userTier !== 'NONE') {
+                document.getElementById('premiumDaysTrackerRow').style.display = 'flex';
+                document.getElementById('premiumDaysRemainingText').innerText = (data.contractDaysRemaining || 50) + " Days";
+            } else {
+                document.getElementById('premiumDaysTrackerRow').style.display = 'none';
+            }
 
             const refCode = data.referralCode || data.username || "nx79402";
             document.getElementById('inviteLinkText').innerText = "https://nexus-earn.com/?ref=" + refCode;
@@ -417,284 +460,135 @@
             onSnapshot(teamQuery, (snapshot) => { if (snapshot.empty) { targetContainer.innerHTML = `<p style="font-size: 0.75rem; color: #9ca3af; text-align: center; padding: 10px;">No downline network links registered under this connection node.</p>`; return; } targetContainer.innerHTML = ""; snapshot.forEach((docSnapshot) => { const member = docSnapshot.data(); const row = document.createElement('div'); row.className = "user-breakdown-row"; const isRegistered = member.username ? true : false; const displayName = isRegistered ? member.username : "Anonymous Invitee"; const activeTier = member.tierCode && member.tierCode !== 'NONE' ? member.tierCode : null; const depositValue = parseFloat(member.totalDepositedAmount || 0); let badgeLayoutHtml = ``; if (isRegistered) { badgeLayoutHtml += `<span class="status-badge registered">Registered</span>`; } else { badgeLayoutHtml += `<span class="status-badge unregistered">Unregistered</span>`; } if (activeTier) { badgeLayoutHtml += `<span class="status-badge vip-tag">${activeTier}</span>`; } else { badgeLayoutHtml += `<span class="status-badge not-activated">Not Activated</span>`; } row.innerHTML = `<div class="user-meta-info"><div class="user-display-name">${displayName}</div><div class="badge-holder">${badgeLayoutHtml}</div></div><div class="user-financial-contribution"><span>Deposited</span>₦${depositValue.toLocaleString('en-US', { minimumFractionDigits: 2 })}</div>`; targetContainer.appendChild(row); }); });
         }
 
+        // UPGRADE / ACTIVATION LOGIC – allows upgrading to a higher VIP only, never downgrade
         async function runProductActivationCycle(packageName, packageCost, dailyYield, tierCode) {
             if (!activeUserSession || !localUserRecord) return;
             const userDocRef = doc(db, "users", activeUserSession.uid);
+            
+            // Check if the requested tier is actually an upgrade (cannot downgrade)
+            const currentTier = localUserRecord.tierCode || 'NONE';
+            const currentTierValue = getTierValue(currentTier);
+            const newTierValue = getTierValue(tierCode);
+            
+            if (currentTier !== 'NONE' && newTierValue <= currentTierValue) {
+                showToast("You cannot downgrade your VIP level. Upgrade only.", false);
+                return;
+            }
+            
             try {
                 let transactionSuccess = false;
-                await runTransaction(db, async (transaction) => { const userSnapshot = await transaction.get(userDocRef); if (!userSnapshot.exists()) throw new Error("Database pointer reference dropped."); let walletBalance = parseFloat(userSnapshot.data().balance || 0); if (walletBalance < packageCost) throw new Error("INSUFFICIENT_FUNDS"); let trackingCurrentTier = userSnapshot.data().tierCode || 'NONE'; if (trackingCurrentTier !== 'NONE') throw new Error("ACTIVE_PLAN_EXISTS"); let finalCalculatedBalance = walletBalance - packageCost; transaction.update(userDocRef, { balance: finalCalculatedBalance, tierCode: tierCode, contractDaysRemaining: 50, activeDailyYield: dailyYield, lastMiningClaimDate: "" }); transactionSuccess = true; });
-                if (transactionSuccess) { await addDoc(collection(db, "ledger"), { uid: activeUserSession.uid, title: "Activated " + packageName, amount: packageCost, type: "debit", timestamp: serverTimestamp() }); showToast(packageName + " Plan Successfully Activated!"); triggerNetworkReferralReward(localUserRecord.referredBy, packageCost); }
-            } catch (err) { if (err.message === "INSUFFICIENT_FUNDS") { showToast("Insufficient account funds to activate this investment plan.", false); } else if (err.message === "ACTIVE_PLAN_EXISTS") { showToast("You already have an active capital contract layout.", false); } else { showToast("Network response fault error. Connection dropped.", false); } console.error(err); }
+                await runTransaction(db, async (transaction) => {
+                    const userSnapshot = await transaction.get(userDocRef);
+                    if (!userSnapshot.exists()) throw new Error("Database pointer reference dropped.");
+
+                    let walletBalance = parseFloat(userSnapshot.data().balance || 0);
+                    if (walletBalance < packageCost) throw new Error("INSUFFICIENT_FUNDS");
+
+                    // Deduct the plan cost
+                    let finalCalculatedBalance = walletBalance - packageCost;
+                    
+                    // If upgrading from an existing plan, we do NOT refund the old plan cost.
+                    // The old plan is simply replaced. The contract days reset to 50.
+                    transaction.update(userDocRef, {
+                        balance: finalCalculatedBalance,
+                        tierCode: tierCode,
+                        contractDaysRemaining: 50,
+                        activeDailyYield: dailyYield,
+                        lastMiningClaimDate: ""   // reset claim so user can claim today after upgrade
+                    });
+                    transactionSuccess = true;
+                });
+
+                if (transactionSuccess) {
+                    await addDoc(collection(db, "ledger"), {
+                        uid: activeUserSession.uid,
+                        title: "Activated " + packageName,
+                        amount: packageCost,
+                        type: "debit",
+                        timestamp: serverTimestamp()
+                    });
+                    showToast(packageName + " Plan Successfully Activated!");
+                    // Trigger referral reward for the person who referred this user (if any)
+                    if (localUserRecord.referredBy) {
+                        triggerNetworkReferralReward(localUserRecord.referredBy, packageCost);
+                    }
+                }
+            } catch (err) {
+                if (err.message === "INSUFFICIENT_FUNDS") {
+                    showToast("Insufficient account funds to activate this investment plan.", false);
+                } else {
+                    showToast("Network response fault error. Connection dropped.", false);
+                }
+                console.error(err);
+            }
         }
 
-        document.querySelectorAll('.btn-buy-package[data-tier]').forEach(button => { button.addEventListener('click', function() { const name = this.getAttribute('data-name'); const cost = parseFloat(this.getAttribute('data-cost')); const yields = parseFloat(this.getAttribute('data-yield')); const tier = this.getAttribute('data-tier'); runProductActivationCycle(name, cost, yields, tier); }); });
+        // Attach upgrade handlers to all plan buttons (excluding "Coming Soon" ones)
+        document.querySelectorAll('.btn-buy-package[data-tier]').forEach(button => {
+            button.addEventListener('click', function() {
+                const name = this.getAttribute('data-name');
+                const cost = parseFloat(this.getAttribute('data-cost'));
+                const yields = parseFloat(this.getAttribute('data-yield'));
+                const tier = this.getAttribute('data-tier');
+                runProductActivationCycle(name, cost, yields, tier);
+            });
+        });
 
         window.executeProfileAttendanceCheckIn = async function() { if (!activeUserSession || !localUserRecord) return; if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { showToast("Daily attendance rewards require an active plan level.", false); return; } const todayStr = new Date().toISOString().split('T')[0]; if (localUserRecord.lastAttendanceClaimDate === todayStr) { showToast("Attendance bonus already processed for today.", false); return; } const userDocRef = doc(db, "users", activeUserSession.uid); try { await runTransaction(db, async (transaction) => { const snap = await transaction.get(userDocRef); let bal = parseFloat(snap.data().balance || 0); transaction.update(userDocRef, { balance: bal + 50, lastAttendanceClaimDate: todayStr }); }); await addDoc(collection(db, "ledger"), { uid: activeUserSession.uid, title: "Daily Attendance Checked-In", amount: 50, type: "credit", timestamp: serverTimestamp() }); showToast("Verified! ₦50 credited directly to your balance."); } catch (ex) { showToast("Operational processing fault. Try reloading workspace.", false); } };
 
-        window.executeDailyMiningCycle = async function() { if (!activeUserSession || !localUserRecord) return; if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { showToast("No active investment plan detected.", false); return; } const todayStr = new Date().toISOString().split('T')[0]; if (localUserRecord.lastMiningClaimDate === todayStr) { showToast("Today's plan allocation already collected. Resets completely at midnight.", false); return; } const activeYield = parseFloat(localUserRecord.activeDailyYield || 0); const userDocRef = doc(db, "users", activeUserSession.uid); try { await runTransaction(db, async (transaction) => { const snap = await transaction.get(userDocRef); let bal = parseFloat(snap.data().balance || 0); let totalEarned = parseFloat(snap.data().totalEarnings || 0); transaction.update(userDocRef, { balance: bal + activeYield, totalEarnings: totalEarned + activeYield, lastMiningClaimDate: todayStr }); }); await addDoc(collection(db, "ledger"), { uid: activeUserSession.uid, title: "Daily Plan Returns Deposited", amount: activeYield, type: "credit", timestamp: serverTimestamp() }); showToast("Success! ₦" + activeYield.toLocaleString() + " added to your balance."); } catch (ex) { showToast("Database synchronization issue. Try checking connection parameters.", false); } };
+        window.executeDailyMiningCycle = async function() {
+            if (!activeUserSession || !localUserRecord) return;
+            if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { showToast("No active investment plan detected.", false); return; }
+            const todayStr = new Date().toISOString().split('T')[0];
+            if (localUserRecord.lastMiningClaimDate === todayStr) { showToast("Today's plan allocation already collected. Resets completely at midnight.", false); return; }
+            
+            // Check if contract days remaining > 0
+            let daysRemaining = parseInt(localUserRecord.contractDaysRemaining || 0);
+            if (daysRemaining <= 0) {
+                showToast("Your investment contract has expired. Please purchase a new plan.", false);
+                return;
+            }
+            
+            const activeYield = parseFloat(localUserRecord.activeDailyYield || 0);
+            const userDocRef = doc(db, "users", activeUserSession.uid);
+
+            try {
+                await runTransaction(db, async (transaction) => {
+                    const snap = await transaction.get(userDocRef);
+                    let bal = parseFloat(snap.data().balance || 0);
+                    let totalEarned = parseFloat(snap.data().totalEarnings || 0);
+                    let remaining = parseInt(snap.data().contractDaysRemaining || 0);
+                    
+                    // Decrease remaining days by 1 after successful claim
+                    let newRemaining = remaining - 1;
+                    if (newRemaining < 0) newRemaining = 0;
+                    
+                    transaction.update(userDocRef, {
+                        balance: bal + activeYield,
+                        totalEarnings: totalEarned + activeYield,
+                        lastMiningClaimDate: todayStr,
+                        contractDaysRemaining: newRemaining
+                    });
+                });
+                await addDoc(collection(db, "ledger"), {
+                    uid: activeUserSession.uid,
+                    title: "Daily Plan Returns Deposited",
+                    amount: activeYield,
+                    type: "credit",
+                    timestamp: serverTimestamp()
+                });
+                showToast("Success! ₦" + activeYield.toLocaleString() + " added to your balance.");
+            } catch (ex) {
+                showToast("Database synchronization issue. Try checking connection parameters.", false);
+            }
+        };
         document.getElementById('universalTaskBox').addEventListener('click', executeDailyMiningCycle);
 
         async function triggerNetworkReferralReward(referrerUID, purchasedPlanCost) { if (!referrerUID || referrerUID.trim() === "") return; const referrerDocRef = doc(db, "users", referrerUID); try { await runTransaction(db, async (transaction) => { const referrerSnap = await transaction.get(referrerDocRef); if (!referrerSnap.exists()) return; let currentReferrerBal = parseFloat(referrerSnap.data().balance || 0); let currentBonusEarned = parseFloat(referrerSnap.data().referralBonusEarned || 0); let directInvitesCount = parseInt(referrerSnap.data().directInvitesCount || 0); let oldTeamDepositTotal = parseFloat(referrerSnap.data().teamDepositTotal || 0); let teamCapitalVolume = parseFloat(referrerSnap.data().teamCapitalVolume || 0); let newTeamDepositTotal = oldTeamDepositTotal + purchasedPlanCost; let calculatedCommission = purchasedPlanCost * 0.10; let finalPayoutSum = calculatedCommission; let trackingMessage = "10% Direct Plan Referral Commission"; if (directInvitesCount === 0) { finalPayoutSum += 300; trackingMessage = "First Referral Bonus Payload (+₦300 Stacked)"; } let extraMilestoneBonusSum = 0; if (oldTeamDepositTotal < 100000 && newTeamDepositTotal >= 100000) { extraMilestoneBonusSum += 5000; addDoc(collection(db, "ledger"), { uid: referrerUID, title: "Reached 100K Deposit Milestone Bonus", amount: 5000, type: "credit", timestamp: serverTimestamp() }); } if (oldTeamDepositTotal < 200000 && newTeamDepositTotal >= 200000) { extraMilestoneBonusSum += 10000; addDoc(collection(db, "ledger"), { uid: referrerUID, title: "Reached 200K Deposit Milestone Bonus", amount: 10000, type: "credit", timestamp: serverTimestamp() }); } if (oldTeamDepositTotal < 300000 && newTeamDepositTotal >= 300000) { extraMilestoneBonusSum += 15000; addDoc(collection(db, "ledger"), { uid: referrerUID, title: "Reached 300K Deposit Milestone Bonus", amount: 15000, type: "credit", timestamp: serverTimestamp() }); } finalPayoutSum += extraMilestoneBonusSum; transaction.update(referrerDocRef, { balance: currentReferrerBal + finalPayoutSum, referralBonusEarned: currentBonusEarned + finalPayoutSum, directInvitesCount: directInvitesCount + 1, teamDepositTotal: newTeamDepositTotal, teamCapitalVolume: teamCapitalVolume + purchasedPlanCost }); addDoc(collection(db, "ledger"), { uid: referrerUID, title: trackingMessage, amount: calculatedCommission + (directInvitesCount === 0 ? 300 : 0), type: "credit", timestamp: serverTimestamp() }); }); } catch (err) { console.error("Referral error:", err); } }
 
         document.getElementById('saveBankBtn').addEventListener('click', async () => { if (!activeUserSession) return; const bank = document.getElementById('inputBankName').value; const holder = document.getElementById('inputBankHolderName').value.trim(); const num = document.getElementById('inputBankNumber').value.trim(); if (!bank || holder === "" || num.length !== 10) { closePortalModal('bankLockRulesPopup'); showToast("Please provide an accurate 10-digit account number configuration.", false); return; } closePortalModal('bankLockRulesPopup'); try { const userDocRef = doc(db, "users", activeUserSession.uid); await runTransaction(db, async (transaction) => { transaction.update(userDocRef, { bankName: bank, accountName: holder, accountNumber: num }); }); showToast("Payout profile successfully linked and saved."); } catch (ex) { showToast("An error occurred while locking your details. Please try again.", false); } });
 
-        // ============ PROGRESSIVE SPLIT VOUCHER SYSTEM - NEW CODE ============
-        
-        // Load voucher redemption history
-        async function loadVoucherHistory() {
-            if (!activeUserSession) return;
-            
-            const historyQuery = query(
-                collection(db, "voucherRedemptions"),
-                where("userId", "==", activeUserSession.uid),
-                orderBy("timestamp", "desc"),
-                limit(5)
-            );
-            
-            const snapshot = await getDocs(historyQuery);
-            const historySection = document.getElementById('voucherHistorySection');
-            const historyList = document.getElementById('voucherHistoryList');
-            
-            if (snapshot.empty) {
-                historySection.style.display = 'none';
-                return;
-            }
-            
-            historySection.style.display = 'block';
-            historyList.innerHTML = '';
-            
-            snapshot.forEach(doc => {
-                const redemption = doc.data();
-                const date = redemption.timestamp?.toDate() || new Date();
-                const item = document.createElement('div');
-                item.className = 'voucher-history-item';
-                item.innerHTML = `
-                    <div>
-                        <div class="voucher-history-code">${redemption.voucherCode}</div>
-                        <div class="voucher-history-date">${date.toLocaleDateString()}</div>
-                    </div>
-                    <div class="voucher-history-amount">+₦${(redemption.amountClaimed || 0).toLocaleString()}</div>
-                `;
-                historyList.appendChild(item);
-            });
-        }
-
-        // Progressive split calculation function
-        function calculateProgressiveSplit(totalAmount, numPeople) {
-            const amounts = [];
-            let remaining = totalAmount;
-            
-            for (let i = 1; i <= numPeople; i++) {
-                let factor;
-                if (numPeople <= 10) {
-                    factor = (numPeople - i + 1) / ((numPeople * (numPeople + 1)) / 2);
-                } else {
-                    const decayRate = 0.85;
-                    const weights = [];
-                    let totalWeight = 0;
-                    for (let j = 1; j <= numPeople; j++) {
-                        const weight = Math.pow(decayRate, j - 1);
-                        weights.push(weight);
-                        totalWeight += weight;
-                    }
-                    factor = weights[i - 1] / totalWeight;
-                }
-                
-                let amount = totalAmount * factor;
-                amount = Math.round(amount * 100) / 100;
-                if (i === numPeople && amount < 0.01) amount = 0.01;
-                amounts.push(amount);
-                remaining -= amount;
-            }
-            
-            if (Math.abs(remaining) > 0.01) {
-                amounts[amounts.length - 1] += remaining;
-            }
-            
-            return amounts;
-        }
-
-        // Progressive voucher claim handler
-        async function claimProgressiveVoucher(code) {
-            if (!activeUserSession || !localUserRecord) {
-                showToast("Please login first", false);
-                return;
-            }
-            
-            // Check VIP requirement
-            if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') {
-                showToast("VIP 1+ membership required to claim vouchers!", false);
-                return;
-            }
-            
-            // Query the progressive voucher
-            const voucherQuery = query(collection(db, "progressiveVouchers"), where("code", "==", code));
-            const voucherSnapshot = await getDocs(voucherQuery);
-            
-            if (voucherSnapshot.empty) {
-                showToast("❌ Invalid voucher code. Please check and try again.", false);
-                return;
-            }
-            
-            const voucherDoc = voucherSnapshot.docs[0];
-            const voucher = voucherDoc.data();
-            
-            // Check if voucher is active
-            if (!voucher.isActive || voucher.isFullyClaimed) {
-                showToast("❌ This voucher has been fully claimed already!", false);
-                return;
-            }
-            
-            // Check expiry
-            if (voucher.expiry && voucher.expiry.toDate() < new Date()) {
-                showToast("❌ This voucher has expired!", false);
-                return;
-            }
-            
-            // Check if user already claimed this specific voucher
-            if (voucher.claimedBy && voucher.claimedBy.includes(activeUserSession.uid)) {
-                showToast("❌ You have already claimed this voucher!", false);
-                return;
-            }
-            
-            // Check global per-user limit
-            const userClaimsQuery = query(collection(db, "voucherRedemptions"), where("userId", "==", activeUserSession.uid));
-            const userClaimsSnap = await getDocs(userClaimsQuery);
-            const userTotalClaims = userClaimsSnap.size;
-            
-            if (voucher.maxPerUser && userTotalClaims >= voucher.maxPerUser) {
-                showToast(`❌ You have reached your global claim limit (${voucher.maxPerUser} vouchers)`, false);
-                return;
-            }
-            
-            // Get claim amount (progressively decreasing)
-            const currentIndex = voucher.currentClaimIndex || 0;
-            const claimAmount = voucher.splitAmounts[currentIndex];
-            
-            if (!claimAmount || claimAmount <= 0) {
-                showToast("❌ Voucher error - no remaining value", false);
-                return;
-            }
-            
-            // Process redemption
-            const userRef = doc(db, "users", activeUserSession.uid);
-            
-            try {
-                await runTransaction(db, async (transaction) => {
-                    // Get fresh voucher data
-                    const freshVoucher = await transaction.get(voucherDoc.ref);
-                    const freshData = freshVoucher.data();
-                    
-                    if (freshData.isFullyClaimed || freshData.remainingClaims <= 0) {
-                        throw new Error("Voucher fully claimed");
-                    }
-                    
-                    // Get user data
-                    const userSnap = await transaction.get(userRef);
-                    const currentBalance = parseFloat(userSnap.data().balance || 0);
-                    const currentEarnings = parseFloat(userSnap.data().totalEarnings || 0);
-                    
-                    // Add amount to user
-                    transaction.update(userRef, {
-                        balance: currentBalance + claimAmount,
-                        totalEarnings: currentEarnings + claimAmount
-                    });
-                    
-                    // Update voucher
-                    const newRemainingClaims = freshData.remainingClaims - 1;
-                    const newRemainingAmount = freshData.remainingAmount - claimAmount;
-                    const newClaimIndex = freshData.currentClaimIndex + 1;
-                    const newClaimedBy = [...(freshData.claimedBy || []), activeUserSession.uid];
-                    const newClaimedAmounts = [...(freshData.claimedAmounts || []), claimAmount];
-                    
-                    transaction.update(voucherDoc.ref, {
-                        remainingClaims: newRemainingClaims,
-                        remainingAmount: newRemainingAmount,
-                        currentClaimIndex: newClaimIndex,
-                        claimedBy: newClaimedBy,
-                        claimedAmounts: newClaimedAmounts,
-                        isFullyClaimed: newRemainingClaims === 0
-                    });
-                });
-                
-                // Record redemption
-                await addDoc(collection(db, "voucherRedemptions"), {
-                    voucherCode: code,
-                    userId: activeUserSession.uid,
-                    username: localUserRecord.username || "User",
-                    userTier: localUserRecord.tierCode,
-                    amountClaimed: claimAmount,
-                    claimNumber: voucher.currentClaimIndex + 1,
-                    totalClaims: voucher.totalPeople,
-                    timestamp: serverTimestamp()
-                });
-                
-                // Record in ledger
-                await addDoc(collection(db, "ledger"), {
-                    uid: activeUserSession.uid,
-                    title: `Voucher Claim: ${code}`,
-                    amount: claimAmount,
-                    type: "credit",
-                    timestamp: serverTimestamp(),
-                    claimPosition: voucher.currentClaimIndex + 1
-                });
-                
-                const remaining = voucher.remainingClaims - 1;
-                const position = voucher.currentClaimIndex + 1;
-                
-                Swal.fire({
-                    title: '🎉 Voucher Claimed!',
-                    html: `
-                        <div style="text-align: center;">
-                            <div style="font-size: 2rem; color: #10b981; margin-bottom: 10px;">+₦${claimAmount.toLocaleString()}</div>
-                            <div style="font-size: 0.8rem; color: #e5b842;">You were Claimant #${position} of ${voucher.totalPeople}</div>
-                            <div style="font-size: 0.7rem; color: #9ca3af; margin-top: 10px;">${remaining > 0 ? `${remaining} claims remaining on this voucher` : '🎊 Voucher fully claimed!'}</div>
-                        </div>
-                    `,
-                    icon: 'success',
-                    background: '#111424',
-                    color: '#fff',
-                    confirmButtonColor: '#e5b842',
-                    timer: 4000,
-                    timerProgressBar: true
-                });
-                
-                document.getElementById('voucherCodeField').value = '';
-                closePortalModal('couponModalPopup');
-                await loadVoucherHistory();
-                
-                // Refresh user data display
-                if (dbSnapshotUnsubscriber) {
-                    const userDocRef = doc(db, "users", activeUserSession.uid);
-                    const userSnap = await getDocs(userDocRef);
-                    if (userSnap.exists()) {
-                        renderTerminalMetrics(userSnap.data());
-                    }
-                }
-                
-            } catch (error) {
-                console.error("Voucher claim error:", error);
-                showToast(error.message || "Error processing voucher. Please try again.", false);
-            }
-        }
-
-        // Updated voucher claim button handler
-        document.getElementById('claimVoucherBtn').addEventListener('click', async () => {
-            if (!activeUserSession || !localUserRecord) return;
-            
-            const codeInput = document.getElementById('voucherCodeField').value.trim().toUpperCase();
-            if (!codeInput) {
-                showToast("Please enter a voucher code", false);
-                return;
-            }
-            
-            if (codeInput.length < 6 || codeInput.length > 8) {
-                showToast("Invalid voucher code format. Code should be 6-8 characters.", false);
-                return;
-            }
-            
-            await claimProgressiveVoucher(codeInput);
-        });
+        document.getElementById('claimVoucherBtn').addEventListener('click', async () => { if (!activeUserSession || !localUserRecord) return; if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { showToast("Voucher code redemption requires an active VIP plan level.", false); return; } const codeInput = document.getElementById('voucherCodeField').value.trim(); if (codeInput.length !== 5 || isNaN(codeInput)) { showToast("Voucher code must be exactly 5 numbers.", false); return; } if (codeInput === "79402") { const userDocRef = doc(db, "users", activeUserSession.uid); try { await runTransaction(db, async (transaction) => { const snap = await transaction.get(userDocRef); let bal = parseFloat(snap.data().balance || 0); transaction.update(userDocRef, { balance: bal + 250 }); }); await addDoc(collection(db, "ledger"), { uid: activeUserSession.uid, title: "Promo Voucher Credit Added", amount: 250, type: "credit", timestamp: serverTimestamp() }); showToast("Voucher bonus of ₦250 added successfully!"); closePortalModal('couponModalPopup'); document.getElementById('voucherCodeField').value = ""; } catch (e) { showToast("Error processing voucher application parameters.", false); } } else { showToast("Voucher code is invalid or missing.", false); } });
 
         document.getElementById('copyLinkBtn').addEventListener('click', () => { const textToCopy = document.getElementById('inviteLinkText').innerText; navigator.clipboard.writeText(textToCopy).then(() => { showToast("Referral tracking URL copied to clipboard!"); }); });
     </script>
