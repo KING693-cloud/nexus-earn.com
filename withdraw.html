@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     
-    <!-- WhatsApp / Facebook / Twitter Preview Meta Tags -->
     <meta property="og:title" content="NEXUS EARN - Secure Withdrawal Portal">
-    <meta property="og:description" content="Withdraw your earnings securely. 10% processing fee applies. Minimum ₦1,500.">
+    <meta property="og:description" content="Withdraw your withdrawable balance securely. VIP 1+ required. 10% processing fee applies. Referral bonuses unlock when your referrals activate VIP.">
     <meta property="og:image" content="https://nexus-earn.com/logo.png">
     <meta property="og:url" content="https://nexus-earn.com">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
     
-    <title>NEXUS EARN - Secure Withdrawal</title>
+    <title>NEXUS EARN - Secure Withdrawal Portal</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -53,10 +52,24 @@
         
         .content-panel { padding: 24px; display: flex; flex-direction: column; gap: 20px; }
         
+        /* Balance Cards */
+        .balance-grid { display: flex; flex-direction: column; gap: 12px; margin-bottom: 8px; }
         .balance-card { background: linear-gradient(135deg, #1b203a, #161a2e); border-radius: 16px; padding: 20px; display: flex; align-items: center; gap: 16px; border: 1px solid rgba(229,184,66,0.15); }
         .balance-icon { width: 50px; height: 50px; background: rgba(229,184,66,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: #e5b842; font-size: 1.3rem; }
         .balance-details p { font-size: 0.7rem; color: #a1a1aa; text-transform: uppercase; }
         .balance-details h3 { font-size: 1.5rem; font-weight: 800; margin-top: 2px; }
+        
+        .pending-card { background: linear-gradient(135deg, #1e1a2e, #18152a); border: 1px solid rgba(245,158,11,0.3); }
+        .pending-card .balance-icon { background: rgba(245,158,11,0.15); color: #f59e0b; }
+        .pending-card .balance-details h3 { color: #f59e0b; }
+        
+        .withdrawable-card { background: linear-gradient(135deg, #1a2e1e, #152a18); border: 1px solid rgba(16,185,129,0.3); }
+        .withdrawable-card .balance-icon { background: rgba(16,185,129,0.15); color: #10b981; }
+        .withdrawable-card .balance-details h3 { color: #10b981; }
+        
+        .info-note { background: rgba(59,130,246,0.1); border-radius: 12px; padding: 12px; display: flex; align-items: flex-start; gap: 10px; margin-top: 5px; }
+        .info-note i { color: #3b82f6; margin-top: 2px; }
+        .info-note p { font-size: 0.7rem; color: #9ca3af; line-height: 1.4; }
         
         .input-box label { font-size: 0.7rem; color: #a1a1aa; text-transform: uppercase; display: block; margin-bottom: 8px; }
         .input-row { background: #1b203a; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; display: flex; align-items: center; padding: 0 16px; height: 54px; }
@@ -75,6 +88,10 @@
         .lockout-box { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.2); border-radius: 12px; padding: 16px; display: none; align-items: center; gap: 12px; }
         .lockout-box.active { display: flex; }
         .lockout-box i { color: #ef4444; font-size: 1.2rem; }
+        
+        .vip-warning { background: rgba(229,184,66,0.08); border: 1px solid rgba(229,184,66,0.2); border-radius: 12px; padding: 16px; display: none; align-items: center; gap: 12px; }
+        .vip-warning.active { display: flex; }
+        .vip-warning i { color: #e5b842; font-size: 1.2rem; }
         
         .withdraw-btn { width: 100%; height: 52px; background: linear-gradient(135deg, #f5d061, #e5b842); border: none; border-radius: 12px; color: #111424; font-weight: 800; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 0.9rem; transition: all 0.3s; }
         .withdraw-btn:hover { transform: scale(1.02); box-shadow: 0 5px 15px rgba(229,184,66,0.3); }
@@ -109,6 +126,16 @@
         
         .spinner-small { width: 18px; height: 18px; border: 2px solid #111424; border-top-color: transparent; border-radius: 50%; animation: spin 0.8s linear infinite; display: inline-block; }
         @keyframes spin { to { transform: rotate(360deg); } }
+        
+        .referral-breakdown { background: #0b0d17; border-radius: 12px; padding: 12px; margin-top: 8px; font-size: 0.7rem; }
+        .referral-item { display: flex; justify-content: space-between; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .referral-item:last-child { border-bottom: none; }
+        .frozen { color: #f59e0b; }
+        .unlocked { color: #10b981; }
+        
+        .status-badge { display: inline-block; padding: 2px 8px; border-radius: 20px; font-size: 0.6rem; font-weight: 700; margin-left: 8px; }
+        .status-badge.active { background: rgba(16,185,129,0.2); color: #10b981; }
+        .status-badge.inactive { background: rgba(245,158,11,0.2); color: #f59e0b; }
     </style>
 </head>
 <body>
@@ -134,66 +161,127 @@
         </div>
 
         <div class="content-panel">
-            <div class="balance-card">
-                <div class="balance-icon"><i class="fa-solid fa-wallet"></i></div>
-                <div class="balance-details">
-                    <p>Available Balance</p>
-                    <h3 id="balanceDisplay">₦0.00</h3>
+            <!-- Balance Cards -->
+            <div class="balance-grid">
+                <div class="balance-card">
+                    <div class="balance-icon"><i class="fa-solid fa-wallet"></i></div>
+                    <div class="balance-details">
+                        <p>💰 TOTAL BALANCE (Locked + Unlocked)</p>
+                        <h3 id="totalBalanceDisplay">₦0.00</h3>
+                        <small style="font-size: 0.6rem; color: #6b7280;">Total earnings from all sources</small>
+                    </div>
+                </div>
+                
+                <div class="balance-card pending-card">
+                    <div class="balance-icon"><i class="fa-solid fa-lock"></i></div>
+                    <div class="balance-details">
+                        <p>⏳ PENDING BALANCE (Frozen)</p>
+                        <h3 id="pendingBalanceDisplay">₦0.00</h3>
+                        <small style="font-size: 0.6rem; color: #f59e0b;">🔒 Unlocks when referrals activate VIP</small>
+                    </div>
+                </div>
+                
+                <div class="balance-card withdrawable-card">
+                    <div class="balance-icon"><i class="fa-solid fa-unlock-alt"></i></div>
+                    <div class="balance-details">
+                        <p>✅ WITHDRAWABLE BALANCE</p>
+                        <h3 id="withdrawableDisplay">₦0.00</h3>
+                        <small style="font-size: 0.6rem; color: #10b981;">💰 Available for instant withdrawal</small>
+                    </div>
                 </div>
             </div>
 
+            <!-- Referral Breakdown Section -->
+            <div class="info-note" id="referralBreakdown" style="display: none;">
+                <i class="fa-solid fa-users"></i>
+                <div style="flex:1">
+                    <p><strong>📊 REFERRAL EARNINGS BREAKDOWN</strong></p>
+                    <div id="referralDetails"></div>
+                </div>
+            </div>
+
+            <!-- How It Works Info -->
+            <div class="info-note">
+                <i class="fa-solid fa-circle-info"></i>
+                <div style="flex:1">
+                    <p><strong>💰 HOW REFERRAL BONUSES WORK:</strong></p>
+                    <p style="margin-top: 6px;">🔹 When you refer someone, you get <strong>₦300</strong> instantly — but it's <strong class="frozen">FROZEN</strong> until they activate any VIP plan.<br>
+                    🔹 When your referral activates VIP, their <strong>₦300 bonus UNLOCKS</strong> AND you get <strong>10% of their plan cost</strong> added to withdrawable balance!<br>
+                    🔹 Example: Referral buys VIP1 (₦7,000) → You get ₦300 unlocked + ₦700 commission = <strong class="unlocked">₦1,000 withdrawable!</strong></p>
+                </div>
+            </div>
+
+            <!-- VIP Warning -->
+            <div class="vip-warning" id="vipWarning">
+                <i class="fa-solid fa-crown"></i>
+                <div><strong>VIP 1+ MEMBERSHIP REQUIRED</strong><br><small>You need an active VIP plan to withdraw funds. Purchase a plan from the dashboard.</small></div>
+            </div>
+
+            <!-- Pending Withdrawal Lock -->
             <div class="lockout-box" id="lockoutBox">
                 <i class="fa-solid fa-circle-lock"></i>
-                <div><strong>Withdrawal Locked</strong><br><small>You have a pending withdrawal request</small></div>
+                <div><strong>WITHDRAWAL LOCKED</strong><br><small>You have a pending withdrawal request. Please wait for admin approval.</small></div>
             </div>
 
+            <!-- Withdrawal Amount Input -->
             <div class="input-box">
-                <label>Amount (Min ₦1,500)</label>
+                <label>🏦 AMOUNT TO WITHDRAW (Min ₦1,500)</label>
                 <div class="input-row">
                     <span class="currency-symbol">₦</span>
-                    <input type="number" id="amountInput" placeholder="0.00">
+                    <input type="number" id="amountInput" placeholder="0.00" min="1500" step="100">
                 </div>
             </div>
 
+            <!-- Bank Details Display -->
             <div class="input-box">
-                <label>Bank Name</label>
+                <label>🏛️ BANK NAME</label>
                 <div class="input-row static-display"><span class="static-text" id="bankName">Loading...</span></div>
             </div>
             <div class="input-box">
-                <label>Account Number</label>
+                <label>🔢 ACCOUNT NUMBER</label>
                 <div class="input-row static-display"><span class="static-text" id="accountNumber">Loading...</span></div>
             </div>
             <div class="input-box">
-                <label>Account Name</label>
+                <label>👤 ACCOUNT NAME</label>
                 <div class="input-row static-display"><span class="static-text" id="accountName">Loading...</span></div>
             </div>
 
-            <!-- Tax Breakdown -->
+            <!-- Tax Breakdown Card -->
             <div class="tax-card" id="taxCard" style="display: none;">
-                <div class="tax-row"><span>💰 Requested:</span><span id="grossAmount">₦0.00</span></div>
-                <div class="tax-row"><span>📉 Tax (10%):</span><span id="taxAmount" class="tax-highlight">- ₦0.00</span></div>
-                <div class="tax-row total"><span>🏦 You Receive:</span><span id="netAmount" class="receive-highlight">₦0.00</span></div>
+                <div class="tax-row"><span>💰 Requested Amount:</span><span id="grossAmount">₦0.00</span></div>
+                <div class="tax-row"><span>📉 Processing Fee (10%):</span><span id="taxAmount" class="tax-highlight">- ₦0.00</span></div>
+                <div class="tax-row total"><span>🏦 You Will Receive:</span><span id="netAmount" class="receive-highlight">₦0.00</span></div>
             </div>
 
+            <!-- Withdraw Button -->
             <button class="withdraw-btn" id="withdrawBtn">
-                <i class="fa-solid fa-paper-plane"></i> Request Withdrawal
+                <i class="fa-solid fa-paper-plane"></i> REQUEST WITHDRAWAL
             </button>
+
+            <!-- Time Restrictions Note -->
+            <div class="info-note" style="background: rgba(245,158,11,0.08); border-color: rgba(245,158,11,0.2);">
+                <i class="fa-solid fa-clock" style="color: #f59e0b;"></i>
+                <div style="flex:1">
+                    <p><strong>⏰ WITHDRAWAL HOURS:</strong> Monday - Saturday, 9:00 AM - 9:00 PM (WAT)<br>
+                    <strong>No withdrawals on Sundays.</strong> Requests outside hours are processed the next business day.</p>
+                </div>
+            </div>
 
             <!-- Telegram Support -->
             <a href="https://t.me/Nexusearncustomerservice" target="_blank" class="telegram-support">
                 <div class="telegram-icon"><i class="fa-brands fa-telegram"></i></div>
                 <div class="telegram-text">
-                    <h4>📞 Contact Support</h4>
-                    <p>Chat about pending or rejected withdrawals</p>
+                    <h4>📞 CONTACT SUPPORT</h4>
+                    <p>Chat about pending or rejected withdrawals instantly</p>
                 </div>
                 <i class="fa-solid fa-arrow-right" style="color: #24A1DE; margin-left: auto;"></i>
             </a>
 
-            <!-- Recent Withdrawals -->
+            <!-- Recent Withdrawals History -->
             <div class="history-section">
-                <div class="history-title"><i class="fa-solid fa-clock-rotate-left"></i> Recent Requests</div>
+                <div class="history-title"><i class="fa-solid fa-clock-rotate-left"></i> RECENT WITHDRAWAL REQUESTS</div>
                 <div class="history-list" id="historyList">
-                    <div style="text-align:center;padding:20px;color:#636b8f;"><i class="fa-solid fa-spinner fa-pulse"></i> Loading...</div>
+                    <div style="text-align:center;padding:20px;color:#636b8f;"><i class="fa-solid fa-spinner fa-pulse"></i> Loading withdrawal history...</div>
                 </div>
             </div>
         </div>
@@ -221,6 +309,7 @@
         let hasPending = false, isProcessing = false;
         let bank = "", accNum = "", accName = "";
         let loadingHidden = false;
+        let withdrawableBalance = 0, pendingBalance = 0, totalBalance = 0;
 
         function hideLoading() {
             if (loadingHidden) return;
@@ -234,7 +323,7 @@
             if (status) status.innerHTML = msg;
         }
 
-        async function showSweetAlert(title, message, icon, timer = 3000) {
+        async function showSweetAlert(title, message, icon, timer = 4000) {
             return Swal.fire({
                 title: title,
                 html: message,
@@ -252,41 +341,126 @@
             const toast = document.getElementById('errorToast');
             document.getElementById('errorMsg').innerHTML = msg;
             toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 3500);
+            setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
-        // Update tax breakdown in real-time
-        document.getElementById('amountInput').addEventListener('input', function() {
-            let val = parseFloat(this.value) || 0;
-            let tax = val * 0.10;
-            let net = val - tax;
-            const taxCard = document.getElementById('taxCard');
-            
-            if (val >= 1500) {
-                taxCard.style.display = 'flex';
-                document.getElementById('grossAmount').innerHTML = '₦' + val.toLocaleString(undefined, {minimumFractionDigits:2});
-                document.getElementById('taxAmount').innerHTML = '- ₦' + tax.toLocaleString(undefined, {minimumFractionDigits:2});
-                document.getElementById('netAmount').innerHTML = '₦' + net.toLocaleString(undefined, {minimumFractionDigits:2});
-            } else if (val > 0 && val < 1500) {
-                taxCard.style.display = 'flex';
-                document.getElementById('grossAmount').innerHTML = '₦' + val.toLocaleString(undefined, {minimumFractionDigits:2});
-                document.getElementById('taxAmount').innerHTML = '- ₦' + tax.toLocaleString(undefined, {minimumFractionDigits:2});
-                document.getElementById('netAmount').innerHTML = '₦' + net.toLocaleString(undefined, {minimumFractionDigits:2});
-            } else {
-                taxCard.style.display = 'none';
+        // Calculate VIP plan cost from tier code
+        function getPlanCost(tierCode) {
+            switch(tierCode) {
+                case 'VIP1': return 7000;
+                case 'VIP2': return 11000;
+                case 'VIP3': return 19000;
+                case 'VIP4': return 37000;
+                case 'VIP5': return 71000;
+                case 'VIP6': return 138000;
+                case 'VIP7': return 263000;
+                default: return 0;
             }
-        });
+        }
 
+        // Calculate balances based on referral unlocks (NO INDEX REQUIRED)
+        async function calculateBalances(userId, userTierCode) {
+            try {
+                updateLoadingStatus("Calculating balances...");
+                
+                // Get all users referred by this user
+                const referredQuery = query(collection(db, "users"), where("referredBy", "==", userId));
+                const referredSnap = await getDocs(referredQuery);
+                
+                let frozenReferral300 = 0;
+                let unlockedReferral300 = 0;
+                let commissionFromActivated = 0;
+                let activatedCount = 0;
+                let inactiveCount = 0;
+                let activatedUsersList = [];
+                
+                for (const refDoc of referredSnap.docs) {
+                    const refUser = refDoc.data();
+                    const refTier = refUser.tierCode || 'NONE';
+                    
+                    if (refTier !== 'NONE') {
+                        // Activated user - 300 naira becomes withdrawable
+                        unlockedReferral300 += 300;
+                        activatedCount++;
+                        activatedUsersList.push(refUser.username || 'Anonymous');
+                        
+                        // Add 10% commission from their VIP plan
+                        const planCost = getPlanCost(refTier);
+                        commissionFromActivated += planCost * 0.10;
+                    } else {
+                        // Inactive user - 300 naira stays frozen
+                        frozenReferral300 += 300;
+                        inactiveCount++;
+                    }
+                }
+                
+                // Get normal earnings from totalEarnings
+                const normalEarnings = userData?.totalEarnings || 0;
+                
+                // Withdrawable = normalEarnings + unlockedReferral300 + commissionFromActivated
+                withdrawableBalance = normalEarnings + unlockedReferral300 + commissionFromActivated;
+                pendingBalance = frozenReferral300;
+                totalBalance = withdrawableBalance + pendingBalance;
+                
+                // Update displays
+                document.getElementById('totalBalanceDisplay').innerHTML = "₦" + totalBalance.toLocaleString(undefined, {minimumFractionDigits:2});
+                document.getElementById('pendingBalanceDisplay').innerHTML = "₦" + pendingBalance.toLocaleString(undefined, {minimumFractionDigits:2});
+                document.getElementById('withdrawableDisplay').innerHTML = "₦" + withdrawableBalance.toLocaleString(undefined, {minimumFractionDigits:2});
+                
+                // Show referral breakdown if there are any referrals
+                const breakdownDiv = document.getElementById('referralBreakdown');
+                const detailsDiv = document.getElementById('referralDetails');
+                
+                if (referredSnap.size > 0) {
+                    breakdownDiv.style.display = 'flex';
+                    detailsDiv.innerHTML = `
+                        <div class="referral-item"><span>👥 TOTAL REFERRED USERS:</span><span><strong>${referredSnap.size}</strong> (${activatedCount} activated, ${inactiveCount} pending)</span></div>
+                        <div class="referral-item"><span class="frozen">🔒 FROZEN ₦300 BONUSES (waiting for activation):</span><span class="frozen">₦${frozenReferral300.toLocaleString()}</span></div>
+                        <div class="referral-item"><span class="unlocked">🔓 UNLOCKED ₦300 BONUSES (activated users):</span><span class="unlocked">₦${unlockedReferral300.toLocaleString()}</span></div>
+                        <div class="referral-item"><span class="unlocked">💰 10% COMMISSION from activated referrals:</span><span class="unlocked">₦${commissionFromActivated.toLocaleString()}</span></div>
+                        <div class="referral-item" style="border-top:1px solid rgba(255,255,255,0.1); margin-top:5px; padding-top:8px;"><strong>TOTAL WITHDRAWABLE FROM REFERRALS:</strong><strong class="unlocked">₦${(unlockedReferral300 + commissionFromActivated).toLocaleString()}</strong></div>
+                        ${activatedUsersList.length > 0 ? `<div class="referral-item"><span>✅ ACTIVATED REFERRALS:</span><span>${activatedUsersList.slice(0,3).join(', ')}${activatedUsersList.length > 3 ? ` +${activatedUsersList.length-3} more` : ''}</span></div>` : ''}
+                    `;
+                } else {
+                    breakdownDiv.style.display = 'none';
+                }
+                
+                updateLoadingStatus("Ready");
+                
+                return { withdrawableBalance, pendingBalance, totalBalance, referredCount: referredSnap.size, activatedCount, inactiveCount };
+                
+            } catch (error) {
+                console.error("Balance calculation error:", error);
+                updateLoadingStatus("Error loading balances");
+                return { withdrawableBalance: 0, pendingBalance: 0, totalBalance: 0, referredCount: 0, activatedCount: 0, inactiveCount: 0 };
+            }
+        }
+
+        // Load withdrawal history with client-side sorting (NO INDEX REQUIRED - FIXED)
         async function loadHistory(uid) {
             const container = document.getElementById('historyList');
             try {
+                // Simple query without orderBy to avoid index requirement
                 const q = query(collection(db, "withdrawals"), where("uid", "==", uid));
                 const snap = await getDocs(q);
-                if (snap.empty) { container.innerHTML = '<div style="text-align:center;padding:20px;color:#636b8f;"><i class="fa-regular fa-folder-open"></i> No withdrawal requests</div>'; return; }
                 
+                if (snap.empty) { 
+                    container.innerHTML = '<div style="text-align:center;padding:20px;color:#636b8f;"><i class="fa-regular fa-folder-open"></i> No withdrawal requests yet</div>'; 
+                    return; 
+                }
+                
+                // Client-side sorting (no index needed!)
                 let items = [];
-                snap.forEach(doc => items.push({ id: doc.id, ...doc.data() }));
-                items.sort((a, b) => (b.timestamp?.seconds || 0) - (a.timestamp?.seconds || 0));
+                snap.forEach(doc => {
+                    items.push({ id: doc.id, ...doc.data() });
+                });
+                
+                // Sort by timestamp descending (newest first)
+                items.sort((a, b) => {
+                    const timeA = a.timestamp?.seconds || 0;
+                    const timeB = b.timestamp?.seconds || 0;
+                    return timeB - timeA;
+                });
                 
                 let html = '';
                 items.forEach(item => {
@@ -306,8 +480,8 @@
                                     <span class="history-gross">₦${gross.toLocaleString()}</span>
                                     <span class="history-net">₦${net.toLocaleString()}</span>
                                 </div>
-                                <div class="history-tax-note">10% tax: -₦${tax.toLocaleString()}</div>
-                                <div class="history-date">${date} at ${time}</div>
+                                <div class="history-tax-note">10% fee: -₦${tax.toLocaleString()}</div>
+                                <div class="history-date"><i class="fa-regular fa-calendar"></i> ${date} at ${time}</div>
                             </div>
                             <div class="history-status status-${status}">${statusText}</div>
                         </div>
@@ -315,33 +489,109 @@
                 });
                 container.innerHTML = html;
             } catch(e) { 
-                console.error(e); 
+                console.error("History error:", e); 
                 container.innerHTML = '<div style="text-align:center;padding:20px;color:#ef4444;"><i class="fa-solid fa-circle-exclamation"></i> Error loading history</div>'; 
             }
         }
 
+        // Update tax breakdown in real-time
+        document.getElementById('amountInput').addEventListener('input', function() {
+            let val = parseFloat(this.value) || 0;
+            let tax = val * 0.10;
+            let net = val - tax;
+            const taxCard = document.getElementById('taxCard');
+            const maxWithdrawable = withdrawableBalance;
+            
+            if (val > maxWithdrawable && maxWithdrawable > 0) {
+                this.value = maxWithdrawable;
+                val = maxWithdrawable;
+                tax = val * 0.10;
+                net = val - tax;
+            }
+            
+            if (val >= 1500 && val <= maxWithdrawable) {
+                taxCard.style.display = 'flex';
+                document.getElementById('grossAmount').innerHTML = '₦' + val.toLocaleString(undefined, {minimumFractionDigits:2});
+                document.getElementById('taxAmount').innerHTML = '- ₦' + tax.toLocaleString(undefined, {minimumFractionDigits:2});
+                document.getElementById('netAmount').innerHTML = '₦' + net.toLocaleString(undefined, {minimumFractionDigits:2});
+            } else if (val > 0 && val < 1500) {
+                taxCard.style.display = 'flex';
+                document.getElementById('grossAmount').innerHTML = '₦' + val.toLocaleString(undefined, {minimumFractionDigits:2});
+                document.getElementById('taxAmount').innerHTML = '- ₦' + tax.toLocaleString(undefined, {minimumFractionDigits:2});
+                document.getElementById('netAmount').innerHTML = '₦' + net.toLocaleString(undefined, {minimumFractionDigits:2});
+            } else {
+                taxCard.style.display = 'none';
+            }
+            
+            if (val > maxWithdrawable && maxWithdrawable > 0) {
+                showErrorToast(`⚠️ You can only withdraw up to ₦${maxWithdrawable.toLocaleString()} (your withdrawable balance). Pending balance (₦${pendingBalance.toLocaleString()}) is frozen until referrals activate VIP.`);
+            }
+        });
+
+        // Main auth and data loading
         onAuthStateChanged(auth, async (user) => {
             if (!user) { hideLoading(); window.location.href = "login.html"; return; }
             currentUser = user;
-            updateLoadingStatus("Authenticating...");
+            updateLoadingStatus("Authenticating user...");
             
             const userDoc = doc(db, "users", user.uid);
-            const unsub = onSnapshot(userDoc, (snap) => {
+            const unsub = onSnapshot(userDoc, async (snap) => {
                 if (snap.exists()) {
                     userData = snap.data();
-                    document.getElementById('balanceDisplay').innerHTML = "₦" + (userData.balance || 0).toLocaleString(undefined, {minimumFractionDigits:2});
+                    const userTier = userData.tierCode || 'NONE';
+                    updateLoadingStatus("Loading account data...");
+                    
+                    // Show/hide VIP warning
+                    const vipWarning = document.getElementById('vipWarning');
+                    const withdrawBtn = document.getElementById('withdrawBtn');
+                    if (userTier === 'NONE') {
+                        vipWarning.classList.add('active');
+                        withdrawBtn.disabled = true;
+                        withdrawBtn.title = "VIP 1+ required to withdraw";
+                    } else {
+                        vipWarning.classList.remove('active');
+                        withdrawBtn.disabled = false;
+                    }
+                    
+                    // Load bank details
                     bank = userData.bankName || "Not set";
                     accNum = userData.accountNumber || "Not set";
                     accName = userData.accountName || "Not set";
                     document.getElementById('bankName').innerText = bank;
                     document.getElementById('accountNumber').innerText = accNum;
                     document.getElementById('accountName').innerText = accName;
+                    
+                    // Check if bank details are missing
+                    if (bank === "Not set" || accNum === "Not set") {
+                        const bankWarning = document.createElement('div');
+                        bankWarning.className = 'info-note';
+                        bankWarning.style.background = 'rgba(239,68,68,0.08)';
+                        bankWarning.style.borderColor = 'rgba(239,68,68,0.2)';
+                        bankWarning.innerHTML = `
+                            <i class="fa-solid fa-triangle-exclamation" style="color: #ef4444;"></i>
+                            <div><strong>⚠️ BANK DETAILS MISSING</strong><br><small>Please add your bank details in the Profile tab before requesting withdrawal.</small></div>
+                        `;
+                        const bankSection = document.getElementById('bankName').closest('.input-box');
+                        if (!document.getElementById('bankWarningAdded')) {
+                            bankWarning.id = 'bankWarningAdded';
+                            bankSection.parentNode.insertBefore(bankWarning, bankSection);
+                        }
+                    }
+                    
+                    // Calculate balances
+                    await calculateBalances(user.uid, userTier);
+                    
                     hideLoading();
-                } else { hideLoading(); window.location.href = "dashboard.html"; }
+                } else { 
+                    hideLoading(); 
+                    window.location.href = "dashboard.html"; 
+                }
             });
             
+            // Load withdrawal history
             await loadHistory(user.uid);
             
+            // Monitor pending withdrawals
             const pendingQ = query(collection(db, "withdrawals"), where("uid", "==", user.uid), where("status", "==", "pending"));
             onSnapshot(pendingQ, (snap) => {
                 hasPending = !snap.empty;
@@ -352,47 +602,68 @@
                     box.classList.add('active');
                     btn.disabled = true;
                     input.disabled = true;
-                    btn.innerHTML = '<i class="fa-solid fa-lock"></i> Withdrawal Locked';
                 } else {
                     box.classList.remove('active');
-                    btn.disabled = false;
+                    if (userData?.tierCode !== 'NONE') btn.disabled = false;
                     input.disabled = false;
-                    btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Request Withdrawal';
                 }
             });
             
+            // Refresh history on any withdrawal change (without orderBy to avoid index)
             onSnapshot(query(collection(db, "withdrawals"), where("uid", "==", user.uid)), () => loadHistory(user.uid));
         });
 
+        // Withdrawal request handler
         document.getElementById('withdrawBtn').addEventListener('click', async () => {
-            if (!currentUser || !userData) { showErrorToast("System not ready"); return; }
-            if (hasPending) { showErrorToast("You have a pending withdrawal request"); return; }
+            if (!currentUser || !userData) { showErrorToast("System not ready. Please refresh."); return; }
+            if (hasPending) { showErrorToast("❌ You have a pending withdrawal request. Please wait for admin approval."); return; }
+            if (userData.tierCode === 'NONE') { showErrorToast("❌ VIP 1+ membership required to withdraw funds! Purchase a plan from the dashboard."); return; }
             
             let amount = parseFloat(document.getElementById('amountInput').value);
-            if (isNaN(amount) || amount < 1500) { showErrorToast("Minimum withdrawal is ₦1,500"); return; }
-            if (bank === "Not set" || accNum === "Not set") { showErrorToast("Complete your bank details in profile first"); return; }
-            if (amount > (userData.balance || 0)) { showErrorToast("Insufficient balance"); return; }
+            if (isNaN(amount) || amount < 1500) { showErrorToast("❌ Minimum withdrawal amount is ₦1,500"); return; }
+            if (withdrawableBalance < amount) { 
+                showErrorToast(`❌ Insufficient withdrawable balance! You have ₦${withdrawableBalance.toLocaleString()} withdrawable. Pending balance (₦${pendingBalance.toLocaleString()}) is frozen until your referrals activate VIP.`); 
+                return;
+            }
+            if (bank === "Not set" || accNum === "Not set" || bank === "" || accNum === "") { 
+                showErrorToast("❌ Please complete your bank details in the Profile tab first"); 
+                return;
+            }
             
-            let hour = new Date().getHours();
-            if (hour < 9 || hour >= 21) { showErrorToast("Withdrawals available: 9AM - 9PM daily"); return; }
+            // Time restrictions
+            let now = new Date();
+            let hour = now.getHours();
+            let day = now.getDay();
+            let formattedTime = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: true });
+            
+            if (day === 0) { 
+                showErrorToast("❌ Withdrawals are not processed on Sundays. Please try again on Monday (9AM - 9PM)."); 
+                return; 
+            }
+            if (hour < 9 || hour >= 21) { 
+                showErrorToast(`❌ Withdrawals are only available between 9:00 AM and 9:00 PM (WAT). Current time: ${formattedTime}. Your request will be processed the next business day.`); 
+                return; 
+            }
             
             isProcessing = true;
             let btn = document.getElementById('withdrawBtn');
             btn.disabled = true;
-            btn.innerHTML = '<div class="spinner-small"></div> Processing...';
+            btn.innerHTML = '<div class="spinner-small"></div> PROCESSING REQUEST...';
             
             let tax = amount * 0.10;
             let net = amount - tax;
             
             try {
+                // Deduct from withdrawable balance by reducing totalEarnings
                 await runTransaction(db, async (transaction) => {
                     const userRef = doc(db, "users", currentUser.uid);
                     const snap = await transaction.get(userRef);
-                    let bal = snap.data().balance || 0;
-                    if (amount > bal) throw new Error("Insufficient balance");
-                    transaction.update(userRef, { balance: bal - amount });
+                    let currentTotalEarnings = snap.data().totalEarnings || 0;
+                    if (currentTotalEarnings < amount) throw new Error("Insufficient withdrawable balance");
+                    transaction.update(userRef, { totalEarnings: currentTotalEarnings - amount });
                 });
                 
+                // Create withdrawal request
                 await addDoc(collection(db, "withdrawals"), {
                     uid: currentUser.uid,
                     username: userData.username || "User",
@@ -404,41 +675,62 @@
                     accountNumber: accNum,
                     accountName: accName,
                     status: "pending",
-                    timestamp: serverTimestamp()
+                    timestamp: serverTimestamp(),
+                    requestedAt: new Date().toISOString(),
+                    requestedTime: new Date().toLocaleTimeString(),
+                    requestedDate: new Date().toLocaleDateString(),
+                    withdrawableBalanceAtTime: withdrawableBalance,
+                    pendingBalanceAtTime: pendingBalance,
+                    totalBalanceAtTime: totalBalance
                 });
                 
+                // Clear input and hide tax card
                 document.getElementById('amountInput').value = "";
                 document.getElementById('taxCard').style.display = "none";
                 
+                // Show success message
                 await showSweetAlert(
-                    '✅ Withdrawal Request Submitted',
+                    '✅ WITHDRAWAL REQUEST SUBMITTED!',
                     `<div style="text-align:left;">
                         <div style="background:#1b203a; border-radius:10px; padding:12px; margin-bottom:10px;">
-                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>Requested:</span><span>₦${amount.toLocaleString()}</span></div>
-                            <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#ef4444;"><span>10% Tax:</span><span>-₦${tax.toLocaleString()}</span></div>
-                            <div style="border-top:1px solid #2a3942; padding-top:8px; display:flex; justify-content:space-between; font-weight:bold;"><span>You Receive:</span><span style="color:#10b981;">₦${net.toLocaleString()}</span></div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;"><span>💰 Requested:</span><span><strong>₦${amount.toLocaleString()}</strong></span></div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px; color:#ef4444;"><span>📉 10% Processing Fee:</span><span><strong>-₦${tax.toLocaleString()}</strong></span></div>
+                            <div style="border-top:1px solid #2a3942; padding-top:8px; display:flex; justify-content:space-between; font-weight:bold;"><span>🏦 You Will Receive:</span><span style="color:#10b981; font-size:1.1rem;"><strong>₦${net.toLocaleString()}</strong></span></div>
                         </div>
-                        <div style="background:rgba(229,184,66,0.1); padding:8px; border-radius:8px; text-align:center;">
-                            <i class="fa-solid fa-clock"></i> <strong style="color:#e5b842;">PENDING</strong><br>
-                            <small>Admin will process within 24 hours</small>
+                        <div style="background:rgba(229,184,66,0.1); padding:10px; border-radius:8px; text-align:center;">
+                            <i class="fa-solid fa-clock"></i> <strong style="color:#e5b842;">STATUS: PENDING</strong><br>
+                            <small>⏰ Admin will process your request within 24 hours during business hours (Mon-Sat, 9AM-9PM)</small>
+                        </div>
+                        <div style="margin-top:10px; background:rgba(16,185,129,0.1); padding:8px; border-radius:8px; text-align:center;">
+                            <i class="fa-solid fa-chart-line"></i> <strong>Remaining Withdrawable Balance: ₦${(withdrawableBalance - amount).toLocaleString()}</strong>
+                        </div>
+                        <div style="margin-top:10px; background:rgba(245,158,11,0.1); padding:8px; border-radius:8px; text-align:center;">
+                            <i class="fa-solid fa-lock"></i> <strong>Pending (Frozen) Balance: ₦${pendingBalance.toLocaleString()}</strong><br>
+                            <small style="color:#f59e0b;">🔓 Unlocks when your referrals activate VIP</small>
                         </div>
                     </div>`,
                     'success',
-                    5000
+                    7000
                 );
                 
                 btn.disabled = true;
-                btn.innerHTML = '<i class="fa-solid fa-clock"></i> Request Pending';
+                btn.innerHTML = '<i class="fa-solid fa-clock"></i> REQUEST PENDING - WAIT FOR APPROVAL';
+                
+                // Refresh page after 2 seconds to update balances
+                setTimeout(() => {
+                    window.location.reload();
+                }, 2500);
                 
             } catch(e) {
-                showErrorToast(e.message);
+                showErrorToast(e.message || "❌ Error processing withdrawal. Please try again.");
                 btn.disabled = false;
-                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Request Withdrawal';
+                btn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> REQUEST WITHDRAWAL';
             }
             isProcessing = false;
         });
         
-        setTimeout(hideLoading, 5000);
+        // Auto-hide loading after timeout
+        setTimeout(hideLoading, 8000);
     </script>
 </body>
 </html>
