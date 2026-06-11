@@ -25,7 +25,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        /* Dark Mode (Default) */
         body {
             background-color: #0b0d17 !important;
             color: #ffffff;
@@ -174,12 +173,6 @@
         @keyframes fadeSlideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes pulse {
-            0% { box-shadow: 0 0 0 0 rgba(229, 184, 66, 0.2); }
-            70% { box-shadow: 0 0 0 10px rgba(229, 184, 66, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(229, 184, 66, 0); }
         }
 
         @keyframes spin {
@@ -624,15 +617,16 @@
             transition: all 0.3s ease;
         }
 
-        .btn-buy-package:hover {
+        .btn-buy-package:hover:not(:disabled) {
             transform: scale(1.02);
             box-shadow: 0 4px 15px rgba(229, 184, 66, 0.3);
         }
 
         .btn-buy-package:disabled {
-            opacity: 0.5;
+            opacity: 0.4;
             cursor: not-allowed;
             transform: none;
+            background: linear-gradient(135deg, #6b7280, #4b5563);
         }
 
         .discount-tag {
@@ -693,44 +687,108 @@
         }
 
         .claim-box {
-            width: 130px;
-            height: 130px;
+            width: 140px;
+            height: 140px;
             border-radius: 50%;
-            border: 3px solid #e5b842;
-            margin: 24px auto;
+            margin: 20px auto;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            background: rgba(229, 184, 66, 0.05);
+            position: relative;
         }
 
-        .claim-box:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(229, 184, 66, 0.3);
+        .claim-box.claim-available {
+            border: 3px solid #e5b842;
+            background: rgba(229, 184, 66, 0.1);
+        }
+
+        .claim-box.claim-available i {
+            color: #e5b842;
+        }
+
+        .claim-box.claim-disabled {
+            border: 3px solid #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .claim-box.claim-disabled i {
+            color: #ef4444;
+        }
+
+        .claim-box.claim-maintenance {
+            border: 3px solid #f97316;
+            background: rgba(249, 115, 22, 0.1);
+            cursor: not-allowed;
+        }
+
+        .claim-box.claim-maintenance i {
+            color: #f97316;
+        }
+
+        .claim-box.claim-completed {
+            border: 3px solid #10b981;
+            background: rgba(16, 185, 129, 0.1);
+            cursor: default;
+        }
+
+        .claim-box.claim-completed i {
+            color: #10b981;
+        }
+
+        .claim-box.claim-loading {
+            border: 3px solid #636b8f;
+            background: rgba(99, 107, 143, 0.1);
+            cursor: wait;
+            animation: pulse 1s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
 
         .claim-box i {
             font-size: 2.5rem;
-            color: #e5b842;
+            margin-bottom: 8px;
         }
 
         .claim-box span {
-            font-size: 0.75rem;
+            font-size: 0.7rem;
             font-weight: 700;
             text-transform: uppercase;
-            margin-top: 8px;
         }
 
-        .claim-box.completed {
-            border-color: #10b981;
-            background: rgba(16, 185, 129, 0.05);
+        .claim-status-message {
+            font-size: 0.7rem;
+            margin-top: 12px;
+            padding: 8px 12px;
+            border-radius: 20px;
+            display: inline-block;
         }
 
-        .claim-box.completed i {
+        .claim-status-message.success {
+            background: rgba(16, 185, 129, 0.15);
             color: #10b981;
+        }
+
+        .claim-status-message.error {
+            background: rgba(239, 68, 68, 0.15);
+            color: #ef4444;
+        }
+
+        .claim-status-message.warning {
+            background: rgba(249, 115, 22, 0.15);
+            color: #f97316;
+        }
+
+        .claim-status-message.info {
+            background: rgba(229, 184, 66, 0.15);
+            color: #e5b842;
         }
 
         .task-expiry-note {
@@ -1090,7 +1148,6 @@
             margin-top: 4px;
         }
 
-        /* Milestone Rewards Section */
         .milestone-rewards-card {
             background: linear-gradient(135deg, #1b203a, #161a2e);
             border-radius: 16px;
@@ -1242,7 +1299,6 @@
             margin-left: 8px;
         }
 
-        /* VIP Tier Specific Border Colors */
         .package-card[data-tier="VIP8"] { border-left: 3px solid #e5b842; }
         .package-card[data-tier="VIP9"] { border-left: 3px solid #3b82f6; }
         .package-card[data-tier="VIP10"] { border-left: 3px solid #a855f7; }
@@ -1280,6 +1336,34 @@
             animation: spin 0.8s linear infinite;
             margin-bottom: 20px;
         }
+
+        .apk-download-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: #1b203a;
+            border: 1px solid #e5b842;
+            border-radius: 50px;
+            padding: 10px 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: #e5b842;
+            cursor: pointer;
+            z-index: 9999;
+            transition: all 0.2s;
+        }
+
+        .apk-download-btn:hover {
+            background: rgba(229, 184, 66, 0.15);
+            transform: scale(1.02);
+        }
+
+        .apk-download-btn i {
+            font-size: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -1289,6 +1373,13 @@
         <div class="loader-spinner"></div>
         <div class="loader-text" style="color: #e5b842; font-weight: 800; margin-top: 12px;">NEXUS EARN</div>
         <p style="margin-top: 8px; color: #9ca3af; font-size: 11px;">Loading secure vault...</p>
+    </div>
+
+    <!-- APK Download Button (floating) -->
+    <div class="apk-download-btn" id="apkDownloadBtn" style="display: none;">
+        <i class="fa-solid fa-download"></i>
+        <span>Download App</span>
+        <span id="apkVersionBadge" style="font-size: 0.6rem; background: #e5b84220; padding: 2px 6px; border-radius: 20px;"></span>
     </div>
 
     <div class="toast-notification" id="customToast">
@@ -1309,7 +1400,6 @@
         <div class="action-float-btn" onclick="openPortalModal('supportModalPopup')"><i class="fa-solid fa-headset"></i><span class="float-btn-label">Support</span></div>
         <div class="action-float-btn" onclick="openPortalModal('couponModalPopup')"><i class="fa-solid fa-gift"></i><span class="float-btn-label">Voucher</span></div>
         <div class="action-float-btn" onclick="executeProfileAttendanceCheckIn()"><i class="fa-solid fa-calendar-check"></i><span class="float-btn-label">Check-In (+₦50)</span></div>
-        <div class="action-float-btn" onclick="showToast('Downloading verified Android Application package installer...')"><i class="fa-solid fa-download"></i><span class="float-btn-label">APK</span></div>
     </div>
 
     <div id="bankLockRulesPopup" class="portal-modal-overlay" style="z-index: 21000;">
@@ -1418,7 +1508,14 @@
                     <div class="task-status-banner"><i class="fa-solid fa-chart-line"></i> Active Level: <span id="taskPackageLabel">NONE (STANDARD)</span></div>
                     <div class="premium-days-badge-container" id="premiumDaysTrackerRow"><span class="days-title-text"><i class="fa-solid fa-hourglass-half"></i> Active Contract Duration Remaining:</span><span class="days-value-counter" id="premiumDaysRemainingText">0 Days</span></div>
                     <p style="font-size: 0.9rem; color: #d1d5db;">Yield Value: <b style="color: #10b981; font-size: 1.2rem;" id="taskRewardLabel">₦0.00</b></p>
-                    <div class="claim-box" id="universalTaskBox"><i class="fa-solid fa-fingerprint" id="taskIcon"></i><span id="taskStatusText">Collect Income</span></div>
+                    
+                    <!-- Dynamic Claim Box with Status -->
+                    <div class="claim-box" id="universalTaskBox">
+                        <i class="fa-solid fa-fingerprint" id="taskIcon"></i>
+                        <span id="taskStatusText">Collect Income</span>
+                    </div>
+                    <div id="claimStatusMessage" class="claim-status-message" style="display: none;"></div>
+                    
                     <div class="task-expiry-note"><i class="fa-solid fa-clock" style="color: #e5b842;"></i> Midnight Reset: <b id="countdownDisplay" style="color: #fff;">--:--:--</b></div>
                 </div>
             </div>
@@ -1430,7 +1527,6 @@
                 <div class="stats-row-expanded"><div class="stat-box"><h4><i class="fa-solid fa-user-plus"></i> Direct (Lvl 1)</h4><p id="teamSizeText">0 Users</p></div><div class="stat-box"><h4><i class="fa-solid fa-user-friends"></i> Sub-Tier (Lvl 2)</h4><p id="teamLvl2SizeText">0 Users</p></div></div>
                 <div class="stats-row-expanded" style="margin-bottom: 20px;"><div class="stat-box" style="border-left-color: #3b82f6;"><h4><i class="fa-solid fa-coins"></i> Bonus Pay Total</h4><p style="color: #10b981;" id="teamRebateText">₦0.00</p></div><div class="stat-box" style="border-left-color: #10b981;"><h4><i class="fa-solid fa-chart-pie"></i> Team Node Capital</h4><p style="color: #e5b842;" id="teamCapitalVolumeText">₦0.00</p></div></div>
                 
-                <!-- Referral Milestone Bonuses (Ladder) -->
                 <div class="milestone-rewards-card" id="milestoneRewardsCard">
                     <div class="milestone-rewards-title"><i class="fa-solid fa-gift"></i> Referral Milestone Bonuses</div>
                     <div class="milestone-list" id="milestoneList"></div>
@@ -1468,12 +1564,12 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        let activeUserSession = null, localUserRecord = null, dbSnapshotUnsubscriber = null;
+        let activeUserSession = null, localUserRecord = null, dbSnapshotUnsubscriber = null, settingsUnsubscriber = null;
+        let isClaiming = false; // Anti-double-click flag
+        let adminSettings = { maintenanceMode: false, disabledVIPs: [], apkDownloadUrl: "", apkVersion: "1.0.0" };
         
-        // PERMANENT DAILY DEDUCTION - OFFICIAL ₦100 (not shown on button, built into calculation)
         const DAILY_DEDUCTION_AMOUNT = 100;
         
-        // REFERRAL MILESTONE BONUS LADDER (Team Deposit Total -> Reward)
         const MILESTONES = [
             { target: 100000, reward: 5000, label: "100K" },
             { target: 200000, reward: 10000, label: "200K" },
@@ -1487,7 +1583,6 @@
             { target: 1000000, reward: 50000, label: "1M" }
         ];
 
-        // Hide loading overlay
         function hideLoadingAndShow() {
             const loader = document.getElementById('loadingOverlay');
             if (loader) {
@@ -1521,6 +1616,164 @@
         window.openPortalModal = function(id) { document.getElementById(id).style.display = 'flex'; };
         window.closePortalModal = function(id) { document.getElementById(id).style.display = 'none'; };
 
+        // Load admin settings from Firestore
+        async function loadAdminSettings() {
+            try {
+                const settingsDoc = doc(db, "admin_settings", "platform_config");
+                const docSnap = await getDoc(settingsDoc);
+                if (docSnap.exists()) {
+                    adminSettings = docSnap.data();
+                } else {
+                    // Create default settings
+                    const defaultSettings = {
+                        maintenanceMode: false,
+                        disabledVIPs: [],
+                        apkDownloadUrl: "",
+                        apkVersion: "1.0.0",
+                        dailyDeduction: 100,
+                        defaultContractDays: 40,
+                        firstReferralBonus: 300,
+                        referralCommissionRate: 10,
+                        checkinBonus: 50
+                    };
+                    await setDoc(settingsDoc, defaultSettings);
+                    adminSettings = defaultSettings;
+                }
+                
+                // Update APK download button
+                const apkBtn = document.getElementById('apkDownloadBtn');
+                if (adminSettings.apkDownloadUrl && adminSettings.apkDownloadUrl !== "") {
+                    apkBtn.style.display = 'flex';
+                    document.getElementById('apkVersionBadge').innerText = adminSettings.apkVersion || "1.0.0";
+                    apkBtn.onclick = () => { window.open(adminSettings.apkDownloadUrl, '_blank'); };
+                } else {
+                    apkBtn.style.display = 'none';
+                }
+                
+                // Update VIP buttons based on disabled list
+                document.querySelectorAll('.upgrade-btn').forEach(btn => {
+                    const tier = btn.getAttribute('data-tier');
+                    if (adminSettings.disabledVIPs && adminSettings.disabledVIPs.includes(tier)) {
+                        btn.disabled = true;
+                        btn.title = "This plan is currently disabled by admin";
+                        btn.style.opacity = "0.5";
+                    } else {
+                        btn.disabled = false;
+                        btn.title = "";
+                        btn.style.opacity = "1";
+                    }
+                });
+                
+                // Update claim button state if maintenance mode
+                updateClaimButtonState();
+                
+            } catch (err) {
+                console.error("Error loading admin settings:", err);
+            }
+        }
+        
+        // Listen for real-time settings changes
+        function listenToAdminSettings() {
+            const settingsDoc = doc(db, "admin_settings", "platform_config");
+            settingsUnsubscriber = onSnapshot(settingsDoc, (snapshot) => {
+                if (snapshot.exists()) {
+                    adminSettings = snapshot.data();
+                    
+                    // Update APK button
+                    const apkBtn = document.getElementById('apkDownloadBtn');
+                    if (adminSettings.apkDownloadUrl && adminSettings.apkDownloadUrl !== "") {
+                        apkBtn.style.display = 'flex';
+                        document.getElementById('apkVersionBadge').innerText = adminSettings.apkVersion || "1.0.0";
+                        apkBtn.onclick = () => { window.open(adminSettings.apkDownloadUrl, '_blank'); };
+                    } else {
+                        apkBtn.style.display = 'none';
+                    }
+                    
+                    // Update VIP buttons
+                    document.querySelectorAll('.upgrade-btn').forEach(btn => {
+                        const tier = btn.getAttribute('data-tier');
+                        if (adminSettings.disabledVIPs && adminSettings.disabledVIPs.includes(tier)) {
+                            btn.disabled = true;
+                            btn.title = "This plan is currently disabled by admin";
+                            btn.style.opacity = "0.5";
+                        } else {
+                            btn.disabled = false;
+                            btn.title = "";
+                            btn.style.opacity = "1";
+                        }
+                    });
+                    
+                    updateClaimButtonState();
+                }
+            });
+        }
+
+        function updateClaimButtonState() {
+            const claimBox = document.getElementById('universalTaskBox');
+            const statusMsgDiv = document.getElementById('claimStatusMessage');
+            
+            if (!localUserRecord) return;
+            
+            const userTier = localUserRecord.tierCode || 'NONE';
+            const todayStr = new Date().toISOString().split('T')[0];
+            const alreadyClaimed = localUserRecord.lastMiningClaimDate === todayStr;
+            const daysRemaining = parseInt(localUserRecord.contractDaysRemaining || 0);
+            
+            // Remove all classes
+            claimBox.classList.remove('claim-available', 'claim-disabled', 'claim-maintenance', 'claim-completed', 'claim-loading');
+            
+            if (adminSettings.maintenanceMode) {
+                claimBox.classList.add('claim-maintenance');
+                claimBox.style.cursor = 'not-allowed';
+                document.getElementById('taskIcon').className = 'fa-solid fa-tools';
+                document.getElementById('taskStatusText').innerText = 'Maintenance';
+                statusMsgDiv.style.display = 'block';
+                statusMsgDiv.className = 'claim-status-message warning';
+                statusMsgDiv.innerHTML = '<i class="fa-solid fa-shield-halved"></i> System maintenance in progress. Please try again later.';
+                return;
+            }
+            
+            if (userTier === 'NONE') {
+                claimBox.classList.add('claim-disabled');
+                claimBox.style.cursor = 'not-allowed';
+                document.getElementById('taskIcon').className = 'fa-solid fa-lock';
+                document.getElementById('taskStatusText').innerText = 'No Active Plan';
+                statusMsgDiv.style.display = 'block';
+                statusMsgDiv.className = 'claim-status-message error';
+                statusMsgDiv.innerHTML = '<i class="fa-solid fa-crown"></i> Purchase a VIP plan to start earning daily!';
+                return;
+            }
+            
+            if (daysRemaining <= 0) {
+                claimBox.classList.add('claim-disabled');
+                claimBox.style.cursor = 'not-allowed';
+                document.getElementById('taskIcon').className = 'fa-solid fa-calendar-times';
+                document.getElementById('taskStatusText').innerText = 'Expired';
+                statusMsgDiv.style.display = 'block';
+                statusMsgDiv.className = 'claim-status-message error';
+                statusMsgDiv.innerHTML = '<i class="fa-solid fa-hourglass-end"></i> Your 40-day contract has expired. Purchase a new plan to continue earning.';
+                return;
+            }
+            
+            if (alreadyClaimed) {
+                claimBox.classList.add('claim-completed');
+                claimBox.style.cursor = 'default';
+                document.getElementById('taskIcon').className = 'fa-solid fa-check-circle';
+                document.getElementById('taskStatusText').innerText = 'Already Collected';
+                statusMsgDiv.style.display = 'block';
+                statusMsgDiv.className = 'claim-status-message success';
+                statusMsgDiv.innerHTML = '<i class="fa-solid fa-check-double"></i> You\'ve already collected today\'s earnings. Come back tomorrow at midnight reset!';
+                return;
+            }
+            
+            // Available to claim
+            claimBox.classList.add('claim-available');
+            claimBox.style.cursor = 'pointer';
+            document.getElementById('taskIcon').className = 'fa-solid fa-hand-holding-usd';
+            document.getElementById('taskStatusText').innerText = 'Collect Income';
+            statusMsgDiv.style.display = 'none';
+        }
+
         onAuthStateChanged(auth, (user) => { 
             if (user) { 
                 activeUserSession = user; 
@@ -1532,48 +1785,27 @@
                         loadTeamBreakdownNetwork(user.uid); 
                         loadVoucherHistory(); 
                         renderMilestones(); 
+                        updateClaimButtonState();
                         hideLoadingAndShow();
                     } else { 
                         window.location.href = "login.html"; 
                     } 
                 }); 
+                loadAdminSettings();
+                listenToAdminSettings();
             } else { 
                 window.location.href = "login.html"; 
             } 
         });
 
         function getTierValue(tierCode) {
-            if (tierCode === 'VIP1') return 1;
-            if (tierCode === 'VIP2') return 2;
-            if (tierCode === 'VIP3') return 3;
-            if (tierCode === 'VIP4') return 4;
-            if (tierCode === 'VIP5') return 5;
-            if (tierCode === 'VIP6') return 6;
-            if (tierCode === 'VIP7') return 7;
-            if (tierCode === 'VIP8') return 8;
-            if (tierCode === 'VIP9') return 9;
-            if (tierCode === 'VIP10') return 10;
-            if (tierCode === 'VIP11') return 11;
-            if (tierCode === 'VIP12') return 12;
-            if (tierCode === 'VIP13') return 13;
-            return 0;
+            const tiers = { VIP1:1, VIP2:2, VIP3:3, VIP4:4, VIP5:5, VIP6:6, VIP7:7, VIP8:8, VIP9:9, VIP10:10, VIP11:11, VIP12:12, VIP13:13 };
+            return tiers[tierCode] || 0;
         }
 
         function getDailyYieldByTier(tierCode) {
-            if (tierCode === 'VIP1') return 850;
-            if (tierCode === 'VIP2') return 1500;
-            if (tierCode === 'VIP3') return 2800;
-            if (tierCode === 'VIP4') return 5550;
-            if (tierCode === 'VIP5') return 11250;
-            if (tierCode === 'VIP6') return 23250;
-            if (tierCode === 'VIP7') return 48250;
-            if (tierCode === 'VIP8') return 105250;
-            if (tierCode === 'VIP9') return 195250;
-            if (tierCode === 'VIP10') return 360250;
-            if (tierCode === 'VIP11') return 780250;
-            if (tierCode === 'VIP12') return 1220250;
-            if (tierCode === 'VIP13') return 2025250;
-            return 0;
+            const yields = { VIP1:850, VIP2:1500, VIP3:2800, VIP4:5550, VIP5:11250, VIP6:23250, VIP7:48250, VIP8:105250, VIP9:195250, VIP10:360250, VIP11:780250, VIP12:1220250, VIP13:2025250 };
+            return yields[tierCode] || 0;
         }
 
         function renderTerminalMetrics(data) {
@@ -1587,8 +1819,6 @@
             document.getElementById('taskPackageLabel').innerText = userTier === 'NONE' ? 'NONE (STANDARD)' : 'VIP TIER: ' + userTier;
             
             let displayYield = getDailyYieldByTier(userTier);
-            
-            // Apply permanent ₦100 deduction (official, built into system)
             const finalYield = Math.max(0, displayYield - DAILY_DEDUCTION_AMOUNT);
             document.getElementById('taskRewardLabel').innerHTML = "₦" + finalYield.toLocaleString();
 
@@ -1651,7 +1881,6 @@
             }
         }
 
-        // Milestone rendering and claiming logic
         function renderMilestones() {
             if (!localUserRecord) return;
             const teamDepositTotal = parseFloat(localUserRecord.teamDepositTotal || 0);
@@ -1751,6 +1980,13 @@
 
         async function runProductActivationCycle(packageName, packageCost, dailyYield, tierCode) {
             if (!activeUserSession || !localUserRecord) return;
+            
+            // Check if this VIP is disabled by admin
+            if (adminSettings.disabledVIPs && adminSettings.disabledVIPs.includes(tierCode)) {
+                showToast("This VIP plan is currently disabled by admin. Please try another plan.", false);
+                return;
+            }
+            
             const userDocRef = doc(db, "users", activeUserSession.uid);
             const currentTier = localUserRecord.tierCode || 'NONE';
             const currentTierValue = getTierValue(currentTier);
@@ -1800,6 +2036,10 @@
 
         window.executeProfileAttendanceCheckIn = async function() { 
             if (!activeUserSession || !localUserRecord) return; 
+            if (adminSettings.maintenanceMode) {
+                showToast("System maintenance in progress. Check-in unavailable.", false);
+                return;
+            }
             if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { 
                 showToast("Daily attendance rewards require an active plan level.", false); 
                 return; 
@@ -1815,34 +2055,49 @@
                     const snap = await transaction.get(userDocRef); 
                     let currentBalance = parseFloat(snap.data().balance || 0); 
                     transaction.update(userDocRef, { 
-                        balance: currentBalance + 50, 
+                        balance: currentBalance + (adminSettings.checkinBonus || 50), 
                         lastAttendanceClaimDate: todayStr 
                     }); 
                 }); 
                 await addDoc(collection(db, "ledger"), { 
                     uid: activeUserSession.uid, 
-                    title: "📅 Daily Attendance Check-In (+₦50)", 
-                    amount: 50, 
+                    title: "📅 Daily Attendance Check-In (+₦" + (adminSettings.checkinBonus || 50) + ")", 
+                    amount: (adminSettings.checkinBonus || 50), 
                     type: "credit", 
                     timestamp: serverTimestamp() 
                 }); 
-                showToast("✅ Verified! ₦50 credited to your balance."); 
+                showToast("✅ Verified! ₦" + (adminSettings.checkinBonus || 50) + " credited to your balance."); 
             } catch (ex) { 
                 showToast("Processing fault. Try reloading.", false); 
             } 
         };
 
         window.executeDailyMiningCycle = async function() {
+            // Anti-double-click protection
+            if (isClaiming) {
+                showToast("Please wait, processing your previous claim...", false);
+                return;
+            }
+            
             if (!activeUserSession || !localUserRecord) return;
+            
+            // Check maintenance mode
+            if (adminSettings.maintenanceMode) {
+                showToast("System maintenance in progress. Please try again later.", false);
+                return;
+            }
+            
             if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { 
                 showToast("No active investment plan detected. Please purchase a VIP plan first.", false); 
                 return; 
             }
+            
             const todayStr = new Date().toISOString().split('T')[0];
             if (localUserRecord.lastMiningClaimDate === todayStr) { 
                 showToast("Today's earnings already collected. Come back tomorrow at midnight reset.", false); 
                 return; 
             }
+            
             let daysRemaining = parseInt(localUserRecord.contractDaysRemaining || 0);
             if (daysRemaining <= 0) { 
                 await runTransaction(db, async (transaction) => {
@@ -1854,13 +2109,23 @@
                     });
                 });
                 showToast("Your 40-day investment contract has expired. Please purchase a new plan.", false);
+                updateClaimButtonState();
                 return; 
             }
             
             let displayYield = getDailyYieldByTier(localUserRecord.tierCode);
-            
-            // Apply permanent ₦100 deduction (official - built into system, not shown on button)
             const finalEarning = Math.max(0, displayYield - DAILY_DEDUCTION_AMOUNT);
+            
+            // Set claiming flag and show loading state
+            isClaiming = true;
+            const claimBox = document.getElementById('universalTaskBox');
+            const originalIcon = document.getElementById('taskIcon').className;
+            const originalText = document.getElementById('taskStatusText').innerText;
+            
+            claimBox.classList.remove('claim-available');
+            claimBox.classList.add('claim-loading');
+            document.getElementById('taskIcon').className = 'fa-solid fa-spinner fa-pulse';
+            document.getElementById('taskStatusText').innerText = 'Processing...';
             
             const userDocRef = doc(db, "users", activeUserSession.uid);
             try {
@@ -1890,12 +2155,41 @@
                 if (updatedDoc.exists()) {
                     localUserRecord = updatedDoc.data();
                     renderTerminalMetrics(localUserRecord);
+                    updateClaimButtonState();
                 }
             } catch (ex) { 
                 showToast("Database error. Please try again.", false); 
+                // Reset button state on error
+                claimBox.classList.remove('claim-loading');
+                claimBox.classList.add('claim-available');
+                document.getElementById('taskIcon').className = originalIcon;
+                document.getElementById('taskStatusText').innerText = originalText;
+            } finally {
+                isClaiming = false;
+                // If not already updated, reset button state
+                if (document.getElementById('taskIcon').className === 'fa-solid fa-spinner fa-pulse') {
+                    claimBox.classList.remove('claim-loading');
+                    updateClaimButtonState();
+                }
             }
         };
-        document.getElementById('universalTaskBox').addEventListener('click', executeDailyMiningCycle);
+        
+        // Attach claim handler with anti-double-click
+        document.getElementById('universalTaskBox').addEventListener('click', function(e) {
+            if (isClaiming) return;
+            if (this.classList.contains('claim-available')) {
+                executeDailyMiningCycle();
+            } else if (!this.classList.contains('claim-loading')) {
+                // Show appropriate message based on state
+                if (adminSettings.maintenanceMode) {
+                    showToast("System maintenance in progress. Please try again later.", false);
+                } else if (localUserRecord && (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE')) {
+                    showToast("No active investment plan. Purchase a VIP plan to start earning.", false);
+                } else if (localUserRecord && localUserRecord.lastMiningClaimDate === new Date().toISOString().split('T')[0]) {
+                    showToast("You've already collected today's earnings. Come back tomorrow!", false);
+                }
+            }
+        });
 
         async function triggerNetworkReferralReward(referrerUID, purchasedPlanCost) { 
             if (!referrerUID) return; 
@@ -1910,12 +2204,12 @@
                     let oldTeamDepositTotal = parseFloat(referrerSnap.data().teamDepositTotal || 0); 
                     let teamCapitalVolume = parseFloat(referrerSnap.data().teamCapitalVolume || 0); 
                     let newTeamDepositTotal = oldTeamDepositTotal + purchasedPlanCost; 
-                    let calculatedCommission = purchasedPlanCost * 0.10; 
+                    let calculatedCommission = purchasedPlanCost * (adminSettings.referralCommissionRate || 10) / 100; 
                     let finalPayoutSum = calculatedCommission; 
-                    let trackingMessage = "🤝 10% Direct Plan Referral Commission"; 
+                    let trackingMessage = `🤝 ${adminSettings.referralCommissionRate || 10}% Direct Plan Referral Commission`; 
                     if (directInvitesCount === 0) { 
-                        finalPayoutSum += 300; 
-                        trackingMessage = "🎁 First Referral Bonus (+₦300 Stacked)"; 
+                        finalPayoutSum += (adminSettings.firstReferralBonus || 300); 
+                        trackingMessage = "🎁 First Referral Bonus (+₦" + (adminSettings.firstReferralBonus || 300) + " Stacked)"; 
                     } 
                     transaction.update(referrerDocRef, { 
                         balance: currentBalance + finalPayoutSum, 
@@ -1988,6 +2282,7 @@
 
         async function claimProgressiveVoucher(code) {
             if (!activeUserSession || !localUserRecord) { showToast("Please login first", false); return; }
+            if (adminSettings.maintenanceMode) { showToast("System maintenance in progress. Voucher claims unavailable.", false); return; }
             if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { showToast("VIP 1+ membership required to claim vouchers!", false); return; }
             const claimBtn = document.getElementById('claimVoucherBtn');
             const originalText = claimBtn.innerHTML;
@@ -2108,7 +2403,6 @@
             document.body.classList.add('dark-mode');
         }
         
-        // Initial data load complete - hide loader after a short delay
         setTimeout(() => {
             if (document.getElementById('loadingOverlay')) {
                 hideLoadingAndShow();
