@@ -4,13 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <meta property="og:title" content="NEXUS EARN - Earn ₦850 to ₦2,025,250 Daily">
-    <meta property="og:description" content="Join NEXUS EARN and earn massive daily returns! VIP1-VIP13 tiers available. 40-day contracts with permanent ₦100 daily deduction.">
+    <meta property="og:description" content="Join NEXUS EARN and earn massive daily returns! VIP1-VIP13 tiers available. 40-day contracts.">
     <meta property="og:image" content="https://nexus-earn.com/nexus-logo.png">
     <meta property="og:url" content="https://nexus-earn.com">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="NEXUS EARN - Earn Up to ₦2,025,250 Daily">
-    <meta name="description" content="NEXUS EARN - Premium investment platform with 13 VIP tiers. Earn daily returns for 40 days. Secure and reliable.">
+    <meta name="description" content="NEXUS EARN - Premium investment platform with 13 VIP tiers.">
     <meta name="theme-color" content="#e5b842">
     <title>NEXUS EARN - Premium Investment Platform | VIP 1-13</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
@@ -1368,14 +1367,12 @@
 </head>
 <body>
 
-    <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loader-spinner"></div>
         <div class="loader-text" style="color: #e5b842; font-weight: 800; margin-top: 12px;">NEXUS EARN</div>
         <p style="margin-top: 8px; color: #9ca3af; font-size: 11px;">Loading secure vault...</p>
     </div>
 
-    <!-- APK Download Button (floating) -->
     <div class="apk-download-btn" id="apkDownloadBtn" style="display: none;">
         <i class="fa-solid fa-download"></i>
         <span>Download App</span>
@@ -1425,7 +1422,6 @@
         </div>
     </div>
 
-<!-- VOUCHER MODAL -->
 <div id="couponModalPopup" class="portal-modal-overlay">
     <div class="portal-modal-card">
         <i class="fa-solid fa-xmark portal-modal-close" onclick="closePortalModal('couponModalPopup')"></i>
@@ -1435,7 +1431,6 @@
         <input type="text" id="voucherCodeField" placeholder="Enter voucher code" maxlength="12" style="width: 100%; height: 42px; background: #0b0d17; border: 1px solid rgba(229,184,66,0.3); border-radius: 6px; color: #fff; text-align: center; font-weight: 700; margin-bottom: 14px; font-size: 1rem; letter-spacing: 2px; text-transform: uppercase;">
         <button class="btn-buy-package" id="claimVoucherBtn">Verify & Claim</button>
         
-        <!-- ONE-TIME APK DOWNLOAD ICON (under redeem code) -->
         <div class="apk-icon-section" id="apkIconWrapper" style="margin-top: 16px;">
             <div class="apk-icon-btn" id="oneTimeApkButton" style="display: flex; align-items: center; justify-content: center; gap: 10px; background: linear-gradient(135deg, #1e293b, #0f172a); border: 1px solid #e5b842; border-radius: 60px; padding: 10px 16px; cursor: pointer; transition: all 0.2s; font-weight: 700; color: #e5b842;">
                 <i class="fa-solid fa-download"></i>
@@ -1470,43 +1465,30 @@
                 <h2 class="section-headline"><i class="fa-solid fa-crown"></i> Investment Plans</h2>
                 <p class="section-subline">Choose your plan and start earning daily returns for 40 days (₦100 permanent deduction applied)</p>
                 
-                <!-- VIP 1 -->
                 <div class="package-card" data-tier="VIP1"><div class="package-header"><span class="package-title-text"><i class="fa-solid fa-star"></i> VIP 1: STARTER</span><span class="package-price">₦7,000</span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦850</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦34,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP1" data-name="VIP 1: STARTER" data-cost="7000" data-yield="850">Activate Plan</button></div>
                 
-                <!-- VIP 2 -->
                 <div class="package-card" data-tier="VIP2"><div class="discount-tag">₦1,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-medal"></i> VIP 2: BRONZE</span><span class="package-price">₦11,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦12,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦1,500</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦60,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP2" data-name="VIP 2: BRONZE" data-cost="11000" data-yield="1500">Activate Plan</button></div>
                 
-                <!-- VIP 3 -->
                 <div class="package-card" data-tier="VIP3"><div class="discount-tag">₦1,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-gem"></i> VIP 3: SILVER</span><span class="package-price">₦19,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦20,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦2,800</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦112,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP3" data-name="VIP 3: SILVER" data-cost="19000" data-yield="2800">Activate Plan</button></div>
                 
-                <!-- VIP 4 -->
                 <div class="package-card" data-tier="VIP4"><div class="package-header"><span class="package-title-text"><i class="fa-solid fa-crown"></i> VIP 4: GOLD</span><span class="package-price">₦37,000</span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦5,550</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦222,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP4" data-name="VIP 4: GOLD" data-cost="37000" data-yield="5550">Activate Plan</button></div>
                 
-                <!-- VIP 5 -->
                 <div class="package-card" data-tier="VIP5"><div class="package-header"><span class="package-title-text"><i class="fa-solid fa-trophy"></i> VIP 5: PLATINUM</span><span class="package-price">₦71,000</span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦11,250</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦450,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP5" data-name="VIP 5: PLATINUM" data-cost="71000" data-yield="11250">Activate Plan</button></div>
                 
-                <!-- VIP 6 -->
                 <div class="package-card" data-tier="VIP6"><div class="discount-tag">₦1,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-gem"></i> VIP 6: DIAMOND</span><span class="package-price">₦138,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦139,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦23,250</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦930,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP6" data-name="VIP 6: DIAMOND" data-cost="138000" data-yield="23250">Activate Plan</button></div>
                 
-                <!-- VIP 7 -->
                 <div class="package-card" data-tier="VIP7"><div class="discount-tag">₦10,000 DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text"><i class="fa-solid fa-rocket"></i> VIP 7: APEX</span><span class="package-price">₦263,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦273,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦48,250</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦1,930,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP7" data-name="VIP 7: APEX" data-cost="263000" data-yield="48250">Activate Plan</button></div>
 
-                <!-- VIP 8: INFINITY -->
                 <div class="package-card" data-tier="VIP8"><div class="discount-tag">₦20,000 SPECIAL DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#e5b842;"><i class="fa-solid fa-infinity"></i> VIP 8: INFINITY</span><span class="package-price">₦503,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦523,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦105,250</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦4,210,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP8" data-name="VIP 8: INFINITY" data-cost="503000" data-yield="105250">Activate Plan</button></div>
 
-                <!-- VIP 9: OMEGA -->
                 <div class="package-card" data-tier="VIP9"><div class="discount-tag" style="background:#3b82f6;">₦30,000 MILESTONE BONUS</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#3b82f6;"><i class="fa-solid fa-chart-simple"></i> VIP 9: OMEGA</span><span class="package-price">₦850,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦880,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦195,250</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦7,810,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP9" data-name="VIP 9: OMEGA" data-cost="850000" data-yield="195250">Activate Plan</button></div>
 
-                <!-- VIP 10: QUANTUM -->
                 <div class="package-card" data-tier="VIP10"><div class="discount-tag" style="background:#a855f7;">₦50,000 INCOME BONUS</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#a855f7;"><i class="fa-solid fa-atom"></i> VIP 10: QUANTUM</span><span class="package-price">₦1,450,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦1,500,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦360,250</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦14,410,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP10" data-name="VIP 10: QUANTUM" data-cost="1450000" data-yield="360250">Activate Plan</button></div>
 
-                <!-- VIP 11: NEXUS KING -->
                 <div class="package-card" data-tier="VIP11"><div class="discount-tag" style="background:#ec4899;">₦100,000 CROWN DISCOUNT</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#ec4899;"><i class="fa-solid fa-king"></i> VIP 11: NEXUS KING</span><span class="package-price">₦2,900,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦3,000,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦780,250</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦31,210,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP11" data-name="VIP 11: NEXUS KING" data-cost="2900000" data-yield="780250">Activate Plan</button></div>
 
-                <!-- VIP 12: COSMIC -->
                 <div class="package-card" data-tier="VIP12"><div class="discount-tag" style="background:#06b6d4;">₦150,000 ELITE BONUS</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#06b6d4;"><i class="fa-solid fa-globe"></i> VIP 12: COSMIC</span><span class="package-price">₦4,350,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦4,500,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦1,220,250</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦48,810,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP12" data-name="VIP 12: COSMIC" data-cost="4350000" data-yield="1220250">Activate Plan</button></div>
 
-                <!-- VIP 13: SINGULARITY -->
                 <div class="package-card" data-tier="VIP13"><div class="discount-tag" style="background:#f97316;">₦250,000 MAXIMUM BONUS</div><div class="package-header" style="margin-top: 8px;"><span class="package-title-text" style="color:#f97316;"><i class="fa-solid fa-meteor"></i> VIP 13: SINGULARITY</span><span class="package-price">₦6,750,000 <del style="font-size:0.75rem; color:#9ca3af; margin-left:4px;">₦7,000,000</del></span></div><div class="package-details"><div class="detail-item"><i class="fa-solid fa-calendar-days"></i> Project Plan: 40 Days</div><div class="detail-item"><i class="fa-solid fa-money-bill-wave"></i> Daily Earnings: ₦2,025,250</div><div class="detail-item"><i class="fa-solid fa-chart-line"></i> Total Income: ₦81,010,000</div></div><button class="btn-buy-package upgrade-btn" data-tier="VIP13" data-name="VIP 13: SINGULARITY" data-cost="6750000" data-yield="2025250">Activate Plan</button></div>
             </div>
 
@@ -1518,7 +1500,6 @@
                     <div class="premium-days-badge-container" id="premiumDaysTrackerRow"><span class="days-title-text"><i class="fa-solid fa-hourglass-half"></i> Active Contract Duration Remaining:</span><span class="days-value-counter" id="premiumDaysRemainingText">0 Days</span></div>
                     <p style="font-size: 0.9rem; color: #d1d5db;">Yield Value: <b style="color: #10b981; font-size: 1.2rem;" id="taskRewardLabel">₦0.00</b></p>
                     
-                    <!-- Dynamic Claim Box with Status -->
                     <div class="claim-box" id="universalTaskBox">
                         <i class="fa-solid fa-fingerprint" id="taskIcon"></i>
                         <span id="taskStatusText">Collect Income</span>
@@ -1566,7 +1547,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-app.js";
         import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-auth.js";
-        import { getFirestore, doc, onSnapshot, runTransaction, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, limit, updateDoc, arrayUnion, getDoc, setDoc } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
+        import { getFirestore, doc, onSnapshot, runTransaction, collection, addDoc, serverTimestamp, query, where, getDocs, orderBy, limit, updateDoc, arrayUnion, getDoc, setDoc, deleteField } from "https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore.js";
 
         const firebaseConfig = { apiKey: "AIzaSyDUIQ5s-MI2V3rsi_uWBbRb5YGcFmjjKK4", authDomain: "nexus-earn-1.firebaseapp.com", projectId: "nexus-earn-1", storageBucket: "nexus-earn-1.firebasestorage.app", messagingSenderId: "779765076952", appId: "1:779765076952:web:fa5fac51bef82e74b598ad" };
         const app = initializeApp(firebaseConfig);
@@ -1574,8 +1555,8 @@
         const db = getFirestore(app);
 
         let activeUserSession = null, localUserRecord = null, dbSnapshotUnsubscriber = null, settingsUnsubscriber = null;
-        let isClaiming = false; // Anti-double-click flag
-        let adminSettings = { maintenanceMode: false, disabledVIPs: [], apkDownloadUrl: "", apkVersion: "1.0.0" };
+        let isClaiming = false;
+        let adminSettings = { maintenanceMode: false, disabledVIPs: [], apkDownloadUrl: "", apkVersion: "1.0.0", referralCommissionRate: 10 };
       
         const MILESTONES = [
             { target: 100000, reward: 5000, label: "100K" },
@@ -1590,13 +1571,10 @@
             { target: 1000000, reward: 50000, label: "1M" }
         ];
 
-        // Helper: Get current date in Nigeria (UTC+1) without time
         function getNigeriaDate() {
             const now = new Date();
-            // Convert to UTC+1 (Nigeria time)
-            const nigeriaTime = new Date(now.getTime() + (3600000)); // +1 hour
-            const nigeriaDate = new Date(nigeriaTime.toISOString().split('T')[0]);
-            return nigeriaDate.toISOString().split('T')[0];
+            const nigeriaTime = new Date(now.getTime() + (3600000));
+            return nigeriaTime.toISOString().split('T')[0];
         }
 
         function hideLoadingAndShow() {
@@ -1608,14 +1586,10 @@
         }
 
         window.logout = async function() {
-            const result = await Swal.fire({ title: '⚠️ Confirm Logout', text: 'Are you sure you want to logout from NEXUS EARN?', icon: 'question', background: '#111424', color: '#fff', confirmButtonColor: '#ef4444', cancelButtonColor: '#e5b842', confirmButtonText: 'Yes, Logout', cancelButtonText: 'Cancel', showCancelButton: true });
+            const result = await Swal.fire({ title: '⚠️ Confirm Logout', text: 'Are you sure you want to logout?', icon: 'question', background: '#111424', color: '#fff', confirmButtonColor: '#ef4444', cancelButtonColor: '#e5b842', confirmButtonText: 'Yes, Logout', cancelButtonText: 'Cancel', showCancelButton: true });
             if (result.isConfirmed) { 
-                try { 
-                    await signOut(auth); 
-                    Swal.fire({ title: '✅ Logged Out', text: 'You have been successfully logged out.', icon: 'success', background: '#111424', color: '#fff', confirmButtonColor: '#e5b842', timer: 2000 }).then(() => { window.location.href = "login.html"; }); 
-                } catch(e) { 
-                    Swal.fire({ title: '❌ Error', text: 'Failed to logout.', icon: 'error', background: '#111424', color: '#fff', confirmButtonColor: '#e5b842' }); 
-                } 
+                await signOut(auth); 
+                Swal.fire({ title: '✅ Logged Out', text: 'Successfully logged out.', icon: 'success', background: '#111424', color: '#fff', confirmButtonColor: '#e5b842', timer: 2000 }).then(() => { window.location.href = "login.html"; }); 
             }
         };
         document.getElementById('logoutBtn').addEventListener('click', logout);
@@ -1632,30 +1606,21 @@
         window.openPortalModal = function(id) { document.getElementById(id).style.display = 'flex'; };
         window.closePortalModal = function(id) { document.getElementById(id).style.display = 'none'; };
 
-        // Load admin settings from Firestore
         async function loadAdminSettings() {
             try {
                 const settingsDoc = doc(db, "admin_settings", "platform_config");
                 const docSnap = await getDoc(settingsDoc);
                 if (docSnap.exists()) {
                     adminSettings = docSnap.data();
+                    if (adminSettings.firstReferralBonus) {
+                        await updateDoc(settingsDoc, { firstReferralBonus: deleteField() });
+                        adminSettings.firstReferralBonus = undefined;
+                    }
                 } else {
-                    // Create default settings (no firstReferralBonus)
-                    const defaultSettings = {
-                        maintenanceMode: false,
-                        disabledVIPs: [],
-                        apkDownloadUrl: "",
-                        apkVersion: "1.0.0",
-                        dailyDeduction: 100,
-                        defaultContractDays: 40,
-                        referralCommissionRate: 10,
-                        checkinBonus: 50
-                    };
-                    await setDoc(settingsDoc, defaultSettings);
-                    adminSettings = defaultSettings;
+                    await setDoc(settingsDoc, { maintenanceMode: false, disabledVIPs: [], apkDownloadUrl: "", apkVersion: "1.0.0", dailyDeduction: 100, defaultContractDays: 40, referralCommissionRate: 10, checkinBonus: 50 });
+                    adminSettings = { maintenanceMode: false, disabledVIPs: [], apkDownloadUrl: "", apkVersion: "1.0.0", referralCommissionRate: 10 };
                 }
                 
-                // Update APK download button
                 const apkBtn = document.getElementById('apkDownloadBtn');
                 if (adminSettings.apkDownloadUrl && adminSettings.apkDownloadUrl !== "") {
                     apkBtn.style.display = 'flex';
@@ -1665,7 +1630,6 @@
                     apkBtn.style.display = 'none';
                 }
                 
-                // Update VIP buttons based on disabled list
                 document.querySelectorAll('.upgrade-btn').forEach(btn => {
                     const tier = btn.getAttribute('data-tier');
                     if (adminSettings.disabledVIPs && adminSettings.disabledVIPs.includes(tier)) {
@@ -1679,7 +1643,6 @@
                     }
                 });
                 
-                // Update claim button state if maintenance mode
                 updateClaimButtonState();
                 
             } catch (err) {
@@ -1687,14 +1650,15 @@
             }
         }
         
-        // Listen for real-time settings changes
         function listenToAdminSettings() {
             const settingsDoc = doc(db, "admin_settings", "platform_config");
             settingsUnsubscriber = onSnapshot(settingsDoc, (snapshot) => {
                 if (snapshot.exists()) {
                     adminSettings = snapshot.data();
-                    
-                    // Update APK button
+                    if (adminSettings.firstReferralBonus) {
+                        updateDoc(settingsDoc, { firstReferralBonus: deleteField() });
+                        adminSettings.firstReferralBonus = undefined;
+                    }
                     const apkBtn = document.getElementById('apkDownloadBtn');
                     if (adminSettings.apkDownloadUrl && adminSettings.apkDownloadUrl !== "") {
                         apkBtn.style.display = 'flex';
@@ -1703,8 +1667,6 @@
                     } else {
                         apkBtn.style.display = 'none';
                     }
-                    
-                    // Update VIP buttons
                     document.querySelectorAll('.upgrade-btn').forEach(btn => {
                         const tier = btn.getAttribute('data-tier');
                         if (adminSettings.disabledVIPs && adminSettings.disabledVIPs.includes(tier)) {
@@ -1717,7 +1679,6 @@
                             btn.style.opacity = "1";
                         }
                     });
-                    
                     updateClaimButtonState();
                 }
             });
@@ -1726,15 +1687,12 @@
         function updateClaimButtonState() {
             const claimBox = document.getElementById('universalTaskBox');
             const statusMsgDiv = document.getElementById('claimStatusMessage');
-            
             if (!localUserRecord) return;
-            
             const userTier = localUserRecord.tierCode || 'NONE';
-            const todayStr = getNigeriaDate(); // Nigeria date
+            const todayStr = getNigeriaDate();
             const alreadyClaimed = localUserRecord.lastMiningClaimDate === todayStr;
             const daysRemaining = parseInt(localUserRecord.contractDaysRemaining || 0);
             
-            // Remove all classes
             claimBox.classList.remove('claim-available', 'claim-disabled', 'claim-maintenance', 'claim-completed', 'claim-loading');
             
             if (adminSettings.maintenanceMode) {
@@ -1781,7 +1739,6 @@
                 return;
             }
             
-            // Available to claim
             claimBox.classList.add('claim-available');
             claimBox.style.cursor = 'pointer';
             document.getElementById('taskIcon').className = 'fa-solid fa-hand-holding-usd';
@@ -1793,9 +1750,15 @@
             if (user) { 
                 activeUserSession = user; 
                 if (dbSnapshotUnsubscriber) dbSnapshotUnsubscriber(); 
-                dbSnapshotUnsubscriber = onSnapshot(doc(db, "users", user.uid), (snapshot) => { 
+                dbSnapshotUnsubscriber = onSnapshot(doc(db, "users", user.uid), async (snapshot) => { 
                     if (snapshot.exists()) { 
                         localUserRecord = snapshot.data(); 
+                        if (localUserRecord.firstReferralBonusPaid !== undefined) {
+                            await updateDoc(doc(db, "users", user.uid), { firstReferralBonusPaid: deleteField() });
+                        }
+                        if (localUserRecord.extraReferral300 !== undefined) {
+                            await updateDoc(doc(db, "users", user.uid), { extraReferral300: deleteField() });
+                        }
                         renderTerminalMetrics(localUserRecord); 
                         loadTeamBreakdownNetwork(user.uid); 
                         loadVoucherHistory(); 
@@ -1995,13 +1958,10 @@
 
         async function runProductActivationCycle(packageName, packageCost, dailyYield, tierCode) {
             if (!activeUserSession || !localUserRecord) return;
-            
-            // Check if this VIP is disabled by admin
             if (adminSettings.disabledVIPs && adminSettings.disabledVIPs.includes(tierCode)) {
                 showToast("This VIP plan is currently disabled by admin. Please try another plan.", false);
                 return;
             }
-            
             const userDocRef = doc(db, "users", activeUserSession.uid);
             const currentTier = localUserRecord.tierCode || 'NONE';
             const currentTierValue = getTierValue(currentTier);
@@ -2088,60 +2048,42 @@
         };
 
         window.executeDailyMiningCycle = async function() {
-            // Anti-double-click protection
             if (isClaiming) {
                 showToast("Please wait, processing your previous claim...", false);
                 return;
             }
-            
             if (!activeUserSession || !localUserRecord) return;
-            
-            // Check maintenance mode
             if (adminSettings.maintenanceMode) {
                 showToast("System maintenance in progress. Please try again later.", false);
                 return;
             }
-            
             if (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE') { 
                 showToast("No active investment plan detected. Please purchase a VIP plan first.", false); 
                 return; 
             }
-            
             const todayStr = getNigeriaDate();
             if (localUserRecord.lastMiningClaimDate === todayStr) { 
                 showToast("Today's earnings already collected. Come back tomorrow at midnight reset.", false); 
                 return; 
             }
-            
             let daysRemaining = parseInt(localUserRecord.contractDaysRemaining || 0);
             if (daysRemaining <= 0) { 
                 await runTransaction(db, async (transaction) => {
                     const userRef = doc(db, "users", activeUserSession.uid);
-                    transaction.update(userRef, {
-                        tierCode: "NONE",
-                        contractDaysRemaining: 0,
-                        activeDailyYield: 0
-                    });
+                    transaction.update(userRef, { tierCode: "NONE", contractDaysRemaining: 0, activeDailyYield: 0 });
                 });
                 showToast("Your 40-day investment contract has expired. Please purchase a new plan.", false);
                 updateClaimButtonState();
                 return; 
             }
-            
             let displayYield = getDailyYieldByTier(localUserRecord.tierCode);
             const finalEarning = Math.max(0, displayYield);
-            
-            // Set claiming flag and show loading state
             isClaiming = true;
             const claimBox = document.getElementById('universalTaskBox');
-            const originalIcon = document.getElementById('taskIcon').className;
-            const originalText = document.getElementById('taskStatusText').innerText;
-            
             claimBox.classList.remove('claim-available');
             claimBox.classList.add('claim-loading');
             document.getElementById('taskIcon').className = 'fa-solid fa-spinner fa-pulse';
             document.getElementById('taskStatusText').innerText = 'Processing...';
-            
             const userDocRef = doc(db, "users", activeUserSession.uid);
             try {
                 await runTransaction(db, async (transaction) => {
@@ -2156,16 +2098,8 @@
                         contractDaysRemaining: newRemaining
                     });
                 });
-                await addDoc(collection(db, "ledger"), { 
-                    uid: activeUserSession.uid, 
-                    title: "💰 Daily Plan Returns", 
-                    amount: finalEarning, 
-                    type: "credit", 
-                    timestamp: serverTimestamp() 
-                });
+                await addDoc(collection(db, "ledger"), { uid: activeUserSession.uid, title: "💰 Daily Plan Returns", amount: finalEarning, type: "credit", timestamp: serverTimestamp() });
                 showToast("✅ Success! ₦" + finalEarning.toLocaleString() + " added to your balance.");
-                
-                // Update local record
                 const updatedDoc = await getDoc(userDocRef);
                 if (updatedDoc.exists()) {
                     localUserRecord = updatedDoc.data();
@@ -2174,14 +2108,12 @@
                 }
             } catch (ex) { 
                 showToast("Database error. Please try again.", false); 
-                // Reset button state on error
                 claimBox.classList.remove('claim-loading');
                 claimBox.classList.add('claim-available');
-                document.getElementById('taskIcon').className = originalIcon;
-                document.getElementById('taskStatusText').innerText = originalText;
+                document.getElementById('taskIcon').className = 'fa-solid fa-hand-holding-usd';
+                document.getElementById('taskStatusText').innerText = 'Collect Income';
             } finally {
                 isClaiming = false;
-                // If not already updated, reset button state
                 if (document.getElementById('taskIcon').className === 'fa-solid fa-spinner fa-pulse') {
                     claimBox.classList.remove('claim-loading');
                     updateClaimButtonState();
@@ -2189,13 +2121,11 @@
             }
         };
         
-        // Attach claim handler with anti-double-click
         document.getElementById('universalTaskBox').addEventListener('click', function(e) {
             if (isClaiming) return;
             if (this.classList.contains('claim-available')) {
                 executeDailyMiningCycle();
             } else if (!this.classList.contains('claim-loading')) {
-                // Show appropriate message based on state
                 if (adminSettings.maintenanceMode) {
                     showToast("System maintenance in progress. Please try again later.", false);
                 } else if (localUserRecord && (!localUserRecord.tierCode || localUserRecord.tierCode === 'NONE')) {
@@ -2222,7 +2152,7 @@
                     let calculatedCommission = purchasedPlanCost * (adminSettings.referralCommissionRate || 10) / 100; 
                     let finalPayoutSum = calculatedCommission; 
                     let trackingMessage = `🤝 ${adminSettings.referralCommissionRate || 10}% Direct Plan Referral Commission`; 
-                    // FIRST REFERRAL BONUS HAS BEEN REMOVED – no extra 300
+                    
                     transaction.update(referrerDocRef, { 
                         balance: currentBalance + finalPayoutSum, 
                         referralBonusEarned: currentBonusEarned + finalPayoutSum, 
@@ -2257,11 +2187,7 @@
             try { 
                 const userDocRef = doc(db, "users", activeUserSession.uid); 
                 await runTransaction(db, async (transaction) => { 
-                    transaction.update(userDocRef, { 
-                        bankName: bank, 
-                        accountName: holder, 
-                        accountNumber: num 
-                    }); 
+                    transaction.update(userDocRef, { bankName: bank, accountName: holder, accountNumber: num }); 
                 }); 
                 showToast("✅ Payout profile successfully linked and saved."); 
             } catch (ex) { 
@@ -2269,7 +2195,6 @@
             } 
         });
 
-        // FIXED: Voucher history without index error (fetch all, sort client-side)
         async function loadVoucherHistory() {
             if (!activeUserSession) return;
             try {
@@ -2282,7 +2207,6 @@
                     historySection.style.display = 'none'; 
                     return; 
                 }
-                // Sort manually in memory (descending by timestamp)
                 let items = [];
                 snapshot.forEach(docSnap => {
                     const redemption = docSnap.data();
@@ -2290,9 +2214,7 @@
                     items.push({ redemption, timestamp });
                 });
                 items.sort((a, b) => b.timestamp - a.timestamp);
-                // Take latest 5
                 items = items.slice(0, 5);
-                
                 historySection.style.display = 'block';
                 historyList.innerHTML = '';
                 for (let item of items) {
@@ -2401,12 +2323,9 @@
 
         document.getElementById('copyLinkBtn').addEventListener('click', () => { 
             const textToCopy = document.getElementById('inviteLinkText').innerText; 
-            navigator.clipboard.writeText(textToCopy).then(() => { 
-                showToast("📋 Referral tracking URL copied to clipboard!"); 
-            }); 
+            navigator.clipboard.writeText(textToCopy).then(() => { showToast("📋 Referral tracking URL copied to clipboard!"); }); 
         });
         
-        // Dark Mode Toggle
         const darkModeToggle = document.getElementById('darkModeToggle');
         let isDarkMode = true;
         darkModeToggle.addEventListener('click', () => {
@@ -2433,12 +2352,9 @@
         }
         
         setTimeout(() => {
-            if (document.getElementById('loadingOverlay')) {
-                hideLoadingAndShow();
-            }
+            if (document.getElementById('loadingOverlay')) hideLoadingAndShow();
         }, 1000);
 
-        // One-time APK download handling
         function initOneTimeApkButton() {
             const apkBtn = document.getElementById('oneTimeApkButton');
             if (!apkBtn) return;
